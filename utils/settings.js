@@ -2,12 +2,12 @@
  * Created by dora on 2017/5/19.
  *
  */
-
+console.log('__dirname is ->',__dirname)
 module.exports = {
 
     imgZip: true, // 上传图片是否压缩(如果为false则本地不需要安装gm)
-    session_secret: 'doracms', // 务必修改
-    auth_cookie_name: 'doracms',
+    session_secret: 'pirated', // 务必修改
+    auth_cookie_name: 'pirated',
     encrypt_key: 'dora',
     cache_maxAge: Math.floor(Date.now() / 1000) + 24 * 60 * 60, //1 hours
 
@@ -34,7 +34,10 @@ module.exports = {
     system_illegal_param: '非法参数',
     system_noPower: '对不起，您无权执行该操作！',
     system_atLeast_one: '请选择至少一项后再执行删除操作！',
-    system_batch_delete_not_allowed: '对不起，该模块不允许批量删除！'
+    system_batch_delete_not_allowed: '对不起，该模块不允许批量删除！',
+
+    //上传路径
+    UPLOAD_PATH: __dirname+'/../../source/upload/'
 };
 
 

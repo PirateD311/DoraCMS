@@ -56,7 +56,14 @@ function createRenderer(bundle, template) {
         runInNewContext: false
     })
 }
-
+function createUploadDir(path){
+    if(!fs.existsSync(__dirname+'/../source/')){
+        fs.mkdirSync(__dirname+'/../source/');
+        fs.mkdirSync(__dirname+'/../source/upload');
+        fs.mkdirSync(__dirname+'/../source/upload/images');
+    }
+    return true
+}
 const app = express()
 
 // 由 html-webpack-plugin 生成
@@ -89,7 +96,11 @@ app.set('view engine', 'ejs')
 app.use(favicon('./favicon.ico'))
 app.use(compression({ threshold: 0 }))
 // 日志
-app.use(logger('":method :url" :status :res[content-length] ":referrer" ":user-agent"'))
+app.use(logger('":method :url" :status :res[content-length] ":referrer" ":user-agent"'));
+
+//创建上传路径
+createUploadDir(settings.UPLOAD_PATH)
+
 // body 解析中间件
 // app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -118,6 +129,7 @@ logUtil.initPath();
 // 设置 express 根目录
 app.use(express.static(path.join(__dirname, 'dist')))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../source')));
 app.use('/server', serve('./dist/server', true))
 app.use('/static', serve('./dist/static', true))
 app.use('/manifest.json', serve('./manifest.json'))
@@ -168,9 +180,9 @@ app.get(['/', '/page/:current(\\d+)?', '/:cate1?___:typeId?/:current(\\d+)?',
         }
 
         const context = {
-            title: '前端开发俱乐部',
-            description: '前端开发俱乐部',
-            keywords: 'doracms',
+            title: '二次元福利社',
+            description: '二次元福利社，coser福利，动漫福利',
+            keywords: '二次元福利社，coser福利，动漫福利',
             url: req.url,
             cookies: req.cookies
         }
@@ -196,7 +208,7 @@ app.get('/robots.txt', function (req, res, next) {
 });
 
 // 集成ueditor
-app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function (req, res, next) {
+app.use("/ueditor/ue", ueditor(path.join(__dirname, '../source'), function (req, res, next) {
     var imgDir = '/upload/images/ueditor/' //默认上传地址为图片
     var ActionType = req.query.action;
     if (ActionType === 'uploadimage' || ActionType === 'uploadfile' || ActionType === 'uploadvideo') {

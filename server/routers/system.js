@@ -32,7 +32,7 @@ router.post('/upload', function (req, res, next) {
     console.log('start upload');
 
     //存放目录
-    let updatePath = "public/upload/images/";
+    let updatePath = settings.UPLOAD_PATH+'images/'||"public/upload/images/";
     let smallImgPath = "public/upload/smallimgs/";
     let newFileName = "";
     form.uploadDir = updatePath;
