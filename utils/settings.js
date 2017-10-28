@@ -12,12 +12,12 @@ module.exports = {
     cache_maxAge: Math.floor(Date.now() / 1000) + 24 * 60 * 60, //1 hours
 
     // 数据库配置
-    URL: 'mongodb://127.0.0.1:27017/doracms2',
-    DB: 'doracms2',
-    HOST: '120.1.1.10',
-    PORT: 27017,
-    USERNAME: 'doracms',
-    PASSWORD: 'password',
+    URL: 'mongodb://cms:12liu555@139.196.113.98:3717/cms',
+    DB: 'cms',
+    HOST: '139.196.113.98',
+    PORT: 3717,
+    USERNAME: 'cms',
+    PASSWORD: '12liu555',
 
     // 站点基础信息配置
     DORACMSAPI: 'http://api.html-js.cn', // 系统服务提供商

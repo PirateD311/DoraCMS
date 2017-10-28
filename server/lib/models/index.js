@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const isProd = process.env.NODE_ENV === 'production'
 const { settings } = require('../../../utils');
 
-if (!isProd) {
+if (!true) { //TODO 修改了环境配置
     mongoose.connect("mongodb://localhost/doracms2");
 } else {
     mongoose.connect('mongodb://' + settings.USERNAME + ':' + settings.PASSWORD + '@' + settings.HOST + ':' + settings.PORT + '/' + settings.DB + '', { useMongoClient: true });
