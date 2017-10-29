@@ -1,9 +1,9 @@
 <template>
     <article class="content-item">
         <el-row :gutter="0">
-            <el-col :xs="0" :sm="0" :md="7" :lg="7">
+            <el-col  :md="7" :lg="7">
                 <div class="post-angle" v-show="item.isTop == 1">荐</div>
-                <div class="grid-content bg-purple contentImg" v-once>
+                <div class="grid-content bg-purple contentImg" >
                     <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
                         <img :src="item.sImg" :alt="item.title" />
                     </router-link>
@@ -11,7 +11,7 @@
             </el-col>
             <el-col :xs="24" :sm="24" :md="17" :lg="17" class='discription'>
                 <div class="grid-content bg-purple-light title">
-                    <h2 v-once>
+                    <h2 >
                         <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">{{item.title}}</router-link>
                     </h2>
                     <div class="dis">{{item.discription}}</div>
@@ -59,6 +59,8 @@
             border-left: 10px solid transparent;
         }
         .contentImg {
+            max-height:150px;
+            overflow:hidden;
             img {
                 width: 100%;
             }
@@ -116,6 +118,9 @@
         serverCacheKey: props => {
             return `article-item-${props.item._id}`
         },
-        props: ['item']
+        props: ['item'],
+        created(){
+            console.log('TopItem Created...Item->',this.item);
+        }
     }
 </script>

@@ -87,14 +87,16 @@
                 current,
                 typeId
             }
-            store.dispatch('frontend/article/getHotContentList', {
+            console.log('Async Data...')
+
+            await store.dispatch('frontend/article/getArticleList', base)
+            await store.dispatch('frontend/article/getHotContentList', {
                 pageSize: 10,
                 typeId
             })
             store.dispatch('global/tags/getTagList', {
                 pageSize: 30
             })
-            await store.dispatch('frontend/article/getArticleList', base)
         },
         mixins: [metaMixin],
         components: {
@@ -106,6 +108,11 @@
             CatesMenu,
             AdsPannel
         },
+        // data(){
+        //     return {
+        //         topics:[]
+        //     }
+        // },
         computed: {
             ...mapGetters({
                 topics: 'frontend/article/getArticleList',
@@ -129,13 +136,16 @@
         methods: {
 
         },
-        activated() {
-            this.$options.asyncData({
+        async activated() {
+            await this.$options.asyncData({
                 store: this.$store,
                 route: this.$route
             }, {
                 current: 1
             })
+        },
+        created(){
+            console.log('Article List Created...')
         },
         metaInfo() {
             const systemData = this.systemConfig.data[0];

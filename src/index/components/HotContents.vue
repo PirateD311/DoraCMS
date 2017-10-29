@@ -36,6 +36,7 @@
 </script>
 
 <style lang="scss">
+    $borderColor:#409eff;
     .hot-content-list {
         margin-bottom: 30px;
         .content-list {
@@ -45,6 +46,7 @@
                     border: none;
                 }
                 li {
+ 
                     position: relative;
                     padding: 10px 0;
                     overflow: hidden;

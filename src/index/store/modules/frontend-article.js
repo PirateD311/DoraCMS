@@ -61,6 +61,7 @@ const actions = {
                 messages, randomArticles,
                 ...config
             })
+            return state.lists;
         }
     },
     async ['getHotContentList']({

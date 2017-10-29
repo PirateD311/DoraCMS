@@ -2,7 +2,7 @@
     <PannelBox title="标签云" className="content-tag">
         <div class="content-tag-list">
             <ul>
-                <li :key="item._id" v-for="(item,index) in tags" v-once>
+                <li :key="item._id" v-for="(item,index) in tags" >
                     <el-button size="mini" round @click="searchTag(item)">{{item.name}}</el-button>
                     <!-- <router-link :to="'/tag/'+item.name">{{item.name}}</router-link> -->
                 </li>
