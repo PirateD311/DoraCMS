@@ -137,8 +137,14 @@ const mutations = {
 }
 
 const getters = {
-    ['getArticleList'](state) {
-        return state.lists
+    getArticleList:(state,getters)=>(path)=>{ 
+        console.log('path:',path,'List path:',state.lists.path)
+        if(path === state.lists.path)
+            return state.lists
+        else return {
+            data:{},
+            loading:true
+        }
     },
     ['getArticleItem'](state) {
         return state.item

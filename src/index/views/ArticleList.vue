@@ -20,8 +20,11 @@
                                     <Pagination :pageInfo="topics.pageInfo" :typeId="typeId" />
                                 </div>
                             </el-col>
-                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else>
-                                <div>暂无内容...</div>
+                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
+                                <div v-if="loading">
+                                    <img src="../assets/loading.gif">
+                                </div>
+                                <div v-else><h3>抱歉，暂无内容...</h3></div>
                             </el-col>
                             <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
@@ -108,18 +111,24 @@
             CatesMenu,
             AdsPannel
         },
-        // data(){
-        //     return {
-        //         topics:[]
-        //     }
-        // },
+        data(){
+            return {
+                loading:false,
+            }
+        },
         computed: {
             ...mapGetters({
-                topics: 'frontend/article/getArticleList',
+                // topics: 'frontend/article/getArticleList',
+                
                 hotlist: 'frontend/article/getHotContentList',
                 tags: 'global/tags/getTagList',
                 systemConfig: 'global/footerConfigs/getSystemConfig'
             }),
+            topics(){
+                let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)
+                this.loading = list.loading;
+                return list;
+            },
             typeId() {
                 return this.$route.params.typeId ? this.$route.params.typeId : this.$route.meta.typeId;
             },

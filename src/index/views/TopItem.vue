@@ -1,7 +1,7 @@
 <template>
     <article class="content-item">
         <el-row :gutter="0">
-            <el-col  :md="7" :lg="7">
+            <el-col :xs="7" :sm="7" :md="7" :lg="7">
                 <div class="post-angle" v-show="item.isTop == 1">荐</div>
                 <div class="grid-content bg-purple contentImg" >
                     <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
@@ -9,7 +9,7 @@
                     </router-link>
                 </div>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="17" :lg="17" class='discription'>
+            <el-col :xs="17" :sm="17" :md="17" :lg="17" class='discription'>
                 <div class="grid-content bg-purple-light title">
                     <h2 >
                         <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">{{item.title}}</router-link>
@@ -59,7 +59,7 @@
             border-left: 10px solid transparent;
         }
         .contentImg {
-            max-height:150px;
+            max-height:100px;
             overflow:hidden;
             img {
                 width: 100%;
