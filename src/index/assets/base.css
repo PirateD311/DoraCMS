@@ -144,6 +144,15 @@ pre {
         display: none !important;
     }
     .content-tag {
+        /*display: none;*/
+    }
+    .contentContainer{
+        margin-top: 10px;
+    }
+    .pannel-box{
+        padding-left: 20px;
+    }
+    .pannel-title{
         display: none;
     }
     .content-item {

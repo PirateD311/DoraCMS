@@ -2,11 +2,23 @@
     <div>
         <div class="contentContainer">
             <div>
+                <el-row :gutter="24">
+                    <el-col :xs="24" :sm="24" :md="0" :lg="0" class="">
+                        <div class="grid-content bg-purple-light title">
+                            <AdsPannel id="SJllJUAdcZ" />
+                            <div v-if="checkCateList">
+                                <CatesMenu :typeId="$route.params.typeId" />
+                            </div>
+                            <Tag :tags="tags.data" />                            
+                        </div>
+                    </el-col>
+                </el-row>
                 <el-row :gutter="0">
                     <el-col :xs="1" :sm="1" :md="3" :lg="3">
                         <div class="grid-content bg-purple">&nbsp;</div>
                     </el-col>
                     <el-col :xs="22" :sm="22" :md="18" :lg="18" class="content-mainbody-left">
+
                         <el-row :gutter="24">
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-if="topics.data.length > 0">
                                 <div class="column-wrap" v-show="typeId != 'indexPage'">
@@ -97,7 +109,7 @@
                 pageSize: 10,
                 typeId
             })
-            store.dispatch('global/tags/getTagList', {
+            await store.dispatch('global/tags/getTagList', {
                 pageSize: 30
             })
         },
