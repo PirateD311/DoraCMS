@@ -6,6 +6,7 @@ const formidable = require('formidable');
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
 const shortid = require('shortid');
 const validator = require('validator')
+const _ = require('lodash');
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -53,14 +54,21 @@ class Content {
             let searchkey = req.query.searchkey; // 搜索关键字
             let model = req.query.model; // 查询模式 full/normal/simple
             let state = req.query.state;
+            let isVip = req.query.isVip; //只查询vip内容
            
             // 条件配置
-            let queryObj = {}, sortObj = { date: -1 }, files = null;
+            let queryObj = {isVip:{$ne:true},state:true}, sortObj = { date: -1 }, files = null;
+
+            if(req.session.user ||req.session.adminUserInfo){
+                delete queryObj.isVip;
+            }
 
             if (sortby) {
                 delete sortObj.date;
                 sortObj[sortby] = -1
             }
+
+            if(isVip)queryObj.isVip = true;
 
             if (state) {
                 queryObj.state = true
@@ -69,6 +77,8 @@ class Content {
             if (typeId && typeId != 'indexPage') {
                 queryObj.categories = typeId
             }
+
+    
 
             if (tagName) {
                 let targetTag = await ContentTagModel.findOne({ name: tagName });
@@ -208,7 +218,8 @@ class Content {
                 isTop: fields.isTop,
                 from: fields.from,
                 discription: fields.discription,
-                comments: fields.comments
+                comments: fields.comments,
+                isVip:fields.isVip,
             }
 
             const newContent = new ContentModel(groupObj);
@@ -258,7 +269,8 @@ class Content {
                 isTop: fields.isTop,
                 from: fields.from,
                 discription: fields.discription,
-                comments: fields.comments
+                comments: fields.comments,
+                isVip:fields.isVip,
             }
             const item_id = fields._id;
             try {

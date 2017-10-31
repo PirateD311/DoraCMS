@@ -36,7 +36,13 @@
                                 <div v-if="loading">
                                     <img src="../assets/loading.gif">
                                 </div>
-                                <div v-else><h3>抱歉，暂无内容...</h3></div>
+                                <div v-else>
+                                    <div v-if="isVip && !loginState.logined">
+                                        <h3>抱歉，该板块为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再查看！</h3>
+                                    </div>
+                                    <h3 v-else>抱歉，暂无内容...</h3>
+                                </div>
+          
                             </el-col>
                             <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
@@ -102,8 +108,9 @@
                 current,
                 typeId
             }
-            console.log('Async Data...')
+            console.log('Async Data...   typeId:'+base.typeId)
 
+            
             await store.dispatch('frontend/article/getArticleList', base)
             await store.dispatch('frontend/article/getHotContentList', {
                 pageSize: 10,
@@ -126,15 +133,16 @@
         data(){
             return {
                 loading:false,
+                isVip:false,
             }
         },
         computed: {
             ...mapGetters({
-                // topics: 'frontend/article/getArticleList',
-                
+                // topics: 'frontend/article/getArticleList',             
                 hotlist: 'frontend/article/getHotContentList',
                 tags: 'global/tags/getTagList',
-                systemConfig: 'global/footerConfigs/getSystemConfig'
+                systemConfig: 'global/footerConfigs/getSystemConfig',
+                loginState: 'frontend/user/getSessionState',
             }),
             topics(){
                 let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)
@@ -152,12 +160,31 @@
                 let navs = this.$store.getters['global/category/getHeaderNavList'].data || [];
                 const obj = navs.find(item => item._id === this.$route.params.typeId);
                 return obj || {};
-            }
+            },
+            
         },
         methods: {
 
         },
         async activated() {
+            console.log('ArticleList Activated....');
+            const {
+                params: {
+                    id,
+                    key,
+                    tagName,
+                    current,
+                    typeId,
+                    searchkey
+                },
+                path
+            } = this.$route
+            console.log('------  typeId:',typeId)
+            console.log('User Session:',this.loginState)
+            if(typeId === 'vip'){
+                this.isVip = true;
+            }
+
             await this.$options.asyncData({
                 store: this.$store,
                 route: this.$route
@@ -185,6 +212,9 @@
                 const obj = this.currentCate;
                 if (obj) {
                     title = obj.name;
+                }
+                if(typeId === 'vip'){
+                    title = '会员专享'
                 }
             } else if (searchkey) {
                 title = '搜索: ' + searchkey;

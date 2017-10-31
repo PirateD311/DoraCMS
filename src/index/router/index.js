@@ -42,6 +42,7 @@ export function createRouter() {
         // scrollBehavior,
         routes: [
             { name: 'index', path: '/', component: index, meta: { typeId: 'indexPage' } },
+            { name: 'vip', path: '/vip', component: index, meta: { typeId: 'vip' } },
             { name: 'index', path: '/page/:current(\\d+)?', component: index, meta: { typeId: 'indexPage' } },
             { name: 'category', path: '/:cate1?___:typeId?/:current(\\d+)?', component: index },
             { name: 'category', path: '/:cate0/:cate1?___:typeId?/:current(\\d+)?', component: index },
@@ -54,7 +55,8 @@ export function createRouter() {
             { name: 'uReplies', path: '/users/replies', component: userReplies },
             { name: 'adminlogin', path: '/dr-admin', component: adminLogin, meta: { typeId: 'adminlogin' } },
             { name: 'sitemap', path: '/sitemap.html', component: siteMap },
-            { name: 'tagPage', path: '/tag/:tagName/:page(\\d+)?', component: index, meta: { typeId: 'tags' } }
+            { name: 'tagPage', path: '/tag/:tagName/:page(\\d+)?', component: index, meta: { typeId: 'tags' } },
+
         ]
     })
     return router;

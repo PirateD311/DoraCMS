@@ -3,6 +3,7 @@
         <el-row :gutter="0">
             <el-col :xs="7" :sm="7" :md="7" :lg="7">
                 <div class="post-angle" v-show="item.isTop == 1">荐</div>
+                <div class="post-angle" v-show="item.isVip == true">会员</div>
                 <div class="grid-content bg-purple contentImg" >
                     <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
                         <img :src="item.sImg" :alt="item.title" />
@@ -120,7 +121,7 @@
         },
         props: ['item'],
         created(){
-            console.log('TopItem Created...Item->',this.item);
+            // console.log('TopItem Created...Item->',this.item);
         }
     }
 </script>
