@@ -38,7 +38,8 @@
                                 </div>
                                 <div v-else>
                                     <div v-if="isVip && !loginState.logined">
-                                        <h3>抱歉，该板块为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再查看！</h3>
+                                        <h3 style="color:#fa5555">抱歉，该区域为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再看！很赤鸡的哦~</h3>
+                                        <img src="../assets/needvip.gif">
                                     </div>
                                     <h3 v-else>抱歉，暂无内容...</h3>
                                 </div>

@@ -27,7 +27,12 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div v-html="article.doc.comments">
+                                    <div v-if="!article.doc.isVip || loginState.logined" >
+                                        <div v-html="article.doc.comments"></div>
+                                    </div>
+                                    <div style="min-height:400px" v-else>
+                                        <h3 style="color:#fa5555">抱歉，该帖子为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再查看！很赤鸡的哦~</h3>
+                                        <img src="../assets/needvip.gif">
                                     </div>
                                     <RandomArticle :articles="article.randomArticles" />
                                     <Messages :userMessageList="messages.data" :contentId="article.doc._id" />
@@ -96,7 +101,8 @@
                 article: 'frontend/article/getArticleItem',
                 hotlist: 'frontend/article/getHotContentList',
                 messages: 'global/message/getUserMessageList',
-                recentArticle: 'frontend/article/getRecentContentList'
+                recentArticle: 'frontend/article/getRecentContentList',
+                loginState: 'frontend/user/getSessionState',
             }),
             cateName() {
                 let catesArr = this.article.doc.categories;

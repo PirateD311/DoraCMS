@@ -57,10 +57,11 @@ class Content {
             let isVip = req.query.isVip; //只查询vip内容
            
             // 条件配置
-            let queryObj = {isVip:{$ne:true},state:true}, sortObj = { date: -1 }, files = null;
+            let queryObj = {state:true}, sortObj = { date: -1 }, files = null;
 
             if(req.session.user ||req.session.adminUserInfo){
-                delete queryObj.isVip;
+                // delete queryObj.isVip;
+                if(isVip)queryObj.isVip = true;
             }
 
             if (sortby) {
@@ -68,7 +69,6 @@ class Content {
                 sortObj[sortby] = -1
             }
 
-            if(isVip)queryObj.isVip = true;
 
             if (state) {
                 queryObj.state = true
