@@ -6,7 +6,7 @@
                 <div class="post-angle" v-show="item.isVip == true">会员</div>
                 <div class="grid-content bg-purple contentImg" >
                     <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
-                        <img :src="item.sImg" :alt="item.title" />
+                        <img :class="{blur:item.isVip}" :src="item.sImg" :alt="item.title" />
                     </router-link>
                 </div>
             </el-col>

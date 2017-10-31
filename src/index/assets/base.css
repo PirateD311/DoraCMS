@@ -122,6 +122,14 @@ pre {
     margin: 0px 0px 35px 0px;
 }
 
+.blur{
+    -webkit-filter: blur(2.5px);
+    -moz-filter: blur(2.5px);
+    -o-filter: blur(2.5px);
+    -ms-filter: blur(2.5px);
+    filter: blur(2.5px); 
+}
+
 @media screen and (max-width:768px) {
     .header .header-main {
         padding: 10px 0 !important;
