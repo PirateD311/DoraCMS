@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>北京图象图形学</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"
+    />
+    <meta name="keywords" content="北京图象图形学" />
+    <meta name="description" content="北京图象图形学">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    /*input::-webkit-input-placeholder{color:#00f;}*/
+
+        body{
+            background-image: url('bg.jpg');background-size: cover;
+            font-size: 16px;
+        }
+        .form-head h1{color: #1e72c3;}
+        .form-control{height: 45px;font-size: 16px;background-color: #03A9F4;    border: 1px solid #03A9F4;}
+        .btn{font-size: 20px;color: #FF9800;background-color: azure;}
+    </style>
+</head>
+
+<body >
+    <div id="page1" class="container">
+        <br><br>
+        <div class="row form-head">
+            <h1 class="text-center">参会回执</h1>
+        </div>
+        <br>
+        <div class="row">
+        <form class="col-xs-10 col-xs-offset-1 " id="joinForm">
+                <div class="form-group">
+                    <input required type="text" name="name" class="form-control" id="name" placeholder="姓名">
+                </div>
+                <div class="form-group">
+                    <input type="text" value="组织:北京图象图形学"  name="unit" class="form-control" id="unit" placeholder="组织:北京图象图形学">
+                </div>
+                <div class="form-group">
+                    <input required type="text" name="company" class="form-control" id="company" placeholder="单位">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="duties" class="form-control" id="duties" placeholder="职务">
+                </div>
+                <div class="form-group">
+                    <input required type="tel" name="phone" class="form-control" id="phone" placeholder="手机">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="邮箱">
+                </div>
+                <!--<div class="form-group">
+                    <input type="number" min="1" name="peopleNum" class="form-control" id="peopleNum" placeholder="人数">
+                </div>-->
+                <br>
+                <button type="submit" class="btn btn-default form-control">提&nbsp;&nbsp;交</button>
+            </form> 
+        </div>
+    </div>
+    <div id="page2" class="container">
+        <div><h1>您的号码是:</h1></div>
+    </div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $('#joinForm').submit(function(e){
+        e.preventDefault();
+        var data = {
+            name:$('#name').val(),
+            company:$('#company').val(),
+            duties:$('#duties').val(),
+            phone:$('#phone').val(),
+            email:$('#email').val(),
+        }
+        if(!data.name){alert('请填写您的姓名！');return;}
+        if(!data.phone){alert('请填写您的手机号！');return;}
+        if(!data.company){alert('请填写您的单位！');return;}
+        console.log('Data:',data)
+        $.get('/meeting/join?'+formatParam(data),function(res){
+            console.log('请求结果:',res);
+            if(res.state === 'success'){
+                alert('参加成功！')
+                $('#page1').hide();
+                $('#page2').show();
+            }else{
+                alert('参加失败！')
+            }
+        })
+    })
+
+    function formatParam(data){
+        var str = ""
+        for(var key in data){
+            str = str?(str+'&'):str;
+            str = str + key+'='+data[key]
+        }
+        return str;
+    }
+
+</script>
+</body>
+</html>

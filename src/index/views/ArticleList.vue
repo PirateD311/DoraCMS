@@ -13,6 +13,7 @@
                         </div>
                     </el-col>
                 </el-row>
+
                 <el-row :gutter="0">
                     <el-col :xs="1" :sm="1" :md="3" :lg="3">
                         <div class="grid-content bg-purple">&nbsp;</div>
@@ -25,6 +26,7 @@
                                     <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
                                     <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
                                 </div>
+                                <h6 style="margin-top: 0">本站不含任何违禁图片、文字或视频，如有发现请立即向管理员反馈删除!更多绅士福利+Q群:600826184</h6>
                                 <div>
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
                                 </div>
@@ -194,7 +196,8 @@
             })
         },
         created(){
-            console.log('Article List Created...')
+            console.log('Article List Created...');
+            // scroll(0,0);
         },
         metaInfo() {
             const systemData = this.systemConfig.data[0];

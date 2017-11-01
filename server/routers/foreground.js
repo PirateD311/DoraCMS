@@ -59,5 +59,21 @@ router.get('/sitemap.xml', (req, res, next) => {
 //   stream.pipe(res);
 // });
 
+//临时加的会议的东西
+router.get('/meeting/join',async (req,res,next)=>{
+  console.log('参数：',req.query);
+  const People = require('../lib/models/People')
+  let people = await People.create(req.query);
+  let randomCode = '',len = 4;
+  while(randomCode.length<len){
+    randomCode+=String(parseInt(9*Math.random()));
+  }
+  randomCode = randomCode.substr(0,len)
+  res.send({
+      state: 'success',
+      code:randomCode,
+      data:people
+  })
+})
 
 module.exports = router

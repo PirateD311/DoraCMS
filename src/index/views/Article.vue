@@ -136,6 +136,9 @@
                 return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
             }
         },
+        created(){
+            // scroll(0,0);
+        },
         mounted() {
             // this.$options.asyncData({store: this.$store})
         },
