@@ -2,8 +2,8 @@
     <article class="content-item">
         <el-row :gutter="0">
             <el-col :xs="7" :sm="7" :md="7" :lg="7">
-                <div class="post-angle" v-show="item.isTop == 1">荐</div>
-                <div class="post-angle" v-show="item.isVip == true">会员</div>
+                <div class="post-angle" v-if="item.isTop == 1">荐</div>
+                <div class="post-angle" v-if="item.isVip == true">会员专享</div>
                 <div class="grid-content bg-purple contentImg" >
                     <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
                         <img :class="{blur:item.isVip}" :src="item.sImg" :alt="item.title" />

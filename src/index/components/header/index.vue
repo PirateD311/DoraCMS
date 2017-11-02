@@ -6,14 +6,14 @@
             </el-col>
             <el-col :xs="22" :sm="22" :md="18" :lg="18">
                 <el-row :gutter="10" class="grid-content bg-purple-light">
-                    <el-col :xs="17" :sm="4" :md="4" :lg="4">
+                    <el-col :xs="12" :sm="4" :md="4" :lg="4">
                         <div class="header-logo">
                             <router-link :to="{path: '/'}">
                                 <img src="../../assets/logo.png" />
                             </router-link>
                         </div>
                     </el-col>
-                    <el-col :xs="7" :sm="7" :md="0" :lg="0">
+                    <el-col :xs="12" :md="0" :lg="0">
                         <el-row>
                             <el-col :xs="24" :sm="24" :md="10" :lg="10">
                                 <LoginPannel/>
@@ -26,8 +26,8 @@
                                 <el-col v-for="(nav,index) in headerNav" :key="index" >
                                     <router-link :to="{path: '/'+nav.defaultUrl+ '___'+nav._id}">{{nav.name}}</router-link>
                                 </el-col>
-                                <el-col style="background-color: rgb(250, 85, 85);border-radius: 30px;">
-                                    <router-link style="color:#f5f7fa" :to="{path: '/vip___vip'}">会员福利</router-link>
+                                <el-col >
+                                    <router-link style="color:#f5f7fa;background-color: #F44336;padding: 8px;border-radius: 15px;" :to="{path: '/vip___vip'}">会员福利</router-link>
                                 </el-col>
                             </el-row>
                         </nav>

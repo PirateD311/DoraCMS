@@ -1,7 +1,7 @@
 <template>
     <div class="admin-main">
-        <el-row :gutter="15">
-            <el-col :span="12">
+        <el-row :gutter="24">
+            <el-col :xs="24" :md="12">
                 <div class="grid-content bg-purple">
                     <el-card class="box-card pannel-box">
                         <div slot="header" class="clearfix">
@@ -26,7 +26,7 @@
                     </el-card>
                 </div>
             </el-col>
-            <el-col :span="12">
+            <el-col :xs="24" :md="12">
                 <div class="grid-content bg-purple-light">
                     <el-card class="box-card pannel-box">
                         <div slot="header" class="clearfix">
@@ -56,8 +56,8 @@
                 </div>
             </el-col>
         </el-row>
-        <el-row :gutter="15">
-            <el-col :span="12">
+        <el-row :gutter="24">
+            <el-col :xs="24" :md="12">
                 <div class="grid-content bg-purple-light">
                     <el-card class="box-card pannel-box">
                         <div slot="header" class="clearfix">
@@ -84,7 +84,7 @@
                     </el-card>
                 </div>
             </el-col>
-            <el-col :span="12">
+            <el-col :xs="24" :md="12">
                 <div class="grid-content bg-purple">
                     <el-card class="box-card pannel-box">
                         <div slot="header" class="clearfix">
@@ -94,7 +94,8 @@
                             <ul class="row user-list">
                                 <div v-if="basicInfo.regUsers && basicInfo.regUsers.length > 0">
                                     <li v-for="user in basicInfo.regUsers" :key="user._id">
-                                        <img :src="user.logo" :alt="user.userName" :title="user.userName" /><span>{{user.userName | cutWords(8)}}</span>
+                                        <img :src="user.logo" alt="#" title="#" />
+                                        <span>{{user.userName | cutWords(8)}}</span>
                                     </li>
                                 </div>
                                 <div v-else>暂无数据</div>
@@ -195,7 +196,7 @@
                 img {
                     border-radius: 50%;
                     max-width: 75%;
-                    height: auto;
+                    height: 26px;
                     width: 26px;
                     position: absolute;
                 }

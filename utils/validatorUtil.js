@@ -16,7 +16,7 @@ module.exports = {
     },
     // 校验用户名
     checkUserName(str) {
-        return /^[a-zA-Z][a-zA-Z0-9_]{4,11}$/.test(str);
+        return str.length>=2&&str.length<=8;
     },
     // 校验中文GBK
     checkName(str, min = 2, max = 6) {

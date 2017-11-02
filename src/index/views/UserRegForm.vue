@@ -60,7 +60,7 @@ export default {
                 }, {
                     validator: (rule, value, callback) => {
                         if (!validatorUtil.checkUserName(value)) {
-                            callback(new Error('5-12个英文字符!'));
+                            callback(new Error('2-8位字符串!'));
                         } else {
                             callback();
                         }

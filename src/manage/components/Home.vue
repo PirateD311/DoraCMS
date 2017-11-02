@@ -1,15 +1,15 @@
 <template>
     <el-row class="container" v-loading.body="loading">
-        <el-col :span="24" class="header">
-            <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+        <el-col :gutter="24" class="header">
+            <el-col :xs="6" :md="10"  class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
                 <router-link v-show="!collapsed" :to="{path: '/main'}"><img src="../assets/images/doracms-logo.png" alt="DoraCMS内容管理系统" /></router-link>
             </el-col>
-            <el-col :span="10">
+            <el-col :xs="2" :md="10">
                 <div class="tools" @click.prevent="collapse">
                     <i class="fa fa-align-justify"></i>
                 </div>
             </el-col>
-            <el-col :span="4" class="userinfo">
+            <el-col :xs="8" :md="4" class="userinfo">
                 <el-dropdown trigger="hover">
                     <span class="el-dropdown-link userinfo-inner">
                         <img :src="loginState.userInfo.logo" /> {{loginState.userInfo.userName}}</span>
@@ -93,7 +93,7 @@
             return {
                 loading: false,
                 sysName: 'DoraCMS',
-                collapsed: false,
+                collapsed: true,
 
             }
         },

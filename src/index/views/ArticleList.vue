@@ -26,7 +26,7 @@
                                     <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
                                     <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
                                 </div>
-                                <h6 style="margin-top: 0">本站不含任何违禁图片、文字或视频，如有发现请立即向管理员反馈删除!更多绅士福利+Q群:600826184</h6>
+                                <h6 :sm='0' style="margin-top: 0">本站承诺不含任何违禁图片、文字或视频，如有发现请立即向管理员反馈删除!更多绅士福利+QQ:230714605</h6>
                                 <div>
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
                                 </div>

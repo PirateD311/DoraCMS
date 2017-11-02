@@ -96,7 +96,7 @@ app.set('view engine', 'ejs')
 app.use(favicon('./favicon.ico'))
 app.use(compression({ threshold: 0 }))
 // 日志
-app.use(logger('":method :url" :status :res[content-length] ":referrer" ":user-agent"'));
+app.use(logger('[:remote-addr] - {:remote-user} [:method] [:url] [:status] :response-time ms :res[content-length] ":referrer" ":user-agent"'));
 
 //创建上传路径
 createUploadDir(settings.UPLOAD_PATH)

@@ -16,6 +16,7 @@
             <el-form-item prop="password">
               <el-input size="small" placeholder="请输入密码" type="password" v-model="userLoginFormData.password"></el-input>
             </el-form-item>
+            <h6 class="text-right" style="margin:5px 0;text-align: right;">没有账号?<a href="/users/reg" style="color:#03A9F4;cursor:pointer">立即注册</a></h6>
             <el-form-item class="submit-btn">
               <el-button size="small" round type="primary" @click="submitForm('ruleForm')">登录</el-button>
               <el-button size="small" round @click="resetForm('ruleForm')">重置</el-button>

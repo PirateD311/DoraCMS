@@ -9,7 +9,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="title" label="标题" width="200" show-overflow-tooltip>
-                <template scope="scope"><a :href="'/details/'+scope.row._id+'.html'" target="_blank">{{scope.row.title}}</a></template>
+                <template scope="scope"><a :class="{vip:scope.row.isVip}" :href="'/details/'+scope.row._id+'.html'" target="_blank">{{scope.row.title}}</a></template>
             </el-table-column>
             <el-table-column prop="date" label="创建时间" width="180">
                 <template scope="scope">{{scope.row.updateDate}}</template>
@@ -49,6 +49,9 @@
 
 .fa-star-o {
     cursor: pointer
+}
+.vip{
+    border-left: 2px solid #FF5722;
 }
 </style>
 <script>
