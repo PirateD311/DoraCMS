@@ -11,10 +11,23 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
     /*input::-webkit-input-placeholder{color:#00f;}*/
-
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color:    #272727 !important;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color:    #272727 !important;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color:    #272727 !important;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color:    #272727 !important;
+        }
+        
         body{
             background-image: url('bg.jpg');background-size: cover;
             font-size: 16px;
+            
         }
         .form-head h1{color: #03A9F4;}
         .form-control{height: 45px;font-size: 16px;background-color: #03A9F4;    border: 1px solid #03A9F4;}
@@ -37,7 +50,7 @@
     <div id="page1" class="container">
         <br><br>
         <div class="row form-head">
-            <h1 class="text-center">参会回执</h1>
+            <h1 class="text-center">参会签到</h1>
         </div>
         <br>
         <div class="row">
