@@ -75,7 +75,8 @@ class Content {
             }
 
             if (typeId && typeId != 'indexPage') {
-                queryObj.categories = typeId
+                queryObj.categories = typeId;
+                if(typeId === 'vip')delete queryObj.categories;
             }
 
     

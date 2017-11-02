@@ -27,7 +27,7 @@
                                     <router-link :to="{path: '/'+nav.defaultUrl+ '___'+nav._id}">{{nav.name}}</router-link>
                                 </el-col>
                                 <el-col >
-                                    <router-link style="color:#f5f7fa;background-color: #F44336;padding: 8px;border-radius: 15px;" :to="{path: '/vip___vip'}">会员福利</router-link>
+                                    <router-link style="color:#F44336;" :to="{path: '/vip___vip'}">会员福利</router-link>
                                 </el-col>
                             </el-row>
                         </nav>
