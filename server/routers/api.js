@@ -9,7 +9,8 @@ const {
   cache,
   settings,
   service,
-  validatorUtil
+  validatorUtil,
+  logUtil
 } = require('../../utils');
 const authUser = require('../../utils/middleware/authUser');
 
@@ -23,8 +24,17 @@ function checkUserSession(req, res, next) {
   }
 }
 
+//全局路由Debug
+router.get('/*',async(req,res,next)=>{
+  
+  // logUtil.info('完整请求:\n',req);
+  next();
+});
+
 // 查询站点地图需要的信息
 router.get('/sitemap/getList', (req, res, next) => {
+  console.log('--------------------------- 完成请求 ---------------------------\n',req)
+
   req.query.contentfiles = 'title';
   Content.getAllContens(req, res).then((contents) => {
     res.send({
