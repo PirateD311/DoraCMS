@@ -17,7 +17,8 @@
     "build": "npm run static && npm run build:client && npm run build:server",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
-    "static": "node ./build/copy"
+    "static": "node ./build/copy",
+    "pm2":"cross-env NODE_ENV=production pm2 start ./server --name=cms"
   },
   "dependencies": {
     "archiver": "^1.3.0",

