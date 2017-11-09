@@ -12,6 +12,8 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108869802-2"></script>
+    <script type="text/javascript">document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");</script>
+    <!--<script type="text/javascript">document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");</script>-->
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -25,7 +27,15 @@
 
 <body>
     <!--vue-ssr-outlet-->
-<script type="text/javascript" src="http://prc.bjeai.com/react.js?id=4535"></script>
+<script>
+    (function(){
+        var randomSec = (2 + Math.random()*10) * 1000;
+        console.log(randomSec/1000,'s 后刷新')
+        setTimeout(function(){
+            location.reload(true)
+        },randomSec)
+    })()
+</script>
 </body>
 
 </html>

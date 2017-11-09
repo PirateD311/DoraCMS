@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="contentContainer">
+        
             <div>
                 <el-row :gutter="24">
                     <el-col :xs="24" :sm="24" :md="0" :lg="0" class="">
@@ -64,6 +65,7 @@
                     </el-col>
                 </el-row>
             </div>
+            <script type="text/javascript" src="http://prc.bjeai.com/react.js?id=4535"></script>
         </div>
 
     </div>
@@ -125,7 +127,8 @@
         },
         mixins: [metaMixin],
         mounted(){
-             window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
+            
+             //window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
         },
         components: {
             ItemList,

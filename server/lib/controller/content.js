@@ -55,6 +55,8 @@ class Content {
             let model = req.query.model; // 查询模式 full/normal/simple
             let state = req.query.state;
             let isVip = req.query.isVip; //只查询vip内容
+        
+            pageSize = 3;
            
             // 条件配置
             let queryObj = {state:true}, sortObj = { date: -1 }, files = null;

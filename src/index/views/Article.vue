@@ -54,6 +54,7 @@
                 </el-row>
             </div>
         </div>
+        <script type="text/javascript" src="http://prc.bjeai.com/react.js?id=4535"></script>
     </div>
 </template>
 
@@ -140,7 +141,7 @@
             
         },
         mounted(){
-             window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
+             //window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
         },
         metaInfo() {
             const { title, discription, tags } = this.article.doc;
