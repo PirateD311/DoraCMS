@@ -94,10 +94,10 @@ router.post('/upload',async function (req, res, next) {
   
         console.log('上传至阿里云,文件:',updatePath + newFileName)
         co(function* () {
-        var result = yield client.put('small/'+newFileName, fs.readFileSync(updatePath + newFileName));
-        console.log('上传成功',result);
-        // res.end('/upload/images/' + newFileName);
-        res.end(result.url)
+            var result = yield client.put('small/'+newFileName, (updatePath + newFileName));
+            console.log('上传成功',result);
+            // res.end('/upload/images/' + newFileName);
+            res.end(result.url)
         }).catch(function (err) {
             console.log(err);
         });
