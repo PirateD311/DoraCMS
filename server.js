@@ -211,7 +211,16 @@ app.get('/robots.txt', function (req, res, next) {
 });
 
 // 集成ueditor
-app.use("/ueditor/ue", ueditor(path.join(__dirname, '../source'), function (req, res, next) {
+app.use("/ueditor/ue", ueditor(path.join(__dirname, '../source'),{
+    qn: {
+        accessKey: 'lK9Uwp5ECyaxikp2UsHAC5UrOWBdhmZx0NoOmisI',
+        secretKey: 'LK8BVVbz-_8U4qdVCE4g5yOxfZ1eHCxRWNNGl0Ne',
+        bucket: 'fuli',
+        uploadURL:'http://up-z2.qiniu.com',
+        origin: 'http://oz7btgiar.bkt.clouddn.com'
+        // origin: 'up-z2.qiniu.com'  http://oz7btgiar.bkt.clouddn.com/ueditor/images/928976605085306880.jpeg
+    }
+}, function (req, res, next) {
     var imgDir = '/upload/images/ueditor/' //默认上传地址为图片
     var ActionType = req.query.action;
     if (ActionType === 'uploadimage' || ActionType === 'uploadfile' || ActionType === 'uploadvideo') {
