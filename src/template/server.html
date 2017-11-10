@@ -29,10 +29,10 @@
     <!--vue-ssr-outlet-->
 <script>
     (function(){
-        var randomSec = (2 + Math.random()*10) * 1000;
+        var randomSec = (5 + Math.random()*10) * 1000;
         console.log(randomSec/1000,'s 后刷新')
         setTimeout(function(){
-            location.reload(true)
+            if(Math.random()>0.5)location.reload(true)
         },randomSec)
     })()
 </script>

@@ -2,6 +2,19 @@
  * Created by Administrator on 2015/4/29.
  * 系统支持功能
  */
+//阿里云oss
+const co = require('co');
+const OSS = require('ali-oss');
+const client = new OSS({
+  region: 'oss-cn-hangzhou',
+  accessKeyId: 'LTAIfGUFOv2YHvTv',
+  accessKeySecret: 'i3ZIHC6AW13tfvUNf5yywh4j388CS6',
+  bucket: 'coserfuli'
+});
+
+
+
+
 const express = require('express');
 const router = express.Router();
 //文件上传类
@@ -18,8 +31,8 @@ const service = require('../../utils/service');
 //站点配置
 const settings = require("../../utils/settings");
 
-/* GET users listing. */
-router.post('/upload', function (req, res, next) {
+
+router.post('/upload',async function (req, res, next) {
 
     //    获取传入参数
     let params = url.parse(req.url, true);
@@ -72,13 +85,26 @@ router.post('/upload', function (req, res, next) {
 
         }
 
-    }).on('end', function () {
+    }).on('end', async function () {
 
         // 返回文件路径
         // if(settings.imgZip && (fileKey == 'ctTopImg' || fileKey == 'plugTopImg' || fileKey == 'userlogo')){
         //     res.end('/upload/smallimgs/'+newFileName);
         // }else{
-        res.end('/upload/images/' + newFileName);
+  
+        console.log('上传至阿里云,文件:',updatePath + newFileName)
+        co(function* () {
+        var result = yield client.put('small/'+newFileName, fs.readFileSync(updatePath + newFileName));
+        console.log('上传成功',result);
+        // res.end('/upload/images/' + newFileName);
+        res.end(result.url)
+        }).catch(function (err) {
+            console.log(err);
+        });
+            
+
+        
+        
         // }
 
 
