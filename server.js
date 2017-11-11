@@ -115,12 +115,13 @@ app.use(session({ //session持久化配置
     },
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({
-        db: "session",
-        host: "localhost",
-        port: 27017,
-        url: !isProd ? settings.URL : 'mongodb://' + settings.USERNAME + ':' + settings.PASSWORD + '@' + settings.HOST + ':' + settings.PORT + '/' + settings.DB + ''
-    })
+    // 为了性能关闭session持久化
+    // store: new MongoStore({   
+    //     db: "session",
+    //     host: "localhost",
+    //     port: 27017,
+    //     url: !isProd ? settings.URL : 'mongodb://' + settings.USERNAME + ':' + settings.PASSWORD + '@' + settings.HOST + ':' + settings.PORT + '/' + settings.DB + ''
+    // })
 }));
 // 鉴权用户
 app.use(authUser.auth);

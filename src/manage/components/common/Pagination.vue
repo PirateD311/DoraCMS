@@ -1,7 +1,7 @@
 <template>
     <div class="block dr-pagination">
         <div v-if="pageInfo">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="pageInfo.current" :page-size="pageInfo.pageSize" layout="total, prev, pager, next" :total="pageInfo.totalItems">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :current-page.sync="pageInfo.current" :page-size="pageInfo.pageSize" layout="total, prev, pager, next" :total="pageInfo.totalItems">
             </el-pagination>
         </div>
     </div>

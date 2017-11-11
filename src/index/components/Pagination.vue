@@ -1,6 +1,6 @@
 <template>
     <div class="content-pagination" v-if="pageInfo && pageInfo.totalItems > 0">
-        <el-pagination small layout="prev, pager, next" :total="pageInfo.totalItems" :current-page="pageInfo.current" @current-change="handleCurrentChange">
+        <el-pagination small layout="prev, pager, next" :total="pageInfo.totalItems" :page-size="pageInfo.pageSize" :current-page="pageInfo.current" @current-change="handleCurrentChange">
         </el-pagination>
     </div>
 </template>
