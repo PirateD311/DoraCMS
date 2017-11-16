@@ -132,7 +132,7 @@ app.use(express.static(path.join(__dirname, 'dist')))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '../source')));
 
-app.use(express.static(path.join(__dirname, 'luopeng')));
+
 
 app.use('/server', serve('./dist/server', true))
 app.use('/static', serve('./dist/static', true))
