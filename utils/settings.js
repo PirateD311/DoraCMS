@@ -12,12 +12,13 @@ module.exports = {
     cache_maxAge: Math.floor(Date.now() / 1000) + 24 * 60 * 60, //1 hours
 
     // 数据库配置 dds-m5eb2175053d9f241.mongodb.rds.aliyuncs.com:3717
-    URL: 'mongodb://fuli:12liu555@139.196.113.98:3717/fuli',
+    URL: 'mongodb://tuzhan001:12liu555@139.196.113.98:3717/tuzhan001',
+    // URL: 'mongodb://fuli:12liu555@139.196.113.98:3717/fuli',
     // URL:'mongodb://cms:12liu555@dds-m5eb2175053d9f241.mongodb.rds.aliyuncs.com:3717/cms',
-    DB: 'fuli',
+    DB: 'tuzhan001',
     HOST: '139.196.113.98',
     PORT: 3717,
-    USERNAME: 'fuli',
+    USERNAME: 'tuzhan001',
     PASSWORD: '12liu555',
 
     // 站点基础信息配置

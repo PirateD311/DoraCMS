@@ -1,8 +1,10 @@
 <style lang='scss'>
     .post-b {
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: none;
         margin-bottom: 20px;
         padding: 0px 0px 10px;
+        float:left;
+        width:33%;
     }
 
     .post-b:last-child {
@@ -10,13 +12,18 @@
     }
 </style>
 <template>
-    <div class="post-b">
-        <TopItem :item="item" :key="item._id" />
+    <div class="post-b"  >
+        <el-col :xs="6">
+            <PictureList v-if="1" :item="item" :key="item._id" />
+            <TopItem v-if="0" :item="item" :key="item._id" />
+        </el-col>
+
     </div>
 </template>
 
 <script>
     import TopItem from './TopItem'
+    import PictureList from './PictureList'
     import {
         mapGetters,
         mapActions
@@ -31,7 +38,8 @@
         },
         components: {
             // Pagination,
-            TopItem
+            TopItem,
+            PictureList,
         },
         methods: {
 

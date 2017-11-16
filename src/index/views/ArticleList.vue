@@ -22,32 +22,7 @@
                     <el-col :xs="22" :sm="22" :md="18" :lg="18" class="content-mainbody-left">
 
                         <el-row :gutter="24">
-                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-if="topics.data.length > 0">
-                                <div class="column-wrap" v-show="typeId != 'indexPage'">
-                                    <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
-                                    <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
-                                </div>
-                                <h6 :sm='0' style="margin-top: 0">本站承诺不含任何违禁图片、文字或视频，如有发现请立即向管理员反馈删除!更多绅士福利+QQ:230714605</h6>
-                                <div>
-                                    <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
-                                </div>
-                                <div class="content-pagination">
-                                    <Pagination :pageInfo="topics.pageInfo" :typeId="typeId" />
-                                </div>
-                            </el-col>
-                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
-                                <div v-if="loading">
-                                    <img src="../assets/loading.gif">
-                                </div>
-                                <div v-else>
-                                    <div v-if="isVip && !loginState.logined">
-                                        <h3 style="color:#fa5555">抱歉，该区域为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再看！很赤鸡的哦~</h3>
-                                        <img src="../assets/needvip.gif">
-                                    </div>
-                                    <h3 v-else>抱歉，暂无内容...</h3>
-                                </div>
-          
-                            </el-col>
+
                             <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
                                     <AdsPannel id="SJllJUAdcZ" />
@@ -58,6 +33,36 @@
                                     <HotContents :hotItems="hotlist" :typeId="$route.params.typeId" v-if="hotlist.length > 0" />
                                 </div>
                             </el-col>
+
+                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-if="topics.data.length > 0">
+                                <div class="column-wrap" v-show="typeId != 'indexPage'">
+                                    <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
+                                    <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
+                                </div>
+                                <div>
+                                   <el-row :gutter="24">
+                                        <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
+                                   </el-row>
+                                </div>
+                                <div class="content-pagination">
+                                    <Pagination :pageInfo="topics.pageInfo" :typeId="typeId" />
+                                </div>
+                            </el-col>
+
+                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
+                                <div v-if="loading">
+                                    <img src="../assets/loading.gif">
+                                </div>
+                                <div v-else>
+                                    <div v-if="isVip && !loginState.logined">
+                                        <h3 style="color:#fa5555">抱歉，该区域为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再看！很赤鸡的哦~</h3>
+                                        <img src="../assets/needvip.gif">
+                                    </div>
+                                    <h3 v-else>抱歉，暂无内容...</h3>
+                                </div>         
+                            </el-col>
+
+
                         </el-row>
                     </el-col>
                     <el-col :xs="1" :sm="1" :md="3" :lg="3">
