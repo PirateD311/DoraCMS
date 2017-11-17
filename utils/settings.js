@@ -13,7 +13,7 @@ module.exports = {
 
     // 数据库配置 dds-m5eb2175053d9f241.mongodb.rds.aliyuncs.com:3717
     URL: 'mongodb://fuli:12liu555@139.196.113.98:3717/fuli',
-    // URL:'mongodb://cms:12liu555@dds-m5eb2175053d9f241.mongodb.rds.aliyuncs.com:3717/cms',
+    // URL:'mongodb://fuli:12liu555@dds-m5eb2175053d9f241.mongodb.rds.aliyuncs.com:3717/fuli',
     DB: 'fuli',
     HOST: '139.196.113.98',
     PORT: 3717,
