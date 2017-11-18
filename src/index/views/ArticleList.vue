@@ -23,7 +23,7 @@
 
                         <el-row :gutter="24">
 
-                            <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
+                            <el-col :xs="0" :sm="5" :md="5" :lg="5" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
                                     <AdsPannel id="SJllJUAdcZ" />
                                     <div v-if="checkCateList">
@@ -34,7 +34,7 @@
                                 </div>
                             </el-col>
 
-                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-if="topics.data.length > 0">
+                            <el-col :xs="24" :sm="19" :md="19" :lg="19" v-if="topics.data.length > 0">
                                 <div class="column-wrap" v-show="typeId != 'indexPage'">
                                     <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
                                     <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
@@ -49,7 +49,7 @@
                                 </div>
                             </el-col>
 
-                            <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
+                            <el-col :xs="24" :sm="19" :md="19" :lg="19" v-else style="min-height: 300px;">
                                 <div v-if="loading">
                                     <img src="../assets/loading.gif">
                                 </div>

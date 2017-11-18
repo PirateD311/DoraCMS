@@ -47,19 +47,19 @@
                 }
                 li {
  
-                    position: relative;
+                    
                     padding: 10px 0;
                     overflow: hidden;
                     font-size: 14px;
                     display: block;
-                    height: 3.5rem;
+                    height: 4.5rem;
                     img {
                         width: 5rem;
                         height: 3.5rem;
-                        position: absolute;
+                        
                     }
                     .left-area{
-                        padding-left: 6rem;
+                        
                     }
                     
                 }

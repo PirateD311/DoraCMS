@@ -50,13 +50,12 @@
             border-left: 10px solid transparent;
         }
         .contentImg {
-            
+            height: 200px;
             overflow:hidden;
             img {
                 width: 100%;
             }
             
-            height: auto;
             display: block;
             position: relative;
             .content-cate {

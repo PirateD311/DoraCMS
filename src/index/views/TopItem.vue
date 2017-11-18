@@ -60,6 +60,7 @@
             border-left: 10px solid transparent;
         }
         .contentImg {
+            height: 200px;
             max-height:100px;
             overflow:hidden;
             img {
