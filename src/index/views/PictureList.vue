@@ -20,7 +20,6 @@
 <style lang="scss">
     .content-item {
         .border{
-
             border-radius: 15px;
             padding-top: 15px;
         }
