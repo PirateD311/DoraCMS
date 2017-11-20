@@ -49,10 +49,11 @@
             border-left: 10px solid transparent;
         }
         .contentImg {
-            height: 200px;
+            max-height: 200px;
             overflow:hidden;
             img {
                 width: 100%;
+                height: 200px;
             }
             
             display: block;

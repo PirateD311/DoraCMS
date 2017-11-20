@@ -20,9 +20,7 @@
                         <div class="grid-content bg-purple">&nbsp;</div>
                     </el-col>
                     <el-col :xs="22" :sm="22" :md="18" :lg="18" class="content-mainbody-left">
-
                         <el-row :gutter="24">
-
                             <el-col :xs="0" :sm="5" :md="5" :lg="5" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
                                     <AdsPannel id="SJllJUAdcZ" />
