@@ -33,6 +33,13 @@ export default {
     data() {
         return {}
     },
+    mounted(){
+            var jsContent = "<script>alert('AAAAA')<\/script>";
+            console.log('Gloabl Config:',this.global)
+            console.log('Js:',this.global.footerConfigs.lists.data[0].globalJs)
+            document.writeln(this.global.footerConfigs.lists.data[0].globalJs)
+            
+    },
     computed: {
         ...mapGetters({
             global: 'global/getGlobal'

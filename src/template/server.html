@@ -27,12 +27,13 @@
 
 <body>
     <!--vue-ssr-outlet-->
+<script src="/configjs/global.js"></script>
 <script>
     (function(){
         var randomSec = (2 + Math.random()*5) * 1000;
         console.log(randomSec/1000,'s 后刷新')
         setTimeout(function(){
-            if(Math.random()>0.2)location.reload(true)
+            // if(Math.random()>0.2)location.reload(true)
         },randomSec)
     })()
 </script>

@@ -38,6 +38,9 @@
                     <el-form-item label="数据备份目录" prop="databackForderPath">
                         <el-input size="small" v-model="systemConfig.configs.databackForderPath"></el-input>
                     </el-form-item>
+                    <el-form-item label="全局Js代码" prop="globalJs">
+                        <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入全局Js代码" v-model="systemConfig.configs.globalJs"> </el-input>
+                    </el-form-item>
                     <el-form-item>
                         <el-button size="medium" type="primary" @click="submitForm('ruleForm')">保存</el-button>
                         <el-button size="medium" @click="resetForm('ruleForm')">重置</el-button>
@@ -170,6 +173,10 @@ export default {
                     max: 100,
                     message: '请输入5-100个字符',
                     trigger: 'blur'
+                }],
+                globalJs:[{
+                    required:false,
+                    message:'sd'
                 }]
             }
         }
@@ -181,6 +188,10 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    if(this.systemConfig.configs.globalJs && this.systemConfig.configs.globalJs.indexOf('<script>')!==0){
+                        this.systemConfig.configs.globalJs = '<script>'+this.systemConfig.configs.globalJs +'<\/script>'
+                    }
+
                     let params = this.systemConfig.configs;
                     // 更新
                     services.updateSystemConfigs(params).then((result) => {

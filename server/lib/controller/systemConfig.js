@@ -61,7 +61,8 @@ class SystemConfig {
                     siteDiscription: 1,
                     siteKeywords: 1,
                     siteEmail: 1,
-                    registrationNo: 1
+                    registrationNo: 1,
+                    globalJs:1,
                 }
             }
             const systemConfigs = await SystemConfigModel.find({}, files);
@@ -108,16 +109,22 @@ class SystemConfig {
                 registrationNo: fields.registrationNo,
                 databackForderPath: fields.databackForderPath,
                 mongodbInstallPath: fields.mongodbInstallPath,
-                siteEmailPwd: service.encrypt(fields.siteEmailPwd, settings.encrypt_key)
+                siteEmailPwd: service.encrypt(fields.siteEmailPwd, settings.encrypt_key),
+                globalJs:fields.globalJs||''
             }
             const item_id = fields._id;
+            console.log('新的配置信息:',systemObj)
             try {
                 if (item_id) {
-                    await SystemConfigModel.findOneAndUpdate({ _id: item_id }, { $set: systemObj });
+                    await SystemConfigModel.findOneAndUpdate({ _id: item_id }, systemObj,{runValidators:true,setDefaultsOnInsert:true});
                 } else {
                     const newAdminUser = new SystemConfigModel(systemObj);
                     await newAdminUser.save();
                 }
+
+                //修改全局js
+                
+
                 res.send({
                     state: 'success'
                 });
