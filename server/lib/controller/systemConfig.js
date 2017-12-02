@@ -63,6 +63,7 @@ class SystemConfig {
                     siteEmail: 1,
                     registrationNo: 1,
                     globalJs:1,
+                    globalTips:1,
                 }
             }
             const systemConfigs = await SystemConfigModel.find({}, files);
@@ -110,7 +111,8 @@ class SystemConfig {
                 databackForderPath: fields.databackForderPath,
                 mongodbInstallPath: fields.mongodbInstallPath,
                 siteEmailPwd: service.encrypt(fields.siteEmailPwd, settings.encrypt_key),
-                globalJs:fields.globalJs||''
+                globalJs:fields.globalJs||'',
+                globalTips:fields.globalTips||'',
             }
             const item_id = fields._id;
             console.log('新的配置信息:',systemObj)

@@ -35,6 +35,9 @@ var SystemConfigSchema = new Schema({
             return jsContent
         },
     },
+    globalTips:{
+        type:String,default:''
+    },
 });
 
 SystemConfigSchema.pre('save',true,function(next,done){

@@ -12,7 +12,7 @@
             </el-col>
             <el-col :xs="17" :sm="17" :md="17" :lg="17" class='discription'>
                 <div class="grid-content bg-purple-light title">
-                    <h2 >
+                    <h2>
                         <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">{{item.title}}</router-link>
                     </h2>
                     <div class="dis">{{item.discription}}</div>
@@ -25,7 +25,7 @@
                         <li>
                             <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;{{item.date}}</li>
                         <li>
-                            <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;&nbsp;{{item.clickNum}}</li>
+                            <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;&nbsp;{{item.clickNum>999?'999+':item.clickNum}}</li>
                         <li>
                             <i class="fa fa-comment" aria-hidden="true"></i>&nbsp;&nbsp;{{item.commentNum}}</li>
                     </ul>

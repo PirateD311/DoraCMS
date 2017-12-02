@@ -41,6 +41,9 @@
                     <el-form-item label="全局Js代码" prop="globalJs">
                         <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入全局Js代码" v-model="systemConfig.configs.globalJs"> </el-input>
                     </el-form-item>
+                    <el-form-item label="全局Tips" prop = "globalTips">
+                        <el-input type="textarea" :autosize="{ minRows: 2}" placeholder="请输入全局Tips" v-model="systemConfig.configs.globalTips"></el-input>
+                    </el-form-item>
                     <el-form-item>
                         <el-button size="medium" type="primary" @click="submitForm('ruleForm')">保存</el-button>
                         <el-button size="medium" @click="resetForm('ruleForm')">重置</el-button>
@@ -177,7 +180,11 @@ export default {
                 globalJs:[{
                     required:false,
                     message:'sd'
-                }]
+                }],
+                globalTips:[{
+                    required:false,
+                    message:'sd'
+                }],
             }
         }
     },

@@ -27,7 +27,7 @@
                                     <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
                                     <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
                                 </div>
-                                <h6 :sm='0' style="margin-top: 0">本站承诺不含任何违禁图片、文字或视频，如有发现请立即向管理员反馈删除!更多绅士福利+QQ:230714605</h6>
+                                <h6 :sm='0' style="margin-top: 0">{{systemConfig.data[0].globalTips}}</h6>
                                 <div>
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
                                 </div>
@@ -105,7 +105,7 @@
                 path
             } = route
             const base = { ...config,
-                pageSize: 10,
+                pageSize: 5,
                 id,
                 path,
                 searchkey,
@@ -118,7 +118,7 @@
             
             await store.dispatch('frontend/article/getArticleList', base)
             await store.dispatch('frontend/article/getHotContentList', {
-                pageSize: 10,
+                pageSize: 5,
                 typeId
             })
             await store.dispatch('global/tags/getTagList', {
@@ -127,7 +127,7 @@
         },
         mixins: [metaMixin],
         mounted(){
-
+             scroll(0,0);
              //window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
         },
         components: {
@@ -212,7 +212,8 @@
             const {
                 siteName,
                 siteDiscription,
-                siteKeywords
+                siteKeywords,
+                globalTips,
             } = systemData;
             let title = '首页';
             const {

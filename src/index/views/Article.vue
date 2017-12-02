@@ -141,6 +141,7 @@
             
         },
         mounted(){
+            scroll(0,0);
              //window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
         },
         metaInfo() {
