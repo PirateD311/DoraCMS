@@ -3,8 +3,7 @@
         <div class="container text-left" v-once>
             <ul>
                 <li>&nbsp;
-                    <a  rel="nofollow" target="_blank" title="代码在这里">{{codeVersion}}
-                    </a>&nbsp;Copyright (c) 2017 &nbsp;
+                    
                     <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">
                         {{systemConfig.data[0].registrationNo}}
                     </a> All Rights Reserved</li>

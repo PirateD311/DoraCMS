@@ -95,7 +95,9 @@ class ContentCategory {
                 parentId: fields.parentId,
                 enable: fields.enable,
                 defaultUrl: fields.defaultUrl,
-                comments: fields.comments
+                comments: fields.comments,
+                author:fields.author,
+                imageUrl:fields.imageUrl,
             }
 
             const newContentCategory = new ContentCategoryModel(groupObj);

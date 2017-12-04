@@ -26,9 +26,7 @@
                                 <el-col v-for="(nav,index) in headerNav" :key="index" >
                                     <router-link :to="{path: '/'+nav.defaultUrl+ '___'+nav._id}">{{nav.name}}</router-link>
                                 </el-col>
-                                <el-col >
-                                    <router-link style="color:#F44336;" :to="{path: '/vip___vip'}">会员福利</router-link>
-                                </el-col>
+                 
                             </el-row>
                         </nav>
                     </el-col>

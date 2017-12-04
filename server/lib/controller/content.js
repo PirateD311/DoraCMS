@@ -125,7 +125,7 @@ class Content {
             },
             {
                 path: 'categories',
-                select: 'name defaultUrl _id'
+                select: 'name defaultUrl _id comments author imageUrl'
             }, {
                 path: 'tags',
                 select: 'name _id'
@@ -321,6 +321,14 @@ class Content {
         }
     }
 
+    /** 给小说用的，获得所有分类(小说)及章节 */
+    async getNovelList(req,res,next){
+        try{
+            let aggre
+        }catch(error){
+
+        }
+    }
 }
 
 module.exports = new Content();

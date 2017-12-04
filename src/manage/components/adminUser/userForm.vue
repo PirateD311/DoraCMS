@@ -142,6 +142,7 @@ export default {
                     trigger: 'blur'
                 }],
                 comments: [{
+                    required:false,
                     message: '请填写备注',
                     trigger: 'blur'
                 }, {

@@ -21,7 +21,13 @@
                     <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="dialogState.formData.keywords"> </el-input>
                 </el-form-item>
                 <el-form-item label="描述" prop="comments">
-                    <el-input size="small" v-model="dialogState.formData.comments"></el-input>
+                    <el-input size="textarea" :rows="4" v-model="dialogState.formData.comments"></el-input>
+                </el-form-item>
+                <el-form-item label="作者(小说模式填写)" prop="author">
+                    <el-input size="small" v-model="dialogState.formData.author"></el-input>
+                </el-form-item>
+                <el-form-item label="缩略图src" prop="imageUrl">
+                    <el-input size="small" v-model="dialogState.formData.imageUrl"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button size="medium" type="primary" @click="submitForm('cateRuleForm')">{{dialogState.edit ? '更新' : '保存'}}</el-button>
@@ -61,11 +67,19 @@ export default {
                     message: '请填写备注',
                     trigger: 'blur'
                 }, {
-                    min: 5,
-                    max: 50,
-                    message: '请输入5-50个字符',
+                    min: 2,
+                    max: 200,
+                    message: '请输入2-200个字符',
                     trigger: 'blur'
-                }]
+                }],
+                author: [{
+                    required: false,
+                    message: 'dd',
+                }],
+                imageUrl:[{
+                    required: false,
+                    message: 'dd',
+                }],
             },
             options: [{
                 value: '0',
