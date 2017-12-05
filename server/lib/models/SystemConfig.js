@@ -26,26 +26,13 @@ var SystemConfigSchema = new Schema({
     databackForderPath: String,
     globalJs:{
         type:String,default:'',
-        set:(jsContent)=>{
-            console.log('Before:',jsContent)
-            if(jsContent && jsContent.indexOf('<script>')!==0){
-                jsContent = '<script>'+jsContent +'<\/script>'
-            }
-            console.log('After:',jsContent)
-            return jsContent
-        },
     },
     globalTips:{
         type:String,default:''
     },
 });
 
-SystemConfigSchema.pre('save',true,function(next,done){
-    if(this.globalJs && this.globalJs.indexOf('<script>')!==0){
-        this.globalJs = '<script>'+this.globalJs +'<\/script>'
-    }
-    console.log('After:',this.globalJs)
-})
+
 
 var SystemConfig = mongoose.model("SystemConfig", SystemConfigSchema);
 

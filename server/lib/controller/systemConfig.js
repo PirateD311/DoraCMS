@@ -4,7 +4,7 @@ const formidable = require('formidable');
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
 const shortid = require('shortid');
 const validator = require('validator')
-
+const fs = require('fs')
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -125,12 +125,18 @@ class SystemConfig {
                 }
 
                 //修改全局js
-                
+                if(systemObj.globalJs){
+                    const GLOBAL_JS_PATH = __dirname + '/../../../public/configjs/global_a.js'
+                    console.log('修改全局js')
+                    fs.writeFileSync(GLOBAL_JS_PATH,systemObj.globalJs);
+                    console.log('修改全局js成功');
+                }
 
                 res.send({
                     state: 'success'
                 });
             } catch (err) {
+                console.log(err)
                 logUtil.error(err, req);
                 res.send({
                     state: 'error',

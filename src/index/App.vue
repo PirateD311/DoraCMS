@@ -35,7 +35,7 @@ export default {
         return {}
     },
     mounted(){
-        document.writeln(this.global.footerConfigs.lists.data[0].globalJs||'')
+        // document.writeln(this.global.footerConfigs.lists.data[0].globalJs||'')
     },
     computed: {
         ...mapGetters({
