@@ -40,6 +40,7 @@
     "font-awesome": "^4.7.0",
     "formidable": "^1.1.1",
     "iconv-lite": "^0.4.19",
+    "immutable": "^3.8.2",
     "js-cookie": "^2.1.4",
     "lodash": "^4.17.4",
     "log4js": "^0.6.38",

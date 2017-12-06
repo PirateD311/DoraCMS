@@ -29,7 +29,7 @@
                     <router-link :to="'/details/'+o._id+'.html'" class="continue-reading">{{o.title }}</router-link>
                 </div>
                 <div class="text item zhangjie more">
-                    <a>查看更多......</a>
+                    <a @click="moreArticle">查看更多......</a>
                 </div>
             </el-card>
           </el-col>
@@ -77,12 +77,13 @@
                 searchkey,
                 tagName,
                 current,
-                typeId
+                typeId,
+                novel:true
             }
-            console.log('Async Data...   typeId:'+base.typeId)
-
             
+            console.log('Async Data...   typeId:'+base.typeId)          
             await store.dispatch('frontend/article/getArticleList', base)
+            return base;
         },
         mixins: [metaMixin],
         mounted(){
@@ -102,6 +103,7 @@
             return {
                 loading:false,
                 isVip:false,
+                q:{},
             }
         },
         computed: {
@@ -111,7 +113,13 @@
                 tags: 'global/tags/getTagList',
                 systemConfig: 'global/footerConfigs/getSystemConfig',
                 loginState: 'frontend/user/getSessionState',
+                catelist:'global/header/getHeaderNavList',
             }),
+            catelist2(){
+                let list = this.$store.getters['global/category/getHeaderNavList']
+                
+                return list
+            },
             topics(){
                 let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)
                 this.loading = list.loading;
@@ -128,11 +136,19 @@
                 let navs = this.$store.getters['global/category/getHeaderNavList'].data || [];
                 const obj = navs.find(item => item._id === this.$route.params.typeId);
                 return obj || {};
-            },
-            
+            },          
         },
         methods: {
-
+            async moreArticle(){
+                console.log('加载更多文章')
+                console.log('CateList:',this.catelist,this.catelist2)
+                console.log('TagList:',this.tags)
+                console.log('currentCate:',this.currentCate)
+                this.q.current?this.q.current++:(this.q.current=2)
+                this.q.more = true;
+                console.log('Query:',this.q);
+                await this.$store.dispatch('frontend/article/getArticleList', this.q)
+            },
         },
         async activated() {
             console.log('ArticleList Activated....');
@@ -153,7 +169,7 @@
                 this.isVip = true;
             }
 
-            await this.$options.asyncData({
+            this.q = await this.$options.asyncData({
                 store: this.$store,
                 route: this.$route
             }, {
@@ -162,7 +178,7 @@
         },
         created(){
             console.log('Article List Created...');
-            
+            console.log('CateList:',this.catelist)
             // scroll(0,0);
         },
         metaInfo() {
@@ -221,7 +237,7 @@
             min-height:250px;
         }
         .box-card {
-            .item{float:left;height:20px;padding:5px;width: 288px;}
+            .item{float:left;height:20px;padding:5px;min-width: 288px;}
             padding-bottom:15px;
             .more{color: #03A9F4;}
         }

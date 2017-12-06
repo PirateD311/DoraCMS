@@ -1,12 +1,14 @@
 const BaseComponent = require('../prototype/baseComponent');
 const ContentModel = require("../models").Content;
 const ContentTagModel = require("../models").ContentTag;
+const ContentCategoryModel = require("../models").ContentCategory;
 const MessageModel = require("../models").Message;
 const formidable = require('formidable');
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
 const shortid = require('shortid');
 const validator = require('validator')
 const _ = require('lodash');
+const IM = require('immutable')
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -55,6 +57,7 @@ class Content {
             let model = req.query.model; // 查询模式 full/normal/simple
             let state = req.query.state;
             let isVip = req.query.isVip; //只查询vip内容
+            let novel = req.query.novel; //单本小说模式下，只查同类的小说
         
             // pageSize = 3;
            
@@ -118,7 +121,25 @@ class Content {
                     discription: 1
                 }
             }
-            
+            let mainCate
+            if(novel){ //小说模式下的修改
+                files = {
+                    id: 1,
+                    title: 1,
+                    sImg: 1,
+                    stitle: 1,
+                    updateDate: 1
+                }
+                if(!queryObj.categories){
+                    let allCates = await ContentCategoryModel.find({enable:true,parentId:0}).limit(10);
+                    allCates = IM.List(allCates)
+                    mainCate = allCates.find(v=>v.main == true)
+                    if(!mainCate)mainCate = allCates.last()
+                    queryObj.categories = mainCate._id
+                }
+
+            }
+
             const contents = await ContentModel.find(queryObj, files).sort(sortObj).skip(pageSize * (Number(current) - 1)).limit(Number(pageSize)).populate([{
                 path: 'author',
                 select: 'name -_id'
@@ -137,8 +158,9 @@ class Content {
                 pageInfo: {
                     totalItems,
                     current: Number(current) || 1,
-                    pageSize: Number(pageSize) || 10
-                }
+                    pageSize: Number(pageSize) || 10,
+                },
+                mainCate
             })
         } catch (err) {
             logUtil.error(err, req)

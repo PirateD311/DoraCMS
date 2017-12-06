@@ -13,7 +13,8 @@ const state = () => ({
         isLoad: false
     },
     hotContentList: [],
-    recentContentList: []
+    recentContentList: [],
+    novels: []
 })
 
 const actions = {
@@ -21,7 +22,7 @@ const actions = {
         commit,
         state
     }, config) {
-        if (state.lists.data.length > 0 && config.path === state.lists.path) {
+        if (!config.more && state.lists.data.length > 0 && config.path === state.lists.path) {
             return
         }
         const {
@@ -31,12 +32,18 @@ const actions = {
                 cache: true
             })
         if (data.docs && data.state === 'success') {
+            if(config.more){
+                data.docs = state.lists.data.concat(data.docs)
+                console.log('拼接后长度:',data.docs.length)
+            }
+
             commit('receiveArticleList', {
                 ...config,
                 ...data
             })
         }
     },
+    
     async ['getArticleItem']({
         commit,
         state
@@ -97,7 +104,8 @@ const actions = {
         if (data.docs && data.state === 'success') {
             commit('receiveRecentList', data)
         }
-    }
+    },
+    
 }
 
 const mutations = {

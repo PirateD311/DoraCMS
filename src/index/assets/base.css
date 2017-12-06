@@ -187,3 +187,5 @@ pre {
         /*display: none !important;*/
     }
 }
+/*去掉cnzz的统计显示*/
+span[id^="cnzz_stat"]{display: none}

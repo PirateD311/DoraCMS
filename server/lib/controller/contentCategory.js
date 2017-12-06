@@ -49,6 +49,11 @@ class ContentCategory {
 
             const ContentCategories = await ContentCategoryModel.find(queryObj).sort({ sortId: 1 });
             const totalItems = await ContentCategoryModel.count(queryObj);
+
+            if(req.query.article){
+                
+            }
+
             res.send({
                 state: 'success',
                 docs: ContentCategories,
