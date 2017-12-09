@@ -5,13 +5,13 @@ mongoose.connect(DBURL);
 const db = mongoose.connection;
 const ContentModel = require('../lib/models/Content.js')
 
-let categories = ['rJ0Q7OGbM'],
+let categories = ['S1bci4rWz'],
     tags = ['SJt8XdGbG']
 
 db.once('open', async () => {
     console.log('连接数据成功');
     let crawler = require('./novel.js')
-    let list = await crawler.text('http://www.88dushu.com/xiaoshuo/97/97547/','.mulu a','.novel h1','.yd_text2')
+    let list = await crawler.text('http://www.88dushu.com/xiaoshuo/69/69059/','.mulu a','.novel h1','.yd_text2')
     console.log('共计:',list.length,'\n 开始发布。。。');
     
     for(let item of list){

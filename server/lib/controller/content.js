@@ -128,7 +128,8 @@ class Content {
                     title: 1,
                     sImg: 1,
                     stitle: 1,
-                    updateDate: 1
+                    updateDate: 1,
+                    categories:1
                 }
                 if(!queryObj.categories){
                     let allCates = await ContentCategoryModel.find({enable:true,parentId:0}).limit(10);

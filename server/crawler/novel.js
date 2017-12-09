@@ -30,9 +30,10 @@ async function handlePage(url,titleJqSlt,contentJqSlt){
     $ = cheerio.load(iconv.decode(html, 'gbk'))
 
     let title = $(titleJqSlt).text(),
-        content = $(contentJqSlt).text()
+        content = $(contentJqSlt).html()
     
     console.log(title,'\n',content.slice(0,20))
+    
     gArticles.push({
         title,content,
     })
@@ -47,4 +48,4 @@ async function text(startUrl,articleUrlJqSlt,titleJqSlt,contentJqSlt){
     fs.writeFileSync('articles.json',JSON.stringify(gArticles,null,2))
     return gArticles;
 }
-// text('http://www.88dushu.com/xiaoshuo/71/71734/','.mulu a','.novel h1','.yd_text2')
+text('http://www.88dushu.com/xiaoshuo/71/71734/','.mulu a','.novel h1','.yd_text2')
