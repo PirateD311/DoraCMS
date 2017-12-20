@@ -38,8 +38,11 @@
                     <el-form-item label="数据备份目录" prop="databackForderPath">
                         <el-input size="small" v-model="systemConfig.configs.databackForderPath"></el-input>
                     </el-form-item>
-                    <el-form-item label="全局Js代码" prop="globalJs">
-                        <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入全局Js代码" v-model="systemConfig.configs.globalJs"> </el-input>
+                    <el-form-item label="all-top.js代码" prop="allTopJs">
+                        <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入Js代码" v-model="systemConfig.configs.allTopJs"> </el-input>
+                    </el-form-item>
+                    <el-form-item label="all-footer.js代码" prop="allFooterJs">
+                        <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入Js代码" v-model="systemConfig.configs.allFooterJs"> </el-input>
                     </el-form-item>
                     <el-form-item label="全局Tips" prop = "globalTips">
                         <el-input type="textarea" :autosize="{ minRows: 2}" placeholder="请输入全局Tips" v-model="systemConfig.configs.globalTips"></el-input>
@@ -177,7 +180,11 @@ export default {
                     message: '请输入5-100个字符',
                     trigger: 'blur'
                 }],
-                globalJs:[{
+                allTopJs:[{
+                    required:false,
+                    message:'sd'
+                }],
+                allFooterJs:[{
                     required:false,
                     message:'sd'
                 }],

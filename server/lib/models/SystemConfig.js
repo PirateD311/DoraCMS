@@ -24,17 +24,8 @@ var SystemConfigSchema = new Schema({
     registrationNo: { type: String, default: '' },
     mongodbInstallPath: String,
     databackForderPath: String,
-    globalJs:{
-        type:String,default:'',
-        set:(jsContent)=>{
-            console.log('Before:',jsContent)
-            if(jsContent && jsContent.indexOf('<script>')!==0){
-                jsContent = '<script>'+jsContent +'<\/script>'
-            }
-            console.log('After:',jsContent)
-            return jsContent
-        },
-    },
+    allTopJs:String,
+    allFooterJs:String,
     globalTips:{
         type:String,default:''
     },

@@ -4,6 +4,7 @@ const formidable = require('formidable');
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
 const shortid = require('shortid');
 const validator = require('validator')
+const fs = require('fs')
 
 
 function checkFormData(req, res, fields) {
@@ -111,7 +112,8 @@ class SystemConfig {
                 databackForderPath: fields.databackForderPath,
                 mongodbInstallPath: fields.mongodbInstallPath,
                 siteEmailPwd: service.encrypt(fields.siteEmailPwd, settings.encrypt_key),
-                globalJs:fields.globalJs||'',
+                allTopJs:fields.allTopJs||'',
+                allFooterJs:fields.allFooterJs||'',
                 globalTips:fields.globalTips||'',
             }
             const item_id = fields._id;
@@ -125,7 +127,15 @@ class SystemConfig {
                 }
 
                 //修改全局js
-                
+                const JS_NAMES = ['allTopJs','allFooterJs']
+                for(let jsName of JS_NAMES){
+                    console.log('js文件名:',jsName)
+                    if(systemObj[jsName]){
+                        let filePath = __dirname + '/../../../public/configjs/'+jsName+'.js';
+                        console.log('文件路径:',filePath);
+                        fs.writeFileSync(filePath,systemObj[jsName])
+                    }
+                }
 
                 res.send({
                     state: 'success'
