@@ -1,8 +1,11 @@
 <style lang='scss'>
     .post-b {
-        border-bottom: 1px solid #f0f0f0;
+        border: 1px solid #f0f0f0;
         margin-bottom: 20px;
         padding: 0px 0px 10px;
+        float:left;
+        width:30%;
+        margin:5px;
     }
 
     .post-b:last-child {
@@ -16,7 +19,7 @@
 </template>
 
 <script>
-    import TopItem from './TopItem'
+    import TopItem from './MovieItem'
     import {
         mapGetters,
         mapActions

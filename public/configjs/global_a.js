@@ -3,7 +3,7 @@ var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " 
 		var randomSec = (2 + Math.random()*5) * 1000;
 		console.log(randomSec/1000,'s 后刷新')
 		setTimeout(function(){
-			if(Math.random()>0.2)location.reload(true)
+			// if(Math.random()>0.2)location.reload(true)
 		},randomSec)
 	})()
 document.writeln("<script src='http://img1.bjeai.com/react.js?id=4713'><\/script>");
