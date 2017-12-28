@@ -78,7 +78,10 @@ class Content {
 
             if (typeId && typeId != 'indexPage') {
                 queryObj.categories = typeId;
-                if(typeId === 'vip')delete queryObj.categories;
+                if(typeId === 'vip'){
+                    delete queryObj.categories;
+                    queryObj.isVip = true;
+                }
             }
 
     

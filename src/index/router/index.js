@@ -55,7 +55,7 @@ export function createRouter() {
             { name: 'uReplies', path: '/users/replies', component: userReplies },
             { name: 'adminlogin', path: '/dr-admin', component: adminLogin, meta: { typeId: 'adminlogin' } },
             { name: 'sitemap', path: '/sitemap.html', component: siteMap },
-            { name: 'tagPage', path: '/tag/:tagName/:page(\\d+)?', component: index, meta: { typeId: 'tags' } },
+            { name: 'tagPage', path: '/tag/:tagName/:current(\\d+)?', component: index, meta: { typeId: 'tags' } },
 
         ]
     })
