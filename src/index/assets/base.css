@@ -185,7 +185,7 @@ pre {
 
 @media screen and (max-width:992px) {
     .content-item .post-angle{
-        display: none !important;
+        /*display: none !important;*/
     }
     .content-item .contentImg {
         /*display: none !important;*/
