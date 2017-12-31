@@ -97,7 +97,7 @@ export default {
                 }],
                 email: [{
                     required: true,
-                    message: '请填写邮箱',
+                    message: '请填写邮箱(推荐qq邮箱)',
                     trigger: 'blur'
                 }, {
                     validator: (rule, value, callback) => {

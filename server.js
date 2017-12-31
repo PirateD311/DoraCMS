@@ -1,7 +1,8 @@
 process.env.VUE_ENV = 'server'
 const isProd = process.env.NODE_ENV === 'production'
 global.NODE_ENV = isProd
-const useMicroCache = process.env.MICRO_CACHE !== 'false'
+//const useMicroCache = process.env.MICRO_CACHE !== 'false'
+const useMicroCache = isProd
 
 const fs = require('fs')
 const path = require('path')
@@ -34,8 +35,8 @@ const system = require('./server/routers/system');
 
 const isCacheable = () => useMicroCache
 const microCache = lurCache({
-    max: 100,
-    maxAge: 1000
+    max: 500,
+    maxAge: 1000 * 60 * 60 * 6
 })
 
 function createRenderer(bundle, template) {
@@ -46,7 +47,7 @@ function createRenderer(bundle, template) {
         // for component caching
         cache: lurCache({
             max: 1000,
-            maxAge: 1000 * 60 * 15
+            maxAge: 1000 * 60 * 60 * 6
         }),
 
         // this is only needed when vue-server-renderer is npm-linked
@@ -171,9 +172,10 @@ app.get(['/', '/page/:current(\\d+)?', '/:cate1?___:typeId?/:current(\\d+)?',
         }
 
         const cacheable = isCacheable(req)
+        console.log('缓存标志位:',cacheable)
         if (cacheable) {
             const hit = microCache.get(req.url)
-
+            console.log('缓存值:',hit?true:false)
             if (hit) {
                 if (!isProd) {
                     console.log('cache hit!')
