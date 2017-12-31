@@ -2,7 +2,7 @@
     <div class="login-pannel">
         <ul>
             <li v-if="loginState.logined && loginState.userInfo">
-                <el-dropdown>
+                <el-dropdown trigger="click">
                     <span class="el-dropdown-link">
                         {{loginState.userInfo.userName}}
                         <i class="el-icon-caret-bottom el-icon--right"></i>

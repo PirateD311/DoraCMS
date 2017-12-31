@@ -6,6 +6,7 @@ import { sync } from 'vuex-router-sync'
 import * as filters from './filters'
 import titleMixin from './mixins'
 import ElementUI from 'element-ui'
+
 import Header from './index/components/header'
 import Footer from './index/components/Footer'
 

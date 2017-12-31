@@ -1,13 +1,16 @@
 <template>
     <PannelBox title="标签云" className="content-tag">
         <div class="content-tag-list">
-            <ul>
+            <ul class="">
                 <li :key="item._id" v-for="(item,index) in tags" >
                     <el-button size="mini" round @click="searchTag(item)">{{item.name}}</el-button>
                     <!-- <router-link :to="'/tag/'+item.name">{{item.name}}</router-link> -->
                 </li>
             </ul>
+
+            
         </div>
+        <span style="font-size: 14px;float: right;padding-right: 40px;">PS:滚动有更多标签哦</span>
     </PannelBox>
 </template>
 <script>
@@ -31,6 +34,8 @@
 
 <style lang="scss">
     .content-tag {
+        .pannel-title{display:block !important;margin-bottom: 0;}
+        
         ul {
             padding-top: 15px;
             li {

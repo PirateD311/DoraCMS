@@ -50,7 +50,13 @@ const config = {
         }, {
             test: /\.json$/,
             loader: 'json-loader'
-        }]
+        },  {
+          test: /\\\\\\\\.css$/,
+          loader: "style!css"
+      }, {
+          test: /\\\\\\\\.(eot|woff|woff2|ttf)([\\\\\\\\?]?.*)$/,
+          loader: "file"
+      }]
     },
     plugins: [
         new webpack.DefinePlugin({

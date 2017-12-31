@@ -16,7 +16,7 @@ module.exports = {
             query: {
                 name: '[name].[hash:7].[ext]'
             }
-        }]
+        },]
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({

@@ -31,7 +31,8 @@
                                         <div v-html="article.doc.comments"></div>
                                     </div>
                                     <div style="min-height:400px" v-else>
-                                        <h3 style="color:#fa5555">抱歉，该帖子为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a> &nbsp; 后再查看！很赤鸡的哦~</h3>
+                                        <h3 style="color:#fa5555">抱歉，该区域为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a>或<a style="color:#409EFF" href="/users/reg">注册</a> &nbsp; 后再看！很赤鸡的哦~</h3>
+                                        <h6 style="color:#673AB7" >Ps:会员只需注册即可，本站无任何付费内容~</h6>
                                         <img src="../assets/needvip.gif">
                                     </div>
                                     <RandomArticle :articles="article.randomArticles" />

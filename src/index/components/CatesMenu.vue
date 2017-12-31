@@ -1,9 +1,15 @@
 <template>
-    <PannelBox title="分类目录" className="catesMenu">
+    <PannelBox title="分类目录" className="catesMenu" >
         <div v-for="parentNav in rightNavs.parents" :key="parentNav._id">
-            <div class="parent-name">{{parentNav.name}}</div>
-            <ul class="cate-list">
-                <li :key="sonNav._id" :class="{ active: sonNav._id == typeId }" v-for="sonNav in rightNavs.cates" v-if="sonNav.parentId === parentNav._id">
+            <div  class="parent-name hidden-sm-and-down">{{parentNav.name}}</div>
+            <ul class="cate-list hidden-sm-and-down">
+                <li class="" :key="sonNav._id" :class="{ active: sonNav._id == typeId }" v-for="sonNav in rightNavs.cates" v-if="sonNav.parentId === parentNav._id">
+                    <router-link :to="{path: '/'+sonNav.defaultUrl+ '___'+sonNav._id}">{{sonNav.name}}</router-link>
+                </li>
+            </ul>
+            <ul class="cate-list-mob hidden-md-and-up">
+                <li class="mulu" style="">分类目录</li>
+                <li class="" style="" :key="sonNav._id" :class="{ active: sonNav._id == typeId }" v-for="sonNav in rightNavs.cates" v-if="sonNav.parentId === parentNav._id">
                     <router-link :to="{path: '/'+sonNav.defaultUrl+ '___'+sonNav._id}">{{sonNav.name}}</router-link>
                 </li>
             </ul>
@@ -54,6 +60,7 @@
 <style lang="scss">
     .catesMenu {
         font-size: 14px;
+        padding-bottom:0px !important;
         .parent-name {
             font-weight: 700;
             height: 30px;
@@ -65,6 +72,16 @@
             padding-left: 40px;
             .active a:link,.active a:visited{
                 color: #3ca5f6;
+            }
+        }
+        .cate-list-mob{
+            padding-left:10px;
+            .mulu{border-left:4px solid #FFC107;}
+            li{
+                padding: 0 10px;float:left;
+                font-weight: normal;
+                height: 22px;
+                line-height: 22px;
             }
         }
         .cate-list li {
