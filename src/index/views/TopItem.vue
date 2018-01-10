@@ -37,6 +37,7 @@
 </template>
 <style lang="scss">
     .content-item {
+        padding: 0 15px;
         .post-angle {
             position: absolute;
             left: -10px;
@@ -65,6 +66,7 @@
             overflow:hidden;
             img {
                 width: 100%;
+                border-radius: 30px;
             }
             margin-right: 30px;
             height: auto;
@@ -99,6 +101,7 @@
                 }
             }
             .title {
+                margin-top: 10px;
                 h2 {
                     margin: 0;
                     font-size: 18px;

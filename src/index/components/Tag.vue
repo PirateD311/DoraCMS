@@ -1,17 +1,30 @@
 <template>
-    <PannelBox title="标签云" className="content-tag">
-        <div class="content-tag-list">
-            <ul class="">
-                <li :key="item._id" v-for="(item,index) in tags" >
-                    <el-button size="mini" round @click="searchTag(item)">{{item.name}}</el-button>
-                    <!-- <router-link :to="'/tag/'+item.name">{{item.name}}</router-link> -->
-                </li>
-            </ul>
-
-            
-        </div>
-        <span style="font-size: 14px;float: right;padding-right: 40px;">PS:滚动有更多标签哦</span>
-    </PannelBox>
+    <div>
+        <PannelBox title="标签云" className="content-tag" style="display:none">
+            <div class="content-tag-list">
+                <ul class="">
+                    <li :key="item._id" v-for="(item,index) in tags" >
+                        <el-button size="mini" round @click="searchTag(item)">{{item.name}}</el-button>
+                        <!-- <router-link :to="'/tag/'+item.name">{{item.name}}</router-link> -->
+                    </li>
+                </ul>
+            </div>
+            <span style="font-size: 14px;float: right;padding-right: 40px;">PS:滚动有更多标签哦</span>
+        </PannelBox>  
+        <el-collapse v-model="isShowTags" @change="handleChange" class="content-tag">
+            <el-collapse-item title="标签云" name="1">
+                <div class="content-tag-list">
+                    <ul class="">
+                        <li :key="item._id" v-for="(item,index) in tags" >
+                            <el-button size="mini" round @click="searchTag(item)">{{item.name}}</el-button>
+                            <!-- <router-link :to="'/tag/'+item.name">{{item.name}}</router-link> -->
+                        </li>
+                    </ul>
+                </div>
+                <span style="font-size: 14px;float: right;padding-right: 40px;">PS:滚动有更多标签哦</span>
+            </el-collapse-item>
+        </el-collapse>  
+    </div>
 </template>
 <script>
     import {
@@ -24,9 +37,17 @@
         components: {
             PannelBox
         },
+        data(){
+            return {
+                activeNames:['1']
+            }
+        },
         methods: {
             searchTag(item) {
                 this.$router.push('/tag/' + item.name)
+            },
+            handleChange(val) {
+                console.log(val);
             }
         }
     }
@@ -35,7 +56,7 @@
 <style lang="scss">
     .content-tag {
         .pannel-title{display:block !important;margin-bottom: 0;}
-        
+        padding: 15px;
         ul {
             padding-top: 15px;
             li {

@@ -29,6 +29,8 @@ export default {
     adsList: state => state.ads.list,
     adsInfoForm: state => state.ads.infoFormState,
     adsItemForm: state => state.ads.itemFormState,
-    basicInfo: state => state.basicInfo
+    basicInfo: state => state.basicInfo,
+
+    tuijianList: state => state.tuijian.list,
 
 }

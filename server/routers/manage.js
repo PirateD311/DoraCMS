@@ -117,6 +117,7 @@ router.post('/content/updateOne', authToken, authPower, Content.updateContent)
 
 router.get('/content/deleteContent', authToken, authPower, Content.delContent)
 
+router.get('/content/tuijian', authToken, authPower, Content.getTuijianList)
 /**
  * tag管理
  */

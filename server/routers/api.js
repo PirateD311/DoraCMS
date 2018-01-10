@@ -107,6 +107,7 @@ router.get('/systemConfig/getConfig', (req, res, next) => { req.query.model = 's
 // 根据ID获取广告列表
 router.get('/ads/getOne', (req, res, next) => { req.query.state = true; next() }, Ads.getOneAd)
 
-
+// 获得推荐文章
+router.get('/content/tuijian',Content.getTuijianList)
 
 module.exports = router

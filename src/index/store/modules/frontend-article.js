@@ -97,6 +97,13 @@ const actions = {
         if (data.docs && data.state === 'success') {
             commit('receiveRecentList', data)
         }
+    },
+    async ['getTuijianList']({commit,state},config){
+        const {data} = await api.get('content/tuijian',{...config,})
+        console.log('----getTuijianList---', data);
+        if (data.docs && data.state === 'success') {
+            commit('receiveTuijianList', data)
+        }        
     }
 }
 
@@ -133,7 +140,10 @@ const mutations = {
     },
     ['receiveRecentList'](state, data) {
         state.recentContentList = data.docs
-    }
+    },
+    ['receiveTuijianList'](state, data) {
+        state.tuijianList = data.docs
+    }    
 }
 
 const getters = {
@@ -154,7 +164,11 @@ const getters = {
     },
     ['getRecentContentList'](state) {
         return state.recentContentList
-    }
+    },
+    ['getTuijianList'](state) {
+        return state.tuijianList
+    },    
+    
 }
 
 export default {

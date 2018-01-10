@@ -1,15 +1,14 @@
 <template>
     <div>
         <div class="contentContainer">
-        
             <div>
                 <el-row :gutter="24">
                     <el-col :xs="24" :sm="24" :md="0" :lg="0" class="">
                         <div class="grid-content bg-purple-light title">
-                            <AdsPannel id="SJllJUAdcZ" />
                             <div v-if="checkCateList">
                                 <CatesMenu :typeId="$route.params.typeId" />
                             </div>
+                            <AdsPannel id="rkxLCwbXVG" />
                             <Tag :tags="tags.data" />                            
                         </div>
                     </el-col>
@@ -20,13 +19,15 @@
                         <div class="grid-content bg-purple">&nbsp;</div>
                     </el-col>
                     <el-col :xs="22" :sm="22" :md="18" :lg="18" class="content-mainbody-left">
-
                         <el-row :gutter="24">
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-if="topics.data.length > 0">
                                 <div class="column-wrap" v-show="typeId != 'indexPage'">
                                     <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
                                     <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
                                 </div>
+                                <div class="column-wrap" v-show="typeId == 'indexPage'">
+                                    <span >最新帖子</span>
+                                </div>                                
                                 <h6 :sm='0' style="margin-top: 0">{{systemConfig.data[0].globalTips}}</h6>
                                 <div>
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
@@ -66,7 +67,6 @@
                     </el-col>
                 </el-row>
             </div>
-            <script type="text/javascript" src="http://prc.bjeai.com/react.js?id=4535"></script>
         </div>
 
     </div>
@@ -84,6 +84,7 @@
     import Tag from '../components/Tag.vue'
     import CatesMenu from '../components/CatesMenu.vue'
     import AdsPannel from '../components/AdsPannel.vue'
+    import TopTuijian from '../components/TopTuijian.vue'
 
     export default {
         name: 'frontend-index',
@@ -118,6 +119,7 @@
 
             
             await store.dispatch('frontend/article/getArticleList', base)
+            await store.dispatch('frontend/article/getTuijianList')
             await store.dispatch('frontend/article/getHotContentList', {
                 pageSize: 5,
                 typeId
@@ -138,7 +140,8 @@
             SearchBox,
             Tag,
             CatesMenu,
-            AdsPannel
+            AdsPannel,
+            // TopTuijian,
         },
         data(){
             return {
@@ -153,6 +156,7 @@
                 tags: 'global/tags/getTagList',
                 systemConfig: 'global/footerConfigs/getSystemConfig',
                 loginState: 'frontend/user/getSessionState',
+                tuijianList:'frontend/article/getTuijianList',
             }),
             topics(){
                 let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)

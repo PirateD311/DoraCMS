@@ -224,7 +224,9 @@ export default {
 
     delAds(params) {
         return reqJsonData('manage/ads/delete', params, 'get')
+    },
+
+    getTuijianList(params){
+        return reqJsonData('manage/content/tuijian',params,'get')
     }
-
-
 }

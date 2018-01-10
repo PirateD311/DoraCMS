@@ -181,7 +181,12 @@ pre {
     .content-mainbody-right {
         display: none;
     }
-}
+
+    .user-info form{width: 100% !important}
+    .user-info label{width: initial !important}
+    .user-info .el-form-item__content {margin-left: 0!important;display: inline-block}
+    .user-message .el-table__empty-block{width: initial!important}
+}   
 
 @media screen and (max-width:992px) {
     .content-item .post-angle{

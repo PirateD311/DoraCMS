@@ -393,6 +393,11 @@ export default {
         services.getSiteBasicInfo(params).then((result) => {
             commit(types.MAIN_SITEBASIC_INFO, result.data)
         })
+    },
+    async getTuijianList({commit},params = {}){
+        console.log('getTuijianList....')
+        let result = await services.getTuijianList(params)
+        commit(types.TUIJIAN_LIST,result.data)
     }
 
 }

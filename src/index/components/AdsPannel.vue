@@ -59,6 +59,7 @@ export default {
 }
 
 .img-pannel {
+    padding: 15px;
     img {
         width: 100%;
     }

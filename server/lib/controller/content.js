@@ -277,6 +277,7 @@ class Content {
                 discription: fields.discription,
                 comments: fields.comments,
                 isVip:fields.isVip,
+                tuijian:fields.tuijian,
             }
             const item_id = fields._id;
             try {
@@ -324,6 +325,43 @@ class Content {
         }
     }
 
+    async getTuijianList(req,res,next){
+        try{
+            // 条件配置
+            let queryObj = {tuijian:{$gt:0}}, sortObj = { tuijian: -1 }, files = null;
+            let current = req.query.current || 1;
+            let pageSize = req.query.pageSize || 10;
+            const contents = await ContentModel.find(queryObj, files).sort(sortObj).populate([{
+                path: 'author',
+                select: 'name -_id'
+            },
+            {
+                path: 'categories',
+                select: 'name defaultUrl _id'
+            }, {
+                path: 'tags',
+                select: 'name _id'
+            }]).exec();
+            const totalItems = await ContentModel.count(queryObj);
+            res.send({
+                state: 'success',
+                docs: contents,
+                pageInfo: {
+                    totalItems,
+                    current: Number(current) || 1,
+                    pageSize: Number(pageSize) || 10
+                }
+            })
+        }catch(err){
+            logUtil.error(err, req)
+            console.error(err)
+            res.send({
+                state: 'error',
+                type: 'ERROR_DATA',
+                message: '获取TuijianList失败'
+            })
+        }
+    }
 }
 
 module.exports = new Content();

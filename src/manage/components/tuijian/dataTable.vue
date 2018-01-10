@@ -20,9 +20,6 @@
             <el-table-column prop="from" label="来源" show-overflow-tooltip>
                 <template scope="scope">{{scope.row.from === '1'?'原创':'转载'}}</template>
             </el-table-column>
-            <el-table-column prop="from" label="推荐指数" show-overflow-tooltip>
-                <template scope="scope">{{scope.row.tuijian}}</template>
-            </el-table-column>
             <el-table-column prop="clickNum" label="点击" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="commentNum" label="评论数" show-overflow-tooltip>
@@ -36,9 +33,6 @@
             </el-table-column>
             <el-table-column label="操作" width="150" fixed="right">
                 <template scope="scope">
-                    <el-button size="mini" type="primary" plain round @click="tuijianContent(scope.$index, dataList)">
-                        <i class="fa fa-edit"></i>
-                    </el-button>
                     <el-button size="mini" type="primary" plain round @click="editContentInfo(scope.$index, dataList)">
                         <i class="fa fa-edit"></i>
                     </el-button>
@@ -111,34 +105,6 @@ export default {
                 formData: rowData
             });
             this.$router.push('/editContent/' + rowData._id);
-        },
-        tuijianContent(index,rows){
-            let rowData = rows[index];
-            this.$prompt('请输入推荐指数', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                inputPattern: /[0-5]/,
-                inputErrorMessage: '推荐指数格式不正确.[0,5]'
-            }).then(({ value })=>{
-                console.log('RowData:',rowData)
-                console.log('value:',value)
-                rowData.tuijian = parseInt(value)
-                return services.updateContent(rowData);
-            }).then(result => {
-                if (result.data.state === 'success') {
-                    this.$message({
-                        type: 'success',
-                        message: '推荐成功: '
-                    });
-                } else {
-                    this.$message.error(result.data.message);
-                }
-            }).catch(() => {
-            this.$message({
-                type: 'info',
-                message: '放弃推荐'
-            });       
-            });
         },
         topContent(index, rows) {
             let contentData = rows[index];

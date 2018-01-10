@@ -288,6 +288,9 @@ const state = {
         regUserCount: 0,
         contentCount: 0,
         messageCount: 0
+    },
+    tuijian:{
+        list:[]
     }
 }
 
@@ -549,6 +552,9 @@ const mutations = {
     },
     [types.MAIN_SITEBASIC_INFO](state, list) {
         state.basicInfo = list
+    },
+    [types.TUIJIAN_LIST](state,list){
+        state.tuijian.list = list
     }
 
 }
