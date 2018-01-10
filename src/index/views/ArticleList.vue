@@ -84,7 +84,7 @@
     import Tag from '../components/Tag.vue'
     import CatesMenu from '../components/CatesMenu.vue'
     import AdsPannel from '../components/AdsPannel.vue'
-    import TopTuijian from '../components/TopTuijian.vue'
+    
 
     export default {
         name: 'frontend-index',
@@ -119,7 +119,7 @@
 
             
             await store.dispatch('frontend/article/getArticleList', base)
-            await store.dispatch('frontend/article/getTuijianList')
+            
             await store.dispatch('frontend/article/getHotContentList', {
                 pageSize: 5,
                 typeId
@@ -156,7 +156,7 @@
                 tags: 'global/tags/getTagList',
                 systemConfig: 'global/footerConfigs/getSystemConfig',
                 loginState: 'frontend/user/getSessionState',
-                tuijianList:'frontend/article/getTuijianList',
+                
             }),
             topics(){
                 let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)

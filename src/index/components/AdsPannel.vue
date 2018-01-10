@@ -1,25 +1,27 @@
 <template>
-    <div class="content-ads" v-if="ads.data">
-        <div class="img-pannel" v-if="ads.data.type == '1'">
-            <div v-if="ads.data.items.length == 1">
-                <a :href="ads.data.items[0].link" target="_blank"><img :src="ads.data.items[0].sImg" :alt="ads.data.items[0].alt" /></a>
+    <div class="ads">
+        <div class="content-ads" v-if="ads.data">
+            <div class="img-pannel" v-if="ads.data.type == '1'">
+                <div v-if="ads.data.items.length == 1">
+                    <a :href="ads.data.items[0].link" target="_blank"><img :src="ads.data.items[0].sImg" :alt="ads.data.items[0].alt" /></a>
+                </div>
+                <div v-else>
+                    <el-carousel :height="ads.data.height+'px'">
+                        <el-carousel-item v-for="item in ads.data.items" :key="item._id">
+                            <h3>
+                                <a :href="item.link" target="_blank"><img :height="ads.data.height+'px'" :src="item.sImg" :alt="item.alt" /></a>
+                            </h3>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
             </div>
-            <div v-else>
-                <el-carousel :height="ads.data.height+'px'">
-                    <el-carousel-item v-for="item in ads.data.items" :key="item._id">
-                        <h3>
-                            <a :href="item.link" target="_blank"><img :height="ads.data.height+'px'" :src="item.sImg" :alt="item.alt" /></a>
-                        </h3>
-                    </el-carousel-item>
-                </el-carousel>
+            <div class="text-pannel" v-if="ads.data.type == '0'">
+                <ul>
+                    <li v-for="item in ads.data.items" :key="item._id">
+                        <a :href="item.link" target="_blank">{{item.title}}</a>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="text-pannel" v-if="ads.data.type == '0'">
-            <ul>
-                <li v-for="item in ads.data.items" :key="item._id">
-                    <a :href="item.link" target="_blank">{{item.title}}</a>
-                </li>
-            </ul>
         </div>
     </div>
 </template>
