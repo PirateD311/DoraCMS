@@ -7,6 +7,7 @@ const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../.
 const shortid = require('shortid');
 const validator = require('validator')
 const _ = require('lodash');
+const cheerio = require('cheerio')
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -162,7 +163,7 @@ class Content {
         try {
             let targetId = req.query.id;
             const content = await ContentModel.findOneAndUpdate({ _id: targetId }, { '$inc': { 'clickNum': 1 } }).populate([{
-                path: 'author',
+                path: 'author', 
                 select: 'name -_id'
             },
             {
@@ -227,7 +228,12 @@ class Content {
                 comments: fields.comments,
                 isVip:fields.isVip,
             }
-
+            //提取内容中所有图片
+            if(groupObj.comments){
+                let imgs = getAllImgUrl(groupObj.comments)
+                console.log('提取的所有图片:',imgs)
+                groupObj.images = imgs
+            }
             const newContent = new ContentModel(groupObj);
             try {
                 await newContent.save();
@@ -280,6 +286,12 @@ class Content {
                 tuijian:fields.tuijian,
             }
             const item_id = fields._id;
+            //提取内容中所有图片
+            if(contentObj.comments){
+                let imgs = getAllImgUrl(contentObj.comments)
+                console.log('提取的所有图片:',imgs)
+                contentObj.images = imgs
+            }
             try {
                 await ContentModel.findOneAndUpdate({ _id: item_id }, { $set: contentObj });
                 res.send({
@@ -362,6 +374,15 @@ class Content {
             })
         }
     }
-}
 
+
+}
+function getAllImgUrl(html){
+    let $ = cheerio.load(html)
+    let imgUrls = []
+    $('img').each((i,e)=>{
+        if($(e).attr('src'))imgUrls.push($(e).attr('src'))
+    })
+    return imgUrls
+}
 module.exports = new Content();

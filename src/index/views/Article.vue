@@ -155,7 +155,7 @@
             }
             return {
                 title,
-                titleTemplate: '%s | 前端开发俱乐部',
+                titleTemplate: '%s | 二次元福利社',
                 meta: [
                     { vmid: 'description', name: 'description', content: discription },
                     { vmid: 'keywords', name: 'keywords', content: tagArr.join() }

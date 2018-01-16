@@ -2,6 +2,8 @@
  * Created by Administrator on 2015/4/29.
  * 系统支持功能
  */
+const express = require('express');
+const router = express.Router();
 //阿里云oss
 const co = require('co');
 const OSS = require('ali-oss');
@@ -13,10 +15,25 @@ const client = new OSS({
 });
 
 
+//七牛云存储
+const qiniu = require("qiniu");
+const proc = require("process");
 
+var bucket = "fuli";
+var accessKey = "lK9Uwp5ECyaxikp2UsHAC5UrOWBdhmZx0NoOmisI";
+var secretKey = "LK8BVVbz-_8U4qdVCE4g5yOxfZ1eHCxRWNNGl0Ne";
+var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+var options = {
+  scope: bucket,
+}
+var putPolicy = new qiniu.rs.PutPolicy(options);
 
-const express = require('express');
-const router = express.Router();
+var uploadToken = putPolicy.uploadToken(mac);
+var config = new qiniu.conf.Config();
+var formUploader = new qiniu.form_up.FormUploader(config);
+var putExtra = new qiniu.form_up.PutExtra();
+//七牛云存储
+
 //文件上传类
 const formidable = require('formidable'),
     util = require('util'),
@@ -91,22 +108,43 @@ router.post('/upload',async function (req, res, next) {
         // if(settings.imgZip && (fileKey == 'ctTopImg' || fileKey == 'plugTopImg' || fileKey == 'userlogo')){
         //     res.end('/upload/smallimgs/'+newFileName);
         // }else{
-  
-        console.log('上传至阿里云,文件:',updatePath + newFileName)
-        co(function* () {
-            var result = yield client.put('small/'+newFileName, (updatePath + newFileName));
-            console.log('上传成功',result);
-            // res.end('/upload/images/' + newFileName);
-            res.end(result.url)
-        }).catch(function (err) {
-            console.log(err);
-        });
-            
+        if(1){
 
-        
-        
-        // }
+            let key = 'small/'+newFileName,
+                localFile = updatePath + newFileName
+            console.log('上传七牛:key:',key,'localFile:',localFile)
+            // 文件上传
+            formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
+            respBody, respInfo) {
+            // console.log('err:',respErr)
+            // console.log('respBody:',respBody)
+            // console.log('respInfo:',respInfo)
+            if (respErr) {
+                throw respErr;
+            }
 
+            if (respInfo.statusCode == 200) {
+                console.log(respBody);
+                let imgUrl = 'http://oz7btgiar.bkt.clouddn.com/'+respBody.key
+                console.log('上传成功:url:',imgUrl)
+                res.end(imgUrl)
+            } else {
+                console.log(respInfo.statusCode);
+                console.log(respBody);
+                res.end('')
+            }
+            });
+        }else{
+            console.log('上传至阿里云,文件:',updatePath + newFileName)
+            co(function* () {
+                var result = yield client.put('small/'+newFileName, (updatePath + newFileName));
+                console.log('上传成功',result);
+                // res.end('/upload/images/' + newFileName);
+                res.end(result.url)
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
 
     });
 

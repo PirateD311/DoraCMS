@@ -49,6 +49,7 @@
     "morgan": "^1.8.1",
     "nodemailer": "^4.0.1",
     "nprogress": "^0.2.0",
+    "qiniu": "^7.1.1",
     "serve-favicon": "^2.4.2",
     "shelljs": "^0.7.7",
     "shortid": "^2.2.8",

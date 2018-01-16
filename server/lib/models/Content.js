@@ -41,6 +41,8 @@ var ContentSchema = new Schema({
     isVip:{type:Boolean,default:false},//是否为vip可见
     isOverhead:{type: Boolean,default:false},//是否置顶
     tuijian:{type:Number,default:0,min:0,max:5},//推荐级别
+
+    images:[String],    //内容中的所有图片资源
     
 
 });

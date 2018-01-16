@@ -258,7 +258,7 @@ app.get('/manage', authSession, function (req, res) {
         let currentCates = manageCates ? JSON.stringify(manageCates) : [];
         if (isProd) {
             res.render('admin.html', {
-                title: 'DoraCMS后台管理',
+                title: '后台管理',
                 manageCates: currentCates
             })
         } else {
