@@ -21,9 +21,13 @@ const actions = {
         commit,
         state
     }, config) {
-        if (state.lists.data.length > 0 && config.path === state.lists.path) {
+        //拦截没什么变化的请求
+        if (state.lists.data.length > 0 && config.path === state.lists.path && !config.append) {
             return
         }
+        //拦截已经超出最大条目数的请求
+        console.log('lists:',state.lists)
+        if(state.lists.hasNext && state.lists.hasNext==='no')return
         const {
             data
         } = await api.get('content/getList', {
@@ -114,15 +118,28 @@ const mutations = {
         hasNext,
         hasPrev,
         page,
-        path
+        path,
+        append,
     }) {
-        state.lists = {
-            data: docs,
-            pageInfo,
-            hasNext,
-            hasPrev,
-            page,
-            path
+        if(append){
+            state.lists.data = [].concat(state.lists.data).concat(docs)
+            // state.lists.pageInfo = pageInfo
+            // state.lists.page = page
+            // state.lists.path = path
+            // state.lists.hasPrev = hasPrev
+            // state.lists.hasNext = hasNext
+            if(pageInfo.current*pageInfo.pageSize>=pageInfo.totalItems){
+                state.lists.hasNext = 'no'   
+            }
+        }else{
+            state.lists = {
+                data: docs,
+                pageInfo,
+                hasNext,
+                hasPrev,
+                page,
+                path
+            }
         }
     },
     ['receiveArticleItem'](state, {

@@ -32,7 +32,7 @@
                                 <div>
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
                                 </div>
-                                <div class="content-pagination">
+                                <div class="content-pagination" ref="pagination">
                                     <Pagination :pageInfo="topics.pageInfo" :typeId="typeId" />
                                 </div>
                             </el-col>
@@ -131,6 +131,7 @@
         mixins: [metaMixin],
         mounted(){
              scroll(0,0);
+             window.addEventListener('scroll', this.handleScroll);
              //window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
         },
         components: {
@@ -147,6 +148,7 @@
             return {
                 loading:false,
                 isVip:false,
+                aPage:1
             }
         },
         computed: {
@@ -155,8 +157,7 @@
                 hotlist: 'frontend/article/getHotContentList',
                 tags: 'global/tags/getTagList',
                 systemConfig: 'global/footerConfigs/getSystemConfig',
-                loginState: 'frontend/user/getSessionState',
-                
+                loginState: 'frontend/user/getSessionState',             
             }),
             topics(){
                 let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)
@@ -178,7 +179,37 @@
             
         },
         methods: {
-
+            async handleScroll(){
+                console.log('scrollY:',window.scrollY,'滚动条高度:',this.$refs.pagination.offsetTop)
+                // if(window.scrollY>this.$refs.pagination.offsetTop*0.9){
+                if(window.scrollY + window.innerHeight + 200 > document.body.offsetHeight){
+                        console.log('拉取')
+                        const {
+                            params: {
+                                id,
+                                key,
+                                tagName,
+                                current,
+                                typeId,
+                                searchkey
+                            },
+                            path
+                        } = this.$route
+                        const base = {
+                            current: ++this.aPage,
+                            model: 'normal',
+                            pageSize: 5,
+                            id,
+                            path,
+                            searchkey,
+                            tagName,
+                            typeId,
+                            append:true
+                        }
+                        console.log('开始拉取')
+                        await this.$store.dispatch('frontend/article/getArticleList', base);
+                }
+            }
         },
         async activated() {
             console.log('ArticleList Activated....');
@@ -206,13 +237,17 @@
                 current: 1
             })
         },
+        ready () {
+            console.log('handle ready')
+            window.addEventListener('scroll', this.handleScroll);
+        },
         created(){
             console.log('Article List Created...');
             
             // scroll(0,0);
         },
         metaInfo() {
-            
+        
             const systemData = this.systemConfig.data[0];
             const {
                 siteName,
