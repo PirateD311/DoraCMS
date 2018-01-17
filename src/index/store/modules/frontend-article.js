@@ -27,7 +27,7 @@ const actions = {
         }
         //拦截已经超出最大条目数的请求
         console.log('lists:',state.lists)
-        if(state.lists.hasNext && state.lists.hasNext==='no')return
+        if(config.path === state.lists.path && state.lists.hasNext && state.lists.hasNext==='no')return
         const {
             data
         } = await api.get('content/getList', {

@@ -33,7 +33,9 @@
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
                                 </div>
                                 <div class="content-pagination" ref="pagination">
-                                    <Pagination :pageInfo="topics.pageInfo" :typeId="typeId" />
+                                    <h5 v-if="topics.hasNext==='no'">没有更多内容了</h5>
+                                    <Pagination v-if="!loadMore" :pageInfo="topics.pageInfo" :typeId="typeId" />
+                                    <h5 v-else>{{"载入中。。。"}}</h5>
                                 </div>
                             </el-col>
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
@@ -148,7 +150,8 @@
             return {
                 loading:false,
                 isVip:false,
-                aPage:1
+                aPage:1,
+                loadMore:false,
             }
         },
         computed: {
@@ -180,10 +183,8 @@
         },
         methods: {
             async handleScroll(){
-                console.log('scrollY:',window.scrollY,'滚动条高度:',this.$refs.pagination.offsetTop)
-                // if(window.scrollY>this.$refs.pagination.offsetTop*0.9){
-                if(window.scrollY + window.innerHeight + 200 > document.body.offsetHeight){
-                        console.log('拉取')
+                if(window.scrollY + window.innerHeight + 300 > document.body.offsetHeight){
+                        this.loadMore = true
                         const {
                             params: {
                                 id,
@@ -208,6 +209,7 @@
                         }
                         console.log('开始拉取')
                         await this.$store.dispatch('frontend/article/getArticleList', base);
+                        this.loadMore = false
                 }
             }
         },

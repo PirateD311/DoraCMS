@@ -62,7 +62,7 @@
             border-left: 10px solid transparent;
         }
         .contentImg {
-            max-height:100px;
+            max-height:200px;
             overflow:hidden;
             img {
                 width: 100%;
