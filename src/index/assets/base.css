@@ -141,6 +141,7 @@ pre {
     .header .header-main .header-nav {
         border-left: none !important;
         margin-left: 0 !important;
+        font-size: 12px;
     }
     .footer .sitemap {
         display: none !important;
@@ -153,6 +154,7 @@ pre {
     }
     .content-tag {
         /*display: none;*/
+        padding: 0 15px !important;
     }
     .contentContainer{
         margin-top: 10px;
@@ -167,6 +169,7 @@ pre {
         /*padding-bottom: 15px !important;
         margin-bottom: 20px !important;*/
     }
+    .img-pannel{padding: 0 15px !important;}
     .content-item .contentImg {
         /*display: none !important;*/
         height: 100% !important;

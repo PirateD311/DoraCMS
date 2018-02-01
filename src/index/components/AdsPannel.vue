@@ -3,14 +3,18 @@
         <div class="content-ads" v-if="ads.data">
             <div class="img-pannel" v-if="ads.data.type == '1'">
                 <div v-if="ads.data.items.length == 1">
-                    <a :href="ads.data.items[0].link" target="_blank"><img :src="ads.data.items[0].sImg" :alt="ads.data.items[0].alt" /></a>
+                    <a :href="ads.data.items[0].link" ><img :src="ads.data.items[0].sImg" :alt="ads.data.items[0].alt" /></a>
                 </div>
                 <div v-else>
                     <el-carousel :height="ads.data.height+'px'">
                         <el-carousel-item v-for="item in ads.data.items" :key="item._id">
                             <h3>
-                                <a :href="item.link" target="_blank"><img :height="ads.data.height+'px'" :src="item.sImg" :alt="item.alt" /></a>
+                                <a :href="item.link" >
+                                <img :height="ads.data.height+'px'" :src="item.sImg" :alt="item.alt" />
+                                
+                                </a>
                             </h3>
+                            <div class="desc">{{item.alt}}</div>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -45,6 +49,19 @@ export default {
 </script>
 
 <style lang="scss">
+.content-ads{
+    .desc{
+    position: relative;
+    background-color: rgba(51, 51, 51, 0.38);
+    height: 18px;
+    top: -102%;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0 15%;
+    }
+}
 .el-carousel__item h3 {
     color: #475669;
     font-size: 18px;
