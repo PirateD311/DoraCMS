@@ -131,6 +131,7 @@ pre {
 }
 
 @media screen and (max-width:768px) {
+    body{overflow-x: hidden}
     .header .header-main {
         padding: 10px 0 !important;
     }
