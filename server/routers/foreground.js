@@ -9,7 +9,7 @@ const moment = require('moment');
 
 //配置站点地图和robots抓取
 router.get('/sitemap.xml', (req, res, next) => {
-  let root_path = 'https://www.html-js.cn';
+  let root_path = 'http://www.cosfuli.com';
   let priority = 0.8;
   let freq = 'weekly';
   let lastMod = moment().format('YYYY-MM-DD');
