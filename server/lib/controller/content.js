@@ -97,8 +97,10 @@ class Content {
             }
 
             if (searchkey) {
+                console.log('包括关键词.',searchkey)
                 let reKey = new RegExp(searchkey, 'i')
-                queryObj.comments = { $regex: reKey }
+                // queryObj.comments = { $regex: reKey }
+                queryObj.title = { $regex: reKey }
             }
 
             if (model === 'simple') {
