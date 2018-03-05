@@ -19,19 +19,10 @@ const client = new OSS({
 const qiniu = require("qiniu");
 const proc = require("process");
 
-var bucket = "fuli";
-var accessKey = "lK9Uwp5ECyaxikp2UsHAC5UrOWBdhmZx0NoOmisI";
-var secretKey = "LK8BVVbz-_8U4qdVCE4g5yOxfZ1eHCxRWNNGl0Ne";
-var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
-var options = {
-  scope: bucket,
-}
-var putPolicy = new qiniu.rs.PutPolicy(options);
+const bucket = "fuli";
+const accessKey = "lK9Uwp5ECyaxikp2UsHAC5UrOWBdhmZx0NoOmisI";
+const secretKey = "LK8BVVbz-_8U4qdVCE4g5yOxfZ1eHCxRWNNGl0Ne";
 
-var uploadToken = putPolicy.uploadToken(mac);
-var config = new qiniu.conf.Config();
-var formUploader = new qiniu.form_up.FormUploader(config);
-var putExtra = new qiniu.form_up.PutExtra();
 //七牛云存储
 
 //文件上传类
@@ -109,10 +100,19 @@ router.post('/upload',async function (req, res, next) {
         //     res.end('/upload/smallimgs/'+newFileName);
         // }else{
         if(1){
+            let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+            let options = {
+            scope: bucket,
+            }
+            let putPolicy = new qiniu.rs.PutPolicy(options);
+            let uploadToken = putPolicy.uploadToken(mac);
+            let config = new qiniu.conf.Config();
+            let formUploader = new qiniu.form_up.FormUploader(config);
+            let putExtra = new qiniu.form_up.PutExtra();            
 
             let key = 'small/'+newFileName,
                 localFile = updatePath + newFileName
-            console.log('上传七牛:key:',key,'localFile:',localFile)
+            console.log('上传七牛:key:',key,'localFile:',localFile,'Token:',uploadToken)
             // 文件上传
             formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
             respBody, respInfo) {
