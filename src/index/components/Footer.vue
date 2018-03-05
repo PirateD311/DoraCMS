@@ -3,13 +3,14 @@
         <div class="container text-left" v-once>
             <ul>
                 <li>&nbsp;
-                    <a  rel="nofollow" target="_blank" title="代码在这里">{{codeVersion}}
-                    </a>&nbsp;Copyright (c) 2017 &nbsp;
+                    <a rel="nofollow" style="display:none" target="_blank" title="代码在这里">{{codeVersion}}</a>
+                    <router-link to="/sitemap.html" class="">站点地图</router-link>&nbsp;&nbsp;&nbsp;
+                    &nbsp;Copyright (c) 2018 &nbsp;
                     <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">
                         {{systemConfig.data[0].registrationNo}}
                     </a> All Rights Reserved</li>
-                <li class="sitemap">
-                    <router-link to="/sitemap.html" class="">站点地图</router-link>&nbsp;
+                <li class="sitemap">       
+                    <a class="">友情链接:</a><a href="http://www.zhainanfulishe.net">&nbsp;宅男福利社&nbsp;</a>
                 </li>
             </ul>
         </div>
