@@ -269,6 +269,54 @@ app.get('/manage', authSession, function (req, res) {
 });
 app.use('/manage', manage);
 
+//测试并打印get的接口
+const qqwry = require('lib-qqwry').init();
+qqwry.speed();
+router.get('/test/get',async function(req,res,next){
+    try{
+        console.log('####################   Get请求测试   ####################');
+        let client = {
+            ip:getRemoteIp(req),
+            time:new Date().toLocaleTimeString()
+        }
+        client.area = qqwry.searchIP(client.ip)
+        // const rq = require('request-promise')
+        // let resp = await rq('http://ip.taobao.com/service/getIpInfo.php?ip='+client.ip)
+        // console.log('查询ip详情',JSON.parse(resp))
+        // client.area = JSON.parse(resp).data
+        console.log('客户端信息：',client)
+        openCrossDomain(res,null,true)
+        res.send(client)
+    }catch(err){
+        console.log('错误!',err)
+    }
+
+    function getRemoteIp(req){
+        console.log(req.headers['x-real-ip']);
+        console.log(req.headers['x-forwarded-for']);
+        console.log(req.connection.remoteAddress);
+        console.log(req.socket.remoteAddress);
+
+        return req.headers['x-real-ip']
+            ||req.headers['x-forwarded-for']
+            ||req.connection.remoteAddress
+            ||req.socket.remoteAddress
+            ||req.connection.socket.remoteAddress;
+    }
+    function openCrossDomain(res,HostList,sysCall){
+        if( sysCall){
+            HostList = HostList || '*';
+            res.header("Access-Control-Allow-Origin", HostList);
+            res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+            res.header("Access-Control-Allow-Methods","GET, POST, OPTIONS, PUT, PATCH, DELETE");
+            // res.header("X-Powered-By",' 3.2.1');
+            // res.header("Content-Type", "application/json;charset=utf-8");
+            res.header('Access-Control-Allow-Credentials', true);
+            console.log('跨域请求已开启！');
+        }
+    }    
+});
+
 // 404 页面
 app.get('*', (req, res) => {
     res.send('HTTP STATUS: 404')
