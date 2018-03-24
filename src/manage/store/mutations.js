@@ -291,7 +291,9 @@ const state = {
     },
     tuijian:{
         list:[]
-    }
+    },
+    crawlerList:[],
+    crawlerTaskDetail:{},
 }
 
 const mutations = {
@@ -555,7 +557,14 @@ const mutations = {
     },
     [types.TUIJIAN_LIST](state,list){
         state.tuijian.list = list
+    },
+    [types.CRAWLER_LIST](state,list){
+        state.crawlerList = list.docs
+    },
+    [types.CRAWLER_TASK_DETAIL](state,data){
+        state.crawlerTaskDetail = data
     }
+
 
 }
 

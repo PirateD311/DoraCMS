@@ -14,7 +14,7 @@ const {
 } = require('../../utils');
 const authUser = require('../../utils/middleware/authUser');
 
-const { AdminUser, ContentCategory, Content, ContentTag, User, Message, SystemConfig, UserNotify, Ads } = require('../lib/controller');
+const { AdminUser, ContentCategory, Content, ContentTag, User, Message, SystemConfig, UserNotify, Ads} = require('../lib/controller');
 const _ = require('lodash');
 function checkUserSession(req, res, next) {
   if (!_.isEmpty(req.session.user)) {
@@ -109,5 +109,6 @@ router.get('/ads/getOne', (req, res, next) => { req.query.state = true; next() }
 
 // 获得推荐文章
 router.get('/content/tuijian',Content.getTuijianList)
+
 
 module.exports = router

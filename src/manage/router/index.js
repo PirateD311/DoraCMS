@@ -13,6 +13,7 @@ import ContentForm from '../components/content/contentForm'
 import ContentTag from '../components/contentTag/index'
 import ContentMessage from '../components/contentMessage/index'
 import RegUser from '../components/regUser/index'
+import Crawler from '../components/crawler/index'
 import Axios from "axios";
 import _ from 'lodash';
 Vue.use(Router)
@@ -61,6 +62,7 @@ function renderLeftMenu() {
     let renderChildren = (childrenArr) => {
       if (childrenArr && childrenArr.length > 0) {
         (item.children).map((child, index) => {
+          console.log('Nav!!!!->',child)
           childrenMenu.push({
             path: '/' + child.routePath,
             component: resolve => require(['../components/' + child.componentPath], resolve),

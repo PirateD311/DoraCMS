@@ -15,7 +15,8 @@ const {
   SystemOptionLog,
   UserNotify,
   Notify,
-  Ads
+  Ads,
+  Crawler
 } = require('../lib/controller');
 const {
   service,
@@ -216,6 +217,11 @@ router.post('/ads/updateOne', authToken, authPower, Ads.updateAds);
 
 // 删除广告
 router.get('/ads/delete', authToken, authPower, Ads.delAds);
-
+//爬虫相关的
+router.get('/crawler',Crawler.getCrawlerTasks);
+router.post('/crawler',Crawler.createCrawlerTask);
+router.get('/crawler/:name',(req,res,next)=>{req.query.name = req.query.name||req.params.name;next();},Crawler.getCrawlerTask);
+router.get('/crawler/do/execute',Crawler.execulateTask);
+router.get('/crawler/do/testTask',Crawler.testTask);
 
 module.exports = router

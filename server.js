@@ -272,7 +272,7 @@ app.use('/manage', manage);
 //测试并打印get的接口
 const qqwry = require('lib-qqwry').init();
 qqwry.speed();
-router.get('/test/get',async function(req,res,next){
+app.get('/test/get',async function(req,res,next){
     try{
         console.log('####################   Get请求测试   ####################');
         let client = {
@@ -280,10 +280,6 @@ router.get('/test/get',async function(req,res,next){
             time:new Date().toLocaleTimeString()
         }
         client.area = qqwry.searchIP(client.ip)
-        // const rq = require('request-promise')
-        // let resp = await rq('http://ip.taobao.com/service/getIpInfo.php?ip='+client.ip)
-        // console.log('查询ip详情',JSON.parse(resp))
-        // client.area = JSON.parse(resp).data
         console.log('客户端信息：',client)
         openCrossDomain(res,null,true)
         res.send(client)

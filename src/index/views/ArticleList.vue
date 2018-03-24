@@ -28,7 +28,7 @@
                                 <div class="column-wrap" v-show="typeId == 'indexPage'">
                                     <span >最新帖子</span>
                                 </div>                                
-                                <h6 :sm='0' style="margin-top: 0">{{systemConfig.data[0].globalTips}}</h6>
+                                <h6 :sm='0' style=" margin-top: 0px;background-color: #fff57e;padding: 5px 5px;">{{systemConfig.data[0].globalTips}}</h6>
                                 <div>
                                     <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
                                 </div>

@@ -32,5 +32,7 @@ export default {
     basicInfo: state => state.basicInfo,
 
     tuijianList: state => state.tuijian.list,
+    crawlerList:state =>state.crawlerList,
+    crawlerTaskDetail:state =>state.crawlerTaskDetail,
 
 }

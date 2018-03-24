@@ -398,6 +398,15 @@ export default {
         console.log('getTuijianList....')
         let result = await services.getTuijianList(params)
         commit(types.TUIJIAN_LIST,result.data)
+    },
+    async getCrawlerList({commit},params = {}){
+        console.log('getCrawlerList....')
+        let result = await services.getCrawlerList(params)
+        commit(types.CRAWLER_LIST,result.data)
+    },
+    async getCrawlerTask({commit},params={}){
+        let result = await services.crawlerDetail(params)
+        commit(types.CRAWLER_TASK_DETAIL,result.data)
     }
 
 }

@@ -228,5 +228,24 @@ export default {
 
     getTuijianList(params){
         return reqJsonData('manage/content/tuijian',params,'get')
-    }
+    },
+
+    getCrawlerList(params){
+        return reqJsonData('manage/crawler',params,'get')
+    },
+
+    getOneCrawlerTask(params){
+        return reqJsonData('manage/crawler/'+params.name,params,'get')
+    },
+
+    excCrawlerTask(params){
+        return reqJsonData('manage/crawler/do/execute',params,'get')
+    },
+
+    createCrawlerTask(params){
+        return reqJsonData('manage/crawler',params,'post')
+    },
+    testCrawlerTask(params){
+        return reqJsonData('manage/crawler/do/testTask',params,'get')
+    }    
 }

@@ -59,8 +59,11 @@
 </script>
 <style lang="scss">
     .catesMenu {
+        background: #fff;
+        border-radius:15px;
+        padding: 10px!important;
+        margin-bottom: 10px;       
         font-size: 14px;
-        padding-bottom:0px !important;
         .parent-name {
             font-weight: 700;
             height: 30px;

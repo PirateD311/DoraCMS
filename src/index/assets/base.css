@@ -6,6 +6,9 @@ html, body {
     -webkit-font-smoothing: antialiased;
     color: rgb(51, 51, 51);
     font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+    background: url(http://scimg.jb51.net/allimg/140804/10-140P4164I31K.jpg)!important;
+    background-size: cover!important;
+    background-attachment: fixed!important;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -83,6 +86,7 @@ pre {
     margin-bottom: 10px;
 }
 
+
 .normaltitle span {
     background-color: #409EFF;
     height: 30px;
@@ -129,6 +133,13 @@ pre {
     -o-filter: blur(2.5px);
     -ms-filter: blur(2.5px);
     filter: blur(2.5px); 
+}
+
+.card-boder{
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 5px 5px;
+    background: #fff;
 }
 
 @media screen and (max-width:768px) {
@@ -191,6 +202,7 @@ pre {
     .user-info label{width: initial !important}
     .user-info .el-form-item__content {margin-left: 0!important;display: inline-block}
     .user-message .el-table__empty-block{width: initial!important}
+    
 }   
 
 @media screen and (max-width:992px) {
@@ -200,6 +212,8 @@ pre {
     .content-item .contentImg {
         /*display: none !important;*/
     }
+    .catesMenu{border-radius: 0px!important}
+    .content-tag {margin: 0 15px !important}
 }
 
 @media only screen and (max-width:767px){.hidden-xs-only{display:none!important}}@media only screen and (min-width:768px){.hidden-small-and-up{display:none!important}}@media only screen and (min-width:768px) and (max-width:991px){.hidden-sm-only{display:none!important}}@media only screen and (max-width:991px){.hidden-sm-and-down{display:none!important}}@media only screen and (min-width:992px){.hidden-md-and-up{display:none!important}}@media only screen and (min-width:992px) and (max-width:1199px){.hidden-md-only{display:none!important}}@media only screen and (max-width:1199px){.hidden-md-and-down{display:none!important}}@media only screen and (min-width:1200px){.hidden-lg-and-up{display:none!important}}@media only screen and (min-width:1200px) and (max-width:1919px){.hidden-lg-only{display:none!important}}@media only screen and (max-width:1919px){.hidden-lg-and-down{display:none!important}}@media only screen and (min-width:1920px){.hidden-xl-only{display:none!important}}

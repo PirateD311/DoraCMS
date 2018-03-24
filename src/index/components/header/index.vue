@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header class="header ">
         <el-row :gutter="0" class="header-main">
             <el-col :xs="1" :sm="1" :md="3" :lg="3">
                 <div class="grid-content bg-purple">&nbsp;</div>
@@ -141,6 +141,8 @@ export default {
 </script>
 <style lang="scss">
 .header {
+    border-bottom: 2px solid #FFC107;
+    background-color: snow;
     overflow: hidden;
     border-bottom: 1px solid #f1f1f1;
     .header-main {

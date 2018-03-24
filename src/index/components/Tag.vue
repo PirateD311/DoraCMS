@@ -55,9 +55,13 @@
 
 <style lang="scss">
     .content-tag {
+        background: #fff;
+        border-radius: 15px;
         .pannel-title{display:block !important;margin-bottom: 0;}
         padding: 15px;
         ul {
+            background: #fff;
+            border-radius: 15px;
             padding-top: 15px;
             li {
                 float: left;

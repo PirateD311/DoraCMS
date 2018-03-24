@@ -3,6 +3,11 @@
         border-bottom: 1px solid #f0f0f0;
         margin-bottom: 20px;
         padding: 0px 0px 10px;
+
+        border: 1px;
+        border-radius: 15px;
+        padding: 5px 5px;
+        background: #fff;
     }
 
     .post-b:last-child {
@@ -10,7 +15,7 @@
     }
 </style>
 <template>
-    <div class="post-b">
+    <div class="post-b ">
         <TopItem :item="item" :key="item._id" />
     </div>
 </template>

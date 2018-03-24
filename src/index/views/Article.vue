@@ -2,13 +2,13 @@
     <div>
         <div class="content-detail">
             <div class="readme">
-                <el-row :gutter="0" class="header-main">
-                    <el-col :xs="1" :sm="1" :md="3" :lg="3">
+                <el-row :gutter="10" class="header-main">
+                    <el-col :xs="2" :sm="2" :md="3" :lg="3">
                         <div class="grid-content bg-purple">&nbsp;</div>
                     </el-col>
-                    <el-col :xs="22" :sm="22" :md="18" :lg="18">
+                    <el-col :xs="20" :sm="20" :md="18" :lg="18" class="main-content">
                         <el-row :gutter="24">
-                            <el-col :xs="24" :sm="17" :md="17" :lg="17">
+                            <el-col :xs="24" :sm="17" :md="17" :lg="17" >
                                 <div>
                                     <h2 class="content-title">{{article.doc.title}}</h2>
                                     <div class="content-author">
@@ -49,7 +49,7 @@
                             </el-col>
                         </el-row>
                     </el-col>
-                    <el-col :xs="1" :sm="1" :md="3" :lg="3">
+                    <el-col :xs="2" :sm="2" :md="3" :lg="3">
                         <div class="grid-content bg-purple">&nbsp;</div>
                     </el-col>
                 </el-row>
@@ -167,6 +167,11 @@
 </script>
 <style lang="scss">
 .content-detail {
+    .main-content{    
+        border-radius: 15px;
+        background-color: #fff;
+        padding: 15px;
+    }
     color: #3f3f3f;
     margin-top: 20px;
     img {

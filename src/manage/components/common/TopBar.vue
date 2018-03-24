@@ -44,6 +44,9 @@
             <div v-else-if="type === 'ads'">
                 <el-button type="primary" size="small" plain round @click="addAds"><i class="fa fa-fw fa-plus"></i></el-button>
             </div>
+            <div v-else-if="type === 'crawler'">
+                <el-button type="primary" size="small" plain round @click="addCrawler"><i class="fa fa-fw fa-plus"></i></el-button>
+            </div>            
         </div>
         <div class="dr-searchInput">
            <el-form>
@@ -165,6 +168,13 @@ export default {
                 formData:{}
             });
             this.$router.push('/addAds');
+        },
+        addCrawler(){
+            //  this.$store.dispatch('adsInfoForm', {
+            //     edit: false,
+            //     formData:{}
+            // });
+            this.$router.push('/addCrawler');           
         },
         addSysAnnounce() {
             this.$store.dispatch('showContentForm');

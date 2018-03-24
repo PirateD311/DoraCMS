@@ -1,0 +1,29 @@
+{
+  "name": "宅男图库",
+  "articleTasks": [],
+  "opt": {
+    "name": "宅男图库",
+    "articleList": [
+      "https://www.zhainanfulishe.net/tuku"
+    ],
+    "articleUrlMatch": {
+      "type": "jquery",
+      "value": ".home-blog-entry-text h3 a"
+    },
+    "articleTitleMatch": {
+      "type": "jquery",
+      "value": "#breadcrumbs h1"
+    },
+    "articleContentMatch": {
+      "type": "jquery",
+      "value": ".single-text"
+    },
+    "reload": false
+  },
+  "info": {
+    "step": "",
+    "startTime": "",
+    "stopTime": "",
+    "running": false
+  }
+}

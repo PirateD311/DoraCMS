@@ -38,6 +38,9 @@
 <style lang="scss">
     $borderColor:#409eff;
     .hot-content-list {
+        background: #fff;
+        border-radius: 15px;
+        padding:10px;
         margin-bottom: 30px;
         .content-list {
             text-align: left;

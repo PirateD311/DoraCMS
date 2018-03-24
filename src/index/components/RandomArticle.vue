@@ -1,9 +1,9 @@
 <template>
 
     <div class="random-articls" v-if="articles && articles.length > 0">
-        <el-row class="grid-content bg-purple-light" :gutter="15">
-            <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(item,index) in articles" :key="index">
-                <router-link :to="'/details/'+item._id+'.html'" class="continue-reading"><img :src="item.sImg" :alt="item.title" /></router-link>
+        <el-row class="grid-content bg-purple-light" :gutter="5">
+            <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(item,index) in articles" :key="index" class="item">
+                <router-link :to="'/details/'+item._id+'.html'" class="continue-reading"><img  :src="item.sImg" :alt="item.title" /></router-link>
                 <span class="title">{{item.stitle}}</span>
             </el-col>
         </el-row>
@@ -36,6 +36,7 @@
             text-align: center;
             padding: 10px;
         }
+        .item{img{height:150px;width:100%}}
     }
 
 </style>

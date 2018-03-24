@@ -2,10 +2,10 @@
     <div class="ads">
         <div class="content-ads" v-if="ads.data">
             <div class="img-pannel" v-if="ads.data.type == '1'">
-                <div v-if="ads.data.items.length == 1">
+                <div v-if="ads.data.items.length == 1" class="box">
                     <a :href="ads.data.items[0].link" ><img :src="ads.data.items[0].sImg" :alt="ads.data.items[0].alt" /></a>
                 </div>
-                <div v-else>
+                <div v-else class="box">
                     <el-carousel :height="ads.data.height+'px'">
                         <el-carousel-item v-for="item in ads.data.items" :key="item._id">
                             <h3>
@@ -61,6 +61,9 @@ export default {
     line-height: 18px;
     margin: 0 15%;
     }
+    .box{    border-radius: 30px;
+    overflow: hidden;}
+    margin-bottom: 10px;
 }
 .el-carousel__item h3 {
     color: #475669;
