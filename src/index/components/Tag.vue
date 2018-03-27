@@ -39,7 +39,8 @@
         },
         data(){
             return {
-                activeNames:['1']
+                activeNames:['1'],
+                isShowTags:true
             }
         },
         methods: {

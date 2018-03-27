@@ -37,7 +37,7 @@
 </template>
 <style lang="scss">
     .content-item {
-        padding: 0 15px;
+        padding: 5px;
         .post-angle {
             position: absolute;
             left: -10px;
@@ -66,7 +66,7 @@
             overflow:hidden;
             img {
                 width: 100%;
-                border-radius: 30px;
+                border-radius: 15px;
             }
             margin-right: 30px;
             height: auto;
@@ -88,6 +88,7 @@
         }
         .discription {
             text-align: left;
+            padding:0px 10px;
             .post-meta {
                 a:link,
                 a:visited {

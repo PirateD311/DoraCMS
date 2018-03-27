@@ -6,7 +6,7 @@
 
         border: 1px;
         border-radius: 15px;
-        padding: 5px 5px;
+        padding: 0px;
         background: #fff;
     }
 

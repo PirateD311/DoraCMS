@@ -5,15 +5,22 @@
                 <el-row :gutter="24">
                     <el-col :xs="24" :sm="24" :md="0" :lg="0" class="">
                         <div class="grid-content bg-purple-light title">
+                            <AdsPannel id="rkxLCwbXVG" />
                             <div v-if="checkCateList">
                                 <CatesMenu :typeId="$route.params.typeId" />
                             </div>
-                            <AdsPannel id="rkxLCwbXVG" />
+                            
                             <Tag :tags="tags.data" />                            
                         </div>
                     </el-col>
                 </el-row>
-
+                <el-row>
+                    <el-col :xs="0" :md="3"><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                    <el-col :xs="0" :md="18"> 
+                        <AdsPannel id="rkxLCwbXVG" />
+                    </el-col>
+                    <el-col :xs="0" :md="3"><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                </el-row>
                 <el-row :gutter="0">
                     <el-col :xs="1" :sm="1" :md="3" :lg="3">
                         <div class="grid-content bg-purple">&nbsp;</div>
@@ -54,11 +61,12 @@
                             </el-col>
                             <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
-                                    <AdsPannel id="SJllJUAdcZ" />
+                                    
                                     <div v-if="checkCateList">
                                         <CatesMenu :typeId="$route.params.typeId" />
                                     </div>
                                     <Tag :tags="tags.data" />
+                                    <br>
                                     <HotContents :hotItems="hotlist" :typeId="$route.params.typeId" v-if="hotlist.length > 0" />
                                 </div>
                             </el-col>
