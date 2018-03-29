@@ -8,8 +8,7 @@
                             <AdsPannel id="rkxLCwbXVG" />
                             <div v-if="checkCateList">
                                 <CatesMenu :typeId="$route.params.typeId" />
-                            </div>
-                            
+                            </div>                           
                             <Tag :tags="tags.data" />                            
                         </div>
                     </el-col>
@@ -28,17 +27,20 @@
                     <el-col :xs="22" :sm="22" :md="18" :lg="18" class="content-mainbody-left">
                         <el-row :gutter="24">
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-if="topics.data.length > 0">
-                                <div class="column-wrap" v-show="typeId != 'indexPage'">
+                                <div class="column-wrap" v-if="typeId != 'indexPage'">
                                     <span v-if="$route.params.tagName">{{'标签：' + $route.params.tagName}}</span>
                                     <span v-else>{{typeId == 'search' ? '搜索：' + $route.params.searchkey : currentCate.name}}</span>
                                 </div>
-                                <div class="column-wrap" v-show="typeId == 'indexPage'">
-                                    <span >最新帖子</span>
-                                </div>                                
+                                <div class="column-wrap" v-if="typeId == 'indexPage'">
+                                    <span v-bind:class="{ 'tab-selected': showTab===1 }" @click="showTab=1">最新帖子</span>  
+                                    <span v-bind:class="{ 'tab-selected': showTab===2 }" @click="showTab=2">最热帖子</span>                                 
+                                </div>                                                                  
                                 <h6 :sm='0' style=" margin-top: 0px;background-color: #fff57e;padding: 5px 5px;">{{systemConfig.data[0].globalTips}}</h6>
-                                <div>
-                                    <ItemList v-for="item in topics.data" :item="item" :key="item._id" />
+                                <div v-if="typeId == 'indexPage'">
+                                    <ItemList v-if="showTab===1" v-for="item in topics.data" :item="item" :key="item._id" />
+                                    <ItemList v-if="showTab===2" v-for="item in hotlist" :item="item" :key="item._id" />
                                 </div>
+                                <div v-else><ItemList v-for="item in topics.data" :item="item" :key="item._id" /></div>
                                 <div class="content-pagination" ref="pagination">
                                     <h5 v-if="topics.hasNext==='no'">没有更多内容了</h5>
                                     <Pagination v-if="!loadMore" :pageInfo="topics.pageInfo" :typeId="typeId" />
@@ -60,8 +62,7 @@
           
                             </el-col>
                             <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
-                                <div class="grid-content bg-purple-light title">
-                                    
+                                <div class="grid-content bg-purple-light title">                             
                                     <div v-if="checkCateList">
                                         <CatesMenu :typeId="$route.params.typeId" />
                                     </div>
@@ -160,6 +161,7 @@
                 isVip:false,
                 aPage:1,
                 loadMore:false,
+                showTab:1,
             }
         },
         computed: {
@@ -214,7 +216,8 @@
                             tagName,
                             typeId,
                             append:true
-                        }
+                        }                       
+
                         console.log('开始拉取')
                         await this.$store.dispatch('frontend/article/getArticleList', base);
                         this.loadMore = false
@@ -256,8 +259,7 @@
             
             // scroll(0,0);
         },
-        metaInfo() {
-        
+        metaInfo() {     
             const systemData = this.systemConfig.data[0];
             const {
                 siteName,
@@ -306,6 +308,7 @@
 
 <style lang="scss">
     .column-wrap {
+        margin-top: 5px;
         position: relative;
         height: 30px;
         line-height: 30px;
@@ -313,8 +316,9 @@
         color: #303030;
         padding-left: 18px;
         margin-bottom: 15px;
+        cursor: pointer;
     }
-
+    .tab-selected {border: 1px solid #2196F3;color: #2196F3;padding: 2px;}
     .column-wrap:before {
         content: '';
         position: absolute;

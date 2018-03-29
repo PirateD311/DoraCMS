@@ -78,8 +78,9 @@ const actions = {
         } = await api.get('content/getSimpleListByParams', {
                 ...config,
                 sortby: 'clickNum',
-                model: 'simple',
-                cache: true
+                model: 'normal',
+                cache: true,
+                pageSize:10
             })
         // console.log('----getSimpleListByParams---', data);
         if (data.docs && data.state === 'success') {
