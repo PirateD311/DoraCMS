@@ -5,17 +5,17 @@
                 <el-row :gutter="24">
                     <el-col :xs="24" :sm="24" :md="0" :lg="0" class="">
                         <div class="grid-content bg-purple-light title">
-                            <AdsPannel id="rkxLCwbXVG" />
+                            <AdsPannel v-once id="rkxLCwbXVG" />
                             <div v-if="checkCateList">
                                 <CatesMenu :typeId="$route.params.typeId" />
                             </div>                           
-                            <Tag :tags="tags.data" />                            
+                            <Tag v-once :tags="tags.data" />                            
                         </div>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :xs="0" :md="3"><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                    <el-col :xs="0" :md="18"> 
+                    <el-col v-once :xs="0" :md="18"> 
                         <AdsPannel id="rkxLCwbXVG" />
                     </el-col>
                     <el-col :xs="0" :md="3"><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -157,7 +157,7 @@
         },
         data(){
             return {
-                loading:false,
+                fullscreenLoading :false,
                 isVip:false,
                 aPage:1,
                 loadMore:false,
@@ -174,7 +174,7 @@
             }),
             topics(){
                 let list =  this.$store.getters['frontend/article/getArticleList'](this.$route.path)
-                this.loading = list.loading;
+                this.fullscreenLoading = list.loading;
                 return list;
             },
             typeId() {

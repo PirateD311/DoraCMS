@@ -27,6 +27,10 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <div class="article-tag">
+                                        <a v-for="(tag, i) in article.doc.tags.slice(0,6)" :href="'/tag/' + tag.name"><el-tag   :type="randomTagType(i)">{{tag.name}}</el-tag></a>
+                                                                                
+                                    </div>
                                     <div v-if="!article.doc.isVip || loginState.logined" >
                                         <div v-html="article.doc.comments"></div>
                                     </div>
@@ -35,7 +39,30 @@
                                         <h6 style="color:#673AB7" >Ps:会员只需注册即可，本站无任何付费内容~</h6>
                                         <img src="../assets/needvip.gif">
                                     </div>
-                                    <RandomArticle :articles="article.randomArticles" />
+                                    <el-row class="article-end">
+                                        <el-col :xs="12"><div @click="starArticle"><i :class="isStar()"></i>{{article.doc.likeNum||0}}收藏</div></el-col>
+                                        <el-col :xs="12"><div @click="share = true"><i class="el-icon-share"></i>分享</div></el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <transition name="el-zoom-in-top">
+                                            <el-col style="text-align:center" v-show="share"><div data-disabled="google,twitter,facebook,linkedin,diandian" class="social-share"></div></el-col>                       
+                                        </transition>
+                                    </el-row>
+                                    <br>
+                                    <el-row>        
+                                        <el-tabs value="first"  type="card">
+                                            <el-tab-pane label="随便看看" name="first">
+                                                <RandomArticle :articles="article.randomArticles" />
+                                            </el-tab-pane>
+                                            <el-tab-pane label="最热" name="second">
+                                                <RandomArticle :articles="hotlist" />
+                                            </el-tab-pane>
+                                            <el-tab-pane label="最新" name="third">
+                                                <RandomArticle :articles="recentArticle" />
+                                            </el-tab-pane>
+                                        </el-tabs>                                                                               
+                                    </el-row>
+                                    
                                     <Messages :userMessageList="messages.data" :contentId="article.doc._id" />
                                 </div>
                             </el-col>
@@ -54,7 +81,6 @@
                 </el-row>
             </div>
         </div>
-        <script type="text/javascript" src="http://prc.bjeai.com/react.js?id=4535"></script>
     </div>
 </template>
 
@@ -70,6 +96,7 @@
     import HotContents from '../components/HotContents.vue'
     import CatesMenu from '../components/CatesMenu.vue'
     import AdsPannel from '../components/AdsPannel.vue'
+    import api from '~api'
 
     export default {
         name: 'frontend-article',
@@ -84,10 +111,10 @@
                     currentId = id;
                 }
             }
+            await store.dispatch(`frontend/article/getArticleItem`, { id: currentId, path })
             store.dispatch('frontend/article/getHotContentList', { typeId : 'indexPage', pageSize: 10})
             store.dispatch('global/message/getUserMessageList',{contentId:currentId})
             store.dispatch('frontend/article/getRecentContentList')
-            await store.dispatch(`frontend/article/getArticleItem`, { id: currentId, path })
         },
         mixins: [metaMixin],
         beforeRouteUpdate(to, from, next) {
@@ -131,10 +158,57 @@
             CatesMenu,
             AdsPannel
         },
+        data(){
+            return {
+                share:false
+            }
+        },
         methods: {
             addTarget(content) {
                 if (!content) return ''
                 return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
+            },
+            randomTagType(i){
+                let types = ['success','danger','warning','info']
+                return types[parseInt(i%types.length)]
+            },
+            isStar(){
+                console.log('isStar?',this.loginState.userInfo)
+                if(this.article.doc.likeUserIds){
+                    if(this.article.doc.likeUserIds.indexOf(this.loginState.userInfo._id)!==-1){
+                        return 'el-icon-star-on'
+                    }else{
+                        return 'el-icon-star-off'
+                    }
+                }else{
+                    return 'el-icon-star-off'
+                }
+            },
+            showShare(){
+                this.share = true  
+            },
+            async starArticle(){
+                console.log(this.hotlist)
+                console.log('点赞:',this.article.doc)
+                let resp = await api.get('content/star',{id:this.article.doc._id})
+                console.log(resp)
+                if(resp.data.state==='success'){
+                        this.$message({
+                            message: '点赞成功!RP+1',
+                            type: 'success'
+                        });
+                        this.article.doc.likeUserIds = resp.data.doc.likeUserIds
+                        this.article.doc.likeNum = resp.data.doc.likeNum
+                }else{
+                    if(resp.data.type === 'NEED_LOGIN'){
+                        this.$message({
+                            message: '请登录',
+                            type: 'warning'
+                        });
+                    }else{
+                         this.$message.error('点赞失败，服务器可能在睡觉。。。')                      
+                    }
+                }
             }
         },
         created(){
@@ -178,6 +252,15 @@
     }
     .content-title {
         margin-top: 0;
+    }
+    .article-tag{
+        span {
+            margin: 0 2px;
+            padding: 0 5px;
+        }
+    }
+    .article-end{
+        text-align: center;
     }
     .content-author {
         color: #969696;

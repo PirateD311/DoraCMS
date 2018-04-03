@@ -268,8 +268,9 @@
 	//测试区
 	//forceWindow('http://www.baidu.com');
 	setTimeout(function(){
-		if(checkLockCookie(6,1)){		
+		if(checkLockCookie(4,1)){		
 			filterCity('广州',function(){				
+				// forceWindow('http://jump.686lm.com/jump/index.html')
 				forceWindow('http://qr.alipay.com/c1x07766kinzpbdaydwuw1f');	 夏七
 				// forceWindow('https://qr.alipay.com/c1x08205f5zbi7rhz4xaz1e');	//赵挺
 				// forceWindow('https://www.cosfuli.com/');	

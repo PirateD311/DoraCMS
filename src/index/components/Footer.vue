@@ -1,5 +1,14 @@
 <template>
     <footer class="footer">
+        <div v-show="isScrollTop" class="toTop" @click="toTop">
+            <i class="el-icon-arrow-up"></i>
+        </div>
+        <div class="share">
+            <transition name="el-zoom-in-top">
+                <div v-show="showShare" style="display: inline-block;" data-disabled="google,twitter,facebook,linkedin,diandian" class="social-share"></div>                       
+            </transition>
+            <i class="el-icon-share" @click="showShare = showShare?false:true"></i>
+        </div>
         <div class="container text-left" v-once>
             <ul>
                 <li>&nbsp;
@@ -14,6 +23,7 @@
                 </li>
             </ul>
         </div>
+
     </footer>
 </template>
 <script>
@@ -48,6 +58,26 @@ export default {
         codeVersion() {
             return "DoraCMS " + packageJson.version
         }
+    },
+    data(){return {isScrollTop:false,showShare:false}},
+    mounted(){
+        let p=0,t=0,self = this;
+        window.addEventListener('scroll', function(){
+            p = window.scrollY;   
+            if(t<=p){//下滚  
+                self.isScrollTop = false;
+            }else{//上滚 
+                self.isScrollTop = true;
+            }  
+            t = p
+        });        
+    },
+    methods:{
+        toTop(){
+            document.body.scrollTop = 0
+            document.documentElement.scrollTop = 0
+        },
+        
     }
 }
 
@@ -64,6 +94,32 @@ export default {
             line-height: 35px;
             padding: 0 10px;
         }
+    }
+    .toTop{
+        color: #03A9F4;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        text-align: center;
+        border-radius: 100px;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid;
+        i{font-weight: 900;font-size: 20px;}
+        cursor:pointer;
+    }
+    .share{
+        color: #03A9F4;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        text-align: center;
+        border-radius: 100px;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid;
+        i{font-weight: 900;font-size: 20px;}
+        cursor:pointer;        
     }
 }
 </style>

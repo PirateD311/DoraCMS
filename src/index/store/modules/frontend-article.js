@@ -155,6 +155,7 @@ const mutations = {
     },
     ['receiveHotList'](state, data) {
         state.hotContentList = data.docs
+        console.log('最热:',state.hotContentList)
     },
     ['receiveRecentList'](state, data) {
         state.recentContentList = data.docs

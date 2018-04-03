@@ -109,6 +109,8 @@ router.get('/ads/getOne', (req, res, next) => { req.query.state = true; next() }
 
 // 获得推荐文章
 router.get('/content/tuijian',Content.getTuijianList)
+// 收藏文章
+router.get('/content/star',Content.starContent)
 
 
 module.exports = router

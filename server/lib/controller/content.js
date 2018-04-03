@@ -377,7 +377,42 @@ class Content {
         }
     }
 
-
+    // 收藏
+    async starContent(req,res,next){
+        try {
+            let contentId = req.query.id,
+                uid = req.session?req.session.user._id:req.cookies[settings.auth_cookie_name]
+            console.log('cId:',contentId,'uid:',uid,'cookie:',req.cookies,'session user:',req.session.user)
+            if(uid){
+                let article = await ContentModel.findById(contentId,{likeUserIds:1,likeNum:1})
+                if(!article)throw 'contentId错误，找不到文章'
+                let likeIds = article.likeUserIds+=(uid+','), 
+                    setLikeIds = [...new Set(likeIds.split(','))],
+                    likeUserIds = setLikeIds.join(','),
+                    likeNum = setLikeIds.length
+                console.log(likeUserIds,likeNum)
+                await ContentModel.findByIdAndUpdate(contentId,{likeUserIds,likeNum},{new:true})
+                res.send({
+                    state: 'success',
+                    doc:{likeNum,likeUserIds}
+                });             
+            }else{
+                res.send({
+                    state:'error',
+                    type: 'NEED_LOGIN',
+                    message: '请登录',                 
+                })
+            }
+        } catch (error) {
+                console.log('错误!!!')
+                console.log(error)
+                res.send({
+                state:'error',
+                type: 'ERROR_IN_STAR',
+                message: '收藏失败',                 
+            })          
+        }
+    }
 }
 function getAllImgUrl(html){
     let $ = cheerio.load(html)
