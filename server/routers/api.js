@@ -111,6 +111,8 @@ router.get('/ads/getOne', (req, res, next) => { req.query.state = true; next() }
 router.get('/content/tuijian',Content.getTuijianList)
 // 收藏文章
 router.get('/content/star',Content.starContent)
+//获得隐藏内容
+router.get('/content/hidden',Content.getHiddenContent)
 
 
 module.exports = router

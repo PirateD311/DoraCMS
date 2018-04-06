@@ -4,12 +4,15 @@
             <div class="content-list">
                 <ul>
                     <li class="hot-li" v-for="(item,index) in hotItems" :key="item._id">
-                        <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
-                            <img :src="item.sImg" :alt="item.title" />
-                        </router-link>
-                        <div class="left-area">
-                            <router-link class="title" :to="'/details/'+item._id+'.html'">{{item.title}}</router-link>
-                        </div>
+                        <el-row>
+                            <el-col class="img"><img :src="item.sImg"></el-col>
+                            <el-col class="con">
+                                <router-link class="title" :to="'/details/'+item._id+'.html'">{{item.title}}</router-link>
+                                <span class="time"><i class="el-icon-time"></i>{{item.updateDate}}</span>
+                                <span class="time"><i class="el-icon-message"></i>{{item.commentNum}}</span>
+                                <span class="time"><i class="el-icon-view"></i>{{item.clickNum}}</span>
+                            </el-col>
+                        </el-row>                       
                     </li>
                 </ul>
             </div>
@@ -38,6 +41,9 @@
 <style lang="scss">
     $borderColor:#409eff;
     .hot-content-list {
+        h3{    font-size: 20px;
+    color: red;
+    font-weight: 700;}
         background: #fff;
         border-radius: 15px;
         padding:10px;
@@ -49,20 +55,26 @@
                     border: none;
                 }
                 li {
- 
-                    position: relative;
-                    padding: 10px 0;
-                    overflow: hidden;
-                    font-size: 14px;
-                    display: block;
-                    height: 3.5rem;
-                    img {
-                        width: 5rem;
-                        height: 3.5rem;
-                        position: absolute;
+                   .img {
+                        padding:5px;
+                        img{border-radius:30px;border: 2px solid rgba(58, 142, 230, 0.53);}
                     }
-                    .left-area{
-                        padding-left: 6rem;
+                    .con {
+                        -webkit-transition: opacity .5s ease-in;
+                        transition: opacity .5s ease-in;
+                        .title{
+                            display: block;
+                            text-align: center;
+                            font-size: 16px;
+                            font-weight: 700;
+                        }
+                        .time {
+                            padding-top: 3px;
+                            display: inline-block;
+                            color: #a4abb1;
+                            margin-left:10px;
+                            float:right;
+                        }
                     }
                     
                 }

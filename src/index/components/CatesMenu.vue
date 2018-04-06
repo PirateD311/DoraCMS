@@ -59,6 +59,7 @@
 </script>
 <style lang="scss">
     .catesMenu {
+        h3{font-size: 20px;color: #2196F3;font-weight: 700;}
         background: #fff;
         border-radius:15px;
         padding: 10px!important;

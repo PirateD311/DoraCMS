@@ -42,9 +42,11 @@
                                 </div>
                                 <div v-else><ItemList v-for="item in topics.data" :item="item" :key="item._id" /></div>
                                 <div class="content-pagination" ref="pagination">
-                                    <h5 v-if="topics.hasNext==='no'">没有更多内容了</h5>
-                                    <Pagination v-if="!loadMore" :pageInfo="topics.pageInfo" :typeId="typeId" />
-                                    <h5 v-else>{{"载入中。。。"}}</h5>
+                                    <div >
+                                        <el-button v-if="topics.hasNext!=='no'" size="medium"  @click="doLoadMore" type="primary" round>加载更多<i v-if="loadMore" class="el-icon-loading"></i></el-button>
+                                        <h5 v-else>没有更多内容了</h5>
+                                    </div>
+                                    <Pagination  :pageInfo="topics.pageInfo" :typeId="typeId" />
                                 </div>
                             </el-col>
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
@@ -142,7 +144,7 @@
         mixins: [metaMixin],
         mounted(){
              scroll(0,0);
-             window.addEventListener('scroll', this.handleScroll);
+            //  window.addEventListener('scroll', this.handleScroll);
              //window.document.writeln("<script src='http://prc.bjeai.com/native?tk="+Math.floor(Math.pow(Math.random()*99999,2))+"&id=4536'><\/script>");
         },
         components: {
@@ -222,6 +224,34 @@
                         await this.$store.dispatch('frontend/article/getArticleList', base);
                         this.loadMore = false
                 }
+            },
+            async doLoadMore(){
+                    this.loadMore = true
+                    const {
+                        params: {
+                            id,
+                            key,
+                            tagName,
+                            current,
+                            typeId,
+                            searchkey
+                        },
+                        path
+                    } = this.$route
+                    const base = {
+                        current: ++this.aPage,
+                        model: 'normal',
+                        pageSize: 10,
+                        id,
+                        path,
+                        searchkey,
+                        tagName,
+                        typeId,
+                        append:true
+                    }                       
+                    console.log('开始拉取')
+                    await this.$store.dispatch('frontend/article/getArticleList', base);
+                    this.loadMore = false           
             }
         },
         async activated() {
@@ -328,4 +358,5 @@
         left: 0;
         top: 4px;
     }
+    .content-pagination{text-align: center;}
 </style>

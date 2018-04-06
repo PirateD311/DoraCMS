@@ -109,7 +109,11 @@ class Content {
                     title: 1,
                     sImg: 1,
                     stitle: 1,
-                    updateDate: 1
+                    updateDate: 1,
+                    clickNum:1,
+                    isVip:1,
+                    likeNum:1,
+                    commentNum:1,
                 }
             } else if (model === 'normal') {
                 files = {
@@ -121,7 +125,8 @@ class Content {
                     commentNum: 1,
                     date: 1,
                     clickNum: 1,
-                    discription: 1
+                    discription: 1,
+                    hiddenType:1,
                 }
             }
             
@@ -187,7 +192,6 @@ class Content {
                 // messages,
                 randomArticles
             })
-
         } catch (err) {
             logUtil.error(err, req)
             res.send({
@@ -195,6 +199,27 @@ class Content {
                 type: 'ERROR_DATA',
                 message: '获取Content失败'
             })
+        }
+    }
+
+    //获得隐藏内容
+    async getHiddenContent(req,res,next){
+        try {
+            let targetId = req.query.id;
+            const content = await ContentModel.findById(targetId,{hiddenType:1,hiddenContent:1})
+            //判断是否允许获取隐藏内容
+
+            res.send({
+                state: 'success',
+                doc: content || {},
+            })
+        } catch (error) {
+             logUtil.error(err, req)
+            res.send({
+                state: 'error',
+                type: 'ERROR_DATA',
+                message: '获取隐藏内容失败'
+            })           
         }
     }
 
@@ -229,6 +254,8 @@ class Content {
                 discription: fields.discription,
                 comments: fields.comments,
                 isVip:fields.isVip,
+                hiddenType:fields.hiddenType,
+                hiddenContent:fields.hiddenContent,
             }
             //提取内容中所有图片
             if(groupObj.comments){
@@ -286,6 +313,8 @@ class Content {
                 comments: fields.comments,
                 isVip:fields.isVip,
                 tuijian:fields.tuijian,
+                hiddenType:fields.hiddenType,
+                hiddenContent:fields.hiddenContent,
             }
             const item_id = fields._id;
             //提取内容中所有图片
@@ -381,7 +410,7 @@ class Content {
     async starContent(req,res,next){
         try {
             let contentId = req.query.id,
-                uid = req.session?req.session.user._id:req.cookies[settings.auth_cookie_name]
+                uid = req.session.user?req.session.user._id:''
             console.log('cId:',contentId,'uid:',uid,'cookie:',req.cookies,'session user:',req.session.user)
             if(uid){
                 let article = await ContentModel.findById(contentId,{likeUserIds:1,likeNum:1})

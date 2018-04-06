@@ -18,10 +18,12 @@
                 <el-switch on-text="是" off-text="否" v-model="formState.formData.state"></el-switch>
             </el-form-item>
             <el-form-item label="标签/关键字" prop="tags">
-                <el-select size="small" v-model="formState.formData.tags" multiple filterable allow-create placeholder="请选择文章标签">
+                <el-select style="width:80%" size="small" v-model="formState.formData.tags" multiple filterable allow-create placeholder="请选择文章标签">
                     <el-option v-for="item in contentTagList.docs" :key="item._id" :label="item.name" :value="item._id">
                     </el-option>
                 </el-select>
+                <el-button size="small" @click="newTag.show=true" type="primary" icon="el-icon-circle-plus" circle>新增</el-button>
+                <TagForm :dialogState="newTag"></TagForm>
             </el-form-item>
             <el-form-item label="缩略图" prop="sImg">
                 <el-upload class="avatar-uploader" action="/system/upload?type=images" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
@@ -38,6 +40,14 @@
             </el-form-item>
             <el-form-item label="文档详情" prop="comments">
                 <Ueditor @ready="editorReady"></Ueditor>
+            </el-form-item>
+            <el-form-item label="隐藏内容" props="hiddenType">
+                <el-select size="small" v-model="formState.formData.hiddenType" placeholder="选择隐藏内容">
+                    <el-option v-for="item in config.hiddenType" :label="item.label" :key="item.value" :value="item.value" ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item v-show="formState.formData.hiddenType" label="回复可见内容" prop="hiddenContent">
+                <Ueditor @ready="hiddenEditorReady"></Ueditor>
             </el-form-item>
             <el-form-item class="dr-submitContent">
                 <el-button size="medium" type="primary" @click="submitForm('ruleForm')">{{formState.edit ? '更新' : '保存'}}</el-button>
@@ -92,6 +102,7 @@
 <script>
 import services from '../../store/services.js';
 import Ueditor from '../common/Ueditor.vue';
+import TagForm from '../contentTag/tagForm';
 import _ from 'lodash';
 import {
     mapGetters,
@@ -108,12 +119,21 @@ export default {
             config: {
                 initialFrameWidth: null,
                 initialFrameHeight: 320,
+                hiddenType:[
+                    {value:0,label:'无隐藏'},
+                    {value:1,label:'登录可见'},
+                    {value:2,label:'回复可见'},
+                ]
             },
             imageUrl: '',
             categoryProps: {
                 value: '_id',
                 label: 'name',
                 children: 'children'
+            },
+            newTag:{
+                show:false,
+                formData:{}
             },
 
             rules: {
@@ -188,7 +208,8 @@ export default {
         };
     },
     components: {
-        Ueditor
+        Ueditor,
+        TagForm
     },
     methods: {
         editorReady(instance) {
@@ -203,6 +224,22 @@ export default {
                     edit: this.formState.edit,
                     formData: Object.assign({}, this.formState.formData, {
                         comments: this.content
+                    })
+                });
+            });
+        },
+        hiddenEditorReady(instance){
+            if (this.formState.edit) {
+                instance.setContent(this.formState.formData.hiddenContent);
+            } else {
+                instance.setContent('');
+            }
+            instance.addListener('contentChange', () => {
+                this.hiddenContent = instance.getContent();
+                this.$store.dispatch('showContentForm', {
+                    edit: this.formState.edit,
+                    formData: Object.assign({}, this.formState.formData, {
+                        hiddenContent: this.hiddenContent
                     })
                 });
             });
@@ -240,6 +277,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     let params = this.formState.formData;
+                    console.log('发布文章:',params)
                     // 更新
                     if (this.formState.edit) {
                         services.updateContent(params).then((result) => {

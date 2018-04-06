@@ -43,7 +43,8 @@ var ContentSchema = new Schema({
     tuijian:{type:Number,default:0,min:0,max:5},//推荐级别
 
     images:[String],    //内容中的所有图片资源
-    
+    hiddenContent:{type:String,default:''},
+    hiddenType:{type:Number,default:0},//0:无隐藏,1:登录可见,2:回复可见
 
 });
 

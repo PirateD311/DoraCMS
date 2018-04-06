@@ -40,9 +40,9 @@
             padding: 10px;
         }
         .item{
-            height: 220px;
+            height: 230px;
             overflow:hidden;
-            img{height:150px;width:100%}
+            img{height:150px;width:100%;border-radius: 15px;}
         }
     }
     .view{margin-bottom: 10px;}

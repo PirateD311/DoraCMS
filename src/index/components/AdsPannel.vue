@@ -6,7 +6,7 @@
                     <a :href="ads.data.items[0].link" ><img :src="ads.data.items[0].sImg" :alt="ads.data.items[0].alt" /></a>
                 </div>
                 <div v-else class="box">
-                    <el-carousel >
+                    <el-carousel  :interval="4000">
                         <el-carousel-item v-for="item in ads.data.items" :key="item._id">
                             <h3>
                                 <a :href="item.link" >

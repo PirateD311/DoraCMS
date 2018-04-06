@@ -33,6 +33,19 @@
                                     </div>
                                     <div v-if="!article.doc.isVip || loginState.logined" >
                                         <div v-html="article.doc.comments"></div>
+                                        <el-card class="box-card" v-if="article.doc.hiddenType">
+                                            <div slot="header" style="text-align:center" class="clearfix">
+                                                <h1>被封印的里世界</h1>
+                                                <el-button @click="showHiddenContent" size="small" type="danger" round><i class="el-icon-bell"></i>开启</el-button>
+                                            </div>
+                                            <div class="text item">
+                                                <div v-if="showHidden"><div v-html="article.doc.hiddenContent"></div></div>
+                                                <div v-else>
+                                                    {{hiddenTypeMsg}}
+                                                </div>
+                                            </div>
+                                        </el-card>
+                                        <br>
                                     </div>
                                     <div style="min-height:400px" v-else>
                                         <h3 style="color:#fa5555">抱歉，该区域为会员专享~请您 &nbsp;<a style="color:#409EFF" href="/users/login">登录</a>或<a style="color:#409EFF" href="/users/reg">注册</a> &nbsp; 后再看！很赤鸡的哦~</h3>
@@ -40,8 +53,8 @@
                                         <img src="../assets/needvip.gif">
                                     </div>
                                     <el-row class="article-end">
-                                        <el-col :xs="12"><div @click="starArticle"><i :class="isStar()"></i>{{article.doc.likeNum||0}}收藏</div></el-col>
-                                        <el-col :xs="12"><div @click="share = true"><i class="el-icon-share"></i>分享</div></el-col>
+                                        <el-col :md="10" :xs="12"><div @click="starArticle"><i :class="isStar()"></i>点赞<small>{{article.doc.likeNum||0}}</small></div></el-col>
+                                        <el-col :md="10" :xs="12"><div @click="share = true"><i class="el-icon-share"></i>分享</div></el-col>
                                     </el-row>
                                     <el-row>
                                         <transition name="el-zoom-in-top">
@@ -147,6 +160,13 @@
                 } else {
                     return 'indexPage'
                 }
+            },
+            hiddenTypeMsg(){
+                switch(this.article.doc.hiddenType){
+                    case 0:return '无隐藏内容';
+                    case 1:return '回复可见内容';
+                    case 2:return 'Vip可见内容';
+                }
             }
         },
         components: {
@@ -160,7 +180,8 @@
         },
         data(){
             return {
-                share:false
+                share:false,
+                showHidden:false,
             }
         },
         methods: {
@@ -173,8 +194,7 @@
                 return types[parseInt(i%types.length)]
             },
             isStar(){
-                console.log('isStar?',this.loginState.userInfo)
-                if(this.article.doc.likeUserIds){
+                if(this.article.doc.likeUserIds && this.loginState.userInfo){
                     if(this.article.doc.likeUserIds.indexOf(this.loginState.userInfo._id)!==-1){
                         return 'el-icon-star-on'
                     }else{
@@ -184,14 +204,35 @@
                     return 'el-icon-star-off'
                 }
             },
-            showShare(){
-                this.share = true  
+            showHiddenContent(){
+                let hiddenType = this.article.doc.hiddenType
+                console.log('message:',this.messages,'hiddenType:',hiddenType,'loginState:',this.loginState)
+                if(hiddenType === 1){
+                    if(this.loginState.logined){
+                        this.showHidden = true;
+                        return;
+                    }else{
+                        this.$message.error('该隐藏内容需要登录后查看!');
+                    }
+                }else if(hiddenType === 2){
+                    if(this.loginState.logined){
+                        for(let msg of this.messages.data){
+                            if(msg.author.id === this.loginState.userInfo._id && msg.contentId.id === this.article.doc._id){
+                                this.showHidden = true;
+                                return;
+                            }else{
+                                this.$message.error('该隐藏内容需要回复后查看!');
+                            }
+                        }
+                    }else{
+                        this.$message.error('该隐藏内容需要登录后查看!');
+                        
+                    }
+                }
             },
+
             async starArticle(){
-                console.log(this.hotlist)
-                console.log('点赞:',this.article.doc)
                 let resp = await api.get('content/star',{id:this.article.doc._id})
-                console.log(resp)
                 if(resp.data.state==='success'){
                         this.$message({
                             message: '点赞成功!RP+1',
@@ -261,6 +302,15 @@
     }
     .article-end{
         text-align: center;
+        small{
+            color: red;
+            border: 1px solid red;
+            padding: 1px 4px;
+            border-radius: 15px;
+            position: relative;
+            bottom: 8px;
+            font-size: 10px;
+        }
     }
     .content-author {
         color: #969696;

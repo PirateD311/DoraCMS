@@ -36,9 +36,12 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .content-pagination {
     margin: 30px 0;
     text-align: center;
+    padding: 5px 0px;
+    background: #fff;
+    border-radius: 15px;
 }
 </style>
