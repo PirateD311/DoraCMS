@@ -59,7 +59,7 @@
                     }
                     .img {
                         padding:5px;
-                        img{border-radius:30px;border: 2px solid rgba(58, 142, 230, 0.53);}
+                        img{width:100%;border-radius:30px;border: 2px solid rgba(58, 142, 230, 0.53);}
                     }
                     .con {
                         -webkit-transition: opacity .5s ease-in;

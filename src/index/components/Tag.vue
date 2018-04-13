@@ -40,7 +40,7 @@
         data(){
             return {
                 activeNames:['1'],
-                isShowTags:true
+                isShowTags:"1"
             }
         },
         methods: {
@@ -56,6 +56,7 @@
 
 <style lang="scss">
     .content-tag {
+        .el-collapse, .el-collapse-item__header, .el-collapse-item__wrap{border-bottom:none !important}
         background: #fff;
         border-radius: 15px;
         .pannel-title{display:block !important;margin-bottom: 0;}

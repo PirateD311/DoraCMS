@@ -50,8 +50,8 @@
                                 </div>
                             </el-col>
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
-                                <div v-if="loading">
-                                    <img src="../assets/loading.gif">
+                                <div v-if="fullscreenLoading">
+                                    <i class="el-icon-loading"></i>
                                 </div>
                                 <div v-else>
                                     <div v-if="isVip && !loginState.logined">
@@ -59,7 +59,6 @@
                                         <h3 style="color:#fa5555" >Ps:会员只需注册即可，本站无任何付费内容，只为老司机的分享精神~</h3>
                                         <img src="../assets/needvip.gif">
                                     </div>
-                                    <h3 v-else>抱歉，暂无内容...</h3>
                                 </div>
           
                             </el-col>
@@ -120,7 +119,7 @@
                 path
             } = route
             const base = { ...config,
-                pageSize: 5,
+                pageSize: 15,
                 id,
                 path,
                 searchkey,

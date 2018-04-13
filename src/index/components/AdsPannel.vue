@@ -47,21 +47,20 @@ export default {
 }
 
 </script>
-
 <style lang="scss">
 .content-ads{
     .desc{
-    position: relative;
-    background-color: rgba(51, 51, 51, 0.38);
-    height: 18px;
-    top: -115%;
-    color: white;
-    text-align: center;
-    font-size: 12px;
-    line-height: 18px;
-    margin: 0 15%;
+        position: relative;
+        background-color: rgba(51, 51, 51, 0.38);
+        height: 18px;
+        top: -115%;
+        color: white;
+        text-align: center;
+        font-size: 12px;
+        line-height: 18px;
+        margin: 0 15%;
     }
-    .box{    border-radius: 30px;
+    .box{border-radius: 30px;
     overflow: hidden;}
     margin-bottom: 10px;
 }

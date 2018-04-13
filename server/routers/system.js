@@ -95,11 +95,7 @@ router.post('/upload',async function (req, res, next) {
 
     }).on('end', async function () {
 
-        // 返回文件路径
-        // if(settings.imgZip && (fileKey == 'ctTopImg' || fileKey == 'plugTopImg' || fileKey == 'userlogo')){
-        //     res.end('/upload/smallimgs/'+newFileName);
-        // }else{
-        if(1){
+        if(0){
             let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
             let options = {
             scope: bucket,
@@ -115,26 +111,22 @@ router.post('/upload',async function (req, res, next) {
             console.log('上传七牛:key:',key,'localFile:',localFile,'Token:',uploadToken)
             // 文件上传
             formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
-            respBody, respInfo) {
-            // console.log('err:',respErr)
-            // console.log('respBody:',respBody)
-            // console.log('respInfo:',respInfo)
-            if (respErr) {
-                throw respErr;
-            }
-
-            if (respInfo.statusCode == 200) {
-                console.log(respBody);
-                let imgUrl = 'http://oz7btgiar.bkt.clouddn.com/'+respBody.key
-                console.log('上传成功:url:',imgUrl)
-                res.end(imgUrl)
-            } else {
-                console.log(respInfo.statusCode);
-                console.log(respBody);
-                res.end('')
-            }
+                respBody, respInfo) {
+                if (respErr) {
+                    throw respErr;
+                }
+                if (respInfo.statusCode == 200) {
+                    console.log(respBody);
+                    let imgUrl = 'http://oz7btgiar.bkt.clouddn.com/'+respBody.key
+                    console.log('上传成功:url:',imgUrl)
+                    res.end(imgUrl)
+                } else {
+                    console.log(respInfo.statusCode);
+                    console.log(respBody);
+                    res.end('')
+                }
             });
-        }else{
+        }else if(0){
             console.log('上传至阿里云,文件:',updatePath + newFileName)
             co(function* () {
                 var result = yield client.put('small/'+newFileName, (updatePath + newFileName));
@@ -144,6 +136,9 @@ router.post('/upload',async function (req, res, next) {
             }).catch(function (err) {
                 console.log(err);
             });
+        }else{ //本地上传
+            console.log('上传至本地.',updatePath,newFileName)
+            res.end('/upload/images/' + newFileName)
         }
 
     });

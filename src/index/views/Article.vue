@@ -164,8 +164,8 @@
             hiddenTypeMsg(){
                 switch(this.article.doc.hiddenType){
                     case 0:return '无隐藏内容';
-                    case 1:return '回复可见内容';
-                    case 2:return 'Vip可见内容';
+                    case 1:return '登录可见内容';
+                    case 2:return '回复可见内容';
                 }
             }
         },
@@ -220,10 +220,9 @@
                             if(msg.author.id === this.loginState.userInfo._id && msg.contentId.id === this.article.doc._id){
                                 this.showHidden = true;
                                 return;
-                            }else{
-                                this.$message.error('该隐藏内容需要回复后查看!');
                             }
                         }
+                        this.$message.error('该隐藏内容需要回复后查看!');
                     }else{
                         this.$message.error('该隐藏内容需要登录后查看!');
                         
