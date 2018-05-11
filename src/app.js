@@ -6,6 +6,7 @@ import { sync } from 'vuex-router-sync'
 import * as filters from './filters'
 import titleMixin from './mixins'
 import ElementUI from 'element-ui'
+import VueLazyload from 'vue-lazyload'
 
 import Header from './index/components/header'
 import Footer from './index/components/Footer'
@@ -16,6 +17,9 @@ Object.keys(filters).forEach(key => {
 
 Vue.mixin(titleMixin)
 Vue.use(ElementUI)
+Vue.use(VueLazyload,{
+    preLoad:1.3,   
+})
 
 const preFetchComponent = [
     Header,

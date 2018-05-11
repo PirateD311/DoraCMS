@@ -31,6 +31,5 @@ module.exports = (req, res, next) => {
         } else {
             return next();
         }
-
     }).catch(err => console.log(err));
 }

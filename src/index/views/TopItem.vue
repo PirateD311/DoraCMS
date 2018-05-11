@@ -6,7 +6,7 @@
                 <div class="post-angle" v-if="item.isVip == true">会员专享</div>
                 <div class="grid-content bg-purple contentImg" >
                     <router-link :to="'/details/'+item._id+'.html'" class="continue-reading">
-                        <img :class="{blur:item.isVip}" :src="item.sImg.replace('http://oz7btgiar.bkt.clouddn.com/small','/upload/images')" :alt="item.title" />
+                        <img :class="{blur:item.isVip}" v-lazy="item.sImg.replace('http://oz7btgiar.bkt.clouddn.com/small','/upload/images')"  :alt="item.title" />
                     </router-link>
                 </div>
             </el-col>

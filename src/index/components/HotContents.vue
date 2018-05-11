@@ -5,7 +5,7 @@
                 <ul>
                     <li class="hot-li" v-for="(item,index) in hotItems" :key="item._id">
                         <el-row>
-                            <el-col class="img"><img :src="item.sImg"></el-col>
+                            <el-col class="img"><img :src="item.sImg.replace('http://oz7btgiar.bkt.clouddn.com/small','/upload/images')"></el-col>
                             <el-col class="con">
                                 <router-link class="title" :to="'/details/'+item._id+'.html'">{{item.title}}</router-link>
                                 <span class="time"><i class="el-icon-time"></i>{{item.updateDate}}</span>

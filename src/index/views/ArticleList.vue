@@ -96,7 +96,7 @@
     import Tag from '../components/Tag.vue'
     import CatesMenu from '../components/CatesMenu.vue'
     import AdsPannel from '../components/AdsPannel.vue'
-    
+    import api from '~api'
 
     export default {
         name: 'frontend-index',
@@ -163,6 +163,7 @@
                 aPage:1,
                 loadMore:false,
                 showTab:1,
+                hotPage:1,
             }
         },
         computed: {
@@ -249,7 +250,12 @@
                         append:true
                     }                       
                     console.log('开始拉取')
-                    await this.$store.dispatch('frontend/article/getArticleList', base);
+                    if(this.showTab === 2){                       
+                        await this.$store.dispatch('frontend/article/getHotContentList', { typeId : 'indexPage', pageSize: 10,append:true,current:++this.hotPage})
+                    }else{
+                        await this.$store.dispatch('frontend/article/getArticleList', base);
+                    }
+                    
                     this.loadMore = false           
             }
         },

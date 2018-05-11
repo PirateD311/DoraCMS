@@ -28,6 +28,9 @@
                 }
             };
         },
+        created(){
+            console.log(this.treeData)
+        },
         methods: {
             savePower() {
                 let currentNodes = this.$refs.tree.getCheckedNodes();

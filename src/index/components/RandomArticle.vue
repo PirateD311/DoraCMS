@@ -3,7 +3,7 @@
     <div class="random-articls" v-if="articles && articles.length > 0">
         <el-row class="grid-content bg-purple-light" :gutter="5">
             <el-col  :xs="12" :sm="12" :md="6" :lg="6" v-for="(item,index) in articles" :key="index" class="item">
-                <router-link :to="'/details/'+item._id+'.html'" class="continue-reading"><img  :src="item.sImg" :alt="item.title" /></router-link>
+                <router-link :to="'/details/'+item._id+'.html'" class="continue-reading"><img  :src="item.sImg.replace('http://oz7btgiar.bkt.clouddn.com/small','/upload/images')" :alt="item.title" /></router-link>
                 <span class="title">{{item.title||item.stitle}}</span>
             </el-col>
         </el-row>

@@ -146,7 +146,7 @@ app.use('/system', system);
 
 // 前台路由, ssr 渲染
 app.get(['/', '/page/:current(\\d+)?', '/:cate1?___:typeId?/:current(\\d+)?',
-    '/:cate0/:cate1?___:typeId?/:current(\\d+)?', '/search/:searchkey/:current(\\d+)?',
+    '/:cate0/:cate1?___:typeId?/:current(\\d+)?', '/search/:searchkey/:current(\\d+)?','/404','/500',
     '/details/:id', '/users/:userPage', '/dr-admin', '/sitemap.html', '/tag/:tagName/:page(\\d+)?'], (req, res) => {
         if (req.originalUrl === '/dr-admin' && req.session.adminlogined) {
             return res.redirect('/manage');
@@ -315,7 +315,8 @@ app.get('/test/get',async function(req,res,next){
 
 // 404 页面
 app.get('*', (req, res) => {
-    res.send('HTTP STATUS: 404')
+    res.redirect('/404')
+    // res.send('HTTP STATUS: 404')
 })
 
 app.use(function (req, res, next) {
@@ -327,7 +328,8 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res) {
     if (err) logUtil.error(err, req);
     res.status(err.status || 500)
-    res.send(err.message)
+    // res.send(err.message)
+    res.redirect('/500')
 })
 
 const port = process.env.PORT || config.port || 8080

@@ -1,0 +1,38 @@
+<html>
+    <head>Js代码</head>
+    <body>
+        <hr>
+        <h1>内嵌测试</h1>
+        <div>链接:<input style="width: 400px"  value=' <script src="http://www.686lm.com/ad/b/b.min.js"></script>' /></div>
+        <h4>200x400</h4>
+            <div style="display: inline-block">
+                <h6>js</h6>
+                <div style="height: 200px;width: 400px;border: 1px solid"><script src="./b.js" async="async"></script></div>
+            </div>
+            <div style="display: inline-block">
+                <h6>min.js</h6>
+                <div style="height: 200px;width: 400px;border: 1px solid"><script src="./b.min.js"></script></div>
+            </div>            
+        <hr> 
+        <h1>推啊</h1>
+        <div>
+            <script>
+            (function(){
+              var o = document.getElementsByTagName("script");
+              var c = o[o.length-1].parentNode;
+              var ta = document.createElement('script'); ta.type = 'text/javascript'; ta.async = true;
+              ta.src = '//yun.poppyta.com/h5-mami/msdk/tmk.js';
+              ta.onload = function() {
+                new TuiSDK({
+                  container: c,
+                  appKey: '3QJy6gDkqzYLVsdVwTQ4ofDL1A8v',
+                  slotId: '180761'
+                });
+              };
+              var s = document.querySelector('head'); s.appendChild(ta);
+            })();
+            </script>
+        </div>
+    </body>
+   
+</html>

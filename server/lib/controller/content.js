@@ -263,6 +263,10 @@ class Content {
                 console.log('提取的所有图片:',imgs)
                 groupObj.images = imgs
             }
+            //默认选择第一张图片作为特色图
+            if(groupObj.images && !groupObj.sImg){
+                groupObj.sImg = groupObj.images[0]
+            }
             const newContent = new ContentModel(groupObj);
             try {
                 await newContent.save();
@@ -323,6 +327,10 @@ class Content {
                 console.log('提取的所有图片:',imgs)
                 contentObj.images = imgs
             }
+            //默认选择第一张图片作为特色图
+            if(contentObj.images && !contentObj.sImg){
+                contentObj.sImg = contentObj.images[0]
+            }            
             try {
                 await ContentModel.findOneAndUpdate({ _id: item_id }, { $set: contentObj });
                 res.send({

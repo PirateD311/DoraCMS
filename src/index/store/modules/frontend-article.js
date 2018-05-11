@@ -72,7 +72,7 @@ const actions = {
         commit,
         state
     }, config) {
-        if (state.hotContentList.length && config.path === state.lists.path) return
+        
         const {
             data
         } = await api.get('content/getSimpleListByParams', {
@@ -80,11 +80,14 @@ const actions = {
                 sortby: 'clickNum',
                 model: 'normal',
                 cache: true,
-                pageSize:10
+                pageSize:10,
             })
         // console.log('----getSimpleListByParams---', data);
+        console.log('----getSimpleListByParams---', config);
+        data.append = config.append
         if (data.docs && data.state === 'success') {
-            commit('receiveHotList', data)
+            commit('receiveHotList', data )
+            return data;
         }
     },
     async ['getRecentContentList']({
@@ -154,7 +157,11 @@ const mutations = {
         }
     },
     ['receiveHotList'](state, data) {
-        state.hotContentList = data.docs
+        if(data.append){
+            state.hotContentList = state.hotContentList.concat(data.docs)
+        }else{
+            state.hotContentList = data.docs
+        }
         console.log('最热:',state.hotContentList)
     },
     ['receiveRecentList'](state, data) {

@@ -65,6 +65,7 @@
     "ueditor": "^1.2.2",
     "validator": "^7.0.0",
     "vue": "^2.4.4",
+    "vue-lazyload": "^1.2.3",
     "vue-meta": "^1.0.2",
     "vue-router": "^2.5.3",
     "vue-server-renderer": "^2.4.4",

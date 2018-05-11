@@ -11,6 +11,8 @@ import userCenter from '../views/UserCenter'
 import userMessage from '../views/UserMessage'
 import userReplies from '../views/UserReplies'
 import siteMap from '../views/SiteMap.vue'
+import notFound from '../views/404.vue'
+import error from '../views/500.vue'
 
 Vue.use(VueRouter)
 Vue.use(Meta)
@@ -56,6 +58,8 @@ export function createRouter() {
             { name: 'adminlogin', path: '/dr-admin', component: adminLogin, meta: { typeId: 'adminlogin' } },
             { name: 'sitemap', path: '/sitemap.html', component: siteMap },
             { name: 'tagPage', path: '/tag/:tagName/:current(\\d+)?', component: index, meta: { typeId: 'tags' } },
+            { name: '404', path:'/404', component: notFound},
+            { name: '500', path:'/500', component: error},
 
         ]
     })
