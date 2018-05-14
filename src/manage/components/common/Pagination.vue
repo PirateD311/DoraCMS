@@ -30,7 +30,8 @@ export default {
             console.log(`当前页: ${val}`);
             if (this.pageType === 'content') {
                 this.$store.dispatch('getContentList', {
-                    current: val
+                    current: val,
+                    model:'all',
                 });
             } else if (this.pageType === 'adminUser') {
                 this.$store.dispatch('getAdminUserList', {

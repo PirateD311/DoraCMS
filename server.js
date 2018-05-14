@@ -251,21 +251,34 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname, '../source'),{
 }));
 
 // 后台渲染
-app.get('/manage', authSession, function (req, res) {
-    AdminResource.getAllResource(req, res, {
-        type: '0'
-    }).then((manageCates) => {
-        let currentCates = manageCates ? JSON.stringify(manageCates) : [];
-        if (isProd) {
-            res.render('admin.html', {
-                title: '后台管理',
-                manageCates: currentCates
-            })
-        } else {
-            backend = backend.replace('__manageCates__', currentCates)
-            res.send(backend)
-        }
-    })
+app.get('/manage', authSession, async function (req, res) {
+    console.log(`Begin render manage`)
+    let manageCates = await AdminResource.getAllResource(req,res,{type:'0'})
+    console.log(`manageCates:`,manageCates)
+    let currentCates = manageCates ? JSON.stringify(manageCates) : [];
+    if (isProd) {
+        res.render('admin.html', {
+            title: '后台管理',
+            manageCates: currentCates
+        })
+    } else {
+        backend = backend.replace('__manageCates__', currentCates)
+        res.send(backend)
+    }
+    // AdminResource.getAllResource(req, res, {
+    //     type: '0'
+    // }).then((manageCates) => {
+    //     let currentCates = manageCates ? JSON.stringify(manageCates) : [];
+    //     if (isProd) {
+    //         res.render('admin.html', {
+    //             title: '后台管理',
+    //             manageCates: currentCates
+    //         })
+    //     } else {
+    //         backend = backend.replace('__manageCates__', currentCates)
+    //         res.send(backend)
+    //     }
+    // })
 });
 app.use('/manage', manage);
 

@@ -151,6 +151,7 @@ const state = {
                 author: {},
                 state: true,
                 isTop: 0,
+                status: 'publish',
                 clickNum: 0,
                 comments: '',
                 commentNum: 0,

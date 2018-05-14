@@ -4,19 +4,43 @@
             <el-form-item label="标题" prop="title">
                 <el-input size="small" v-model="formState.formData.title"></el-input>
             </el-form-item>
-            <el-form-item label="简短标题" prop="stitle">
-                <el-input size="small" v-model="formState.formData.stitle"></el-input>
-            </el-form-item>
-            <el-form-item label="来源" prop="from">
-                <el-radio class="radio" v-model="formState.formData.from" label="1">原创</el-radio>
-                <el-radio class="radio" v-model="formState.formData.from" label="2">转载</el-radio>
-            </el-form-item>
-            <el-form-item label="会员可见" prop="isVip">
-                <el-switch on-text="是" off-text="否" v-model="formState.formData.isVip"></el-switch>
-            </el-form-item>
-            <el-form-item label="发布" prop="state">
-                <el-switch on-text="是" off-text="否" v-model="formState.formData.state"></el-switch>
-            </el-form-item>
+            <el-row :span="24" >
+                <el-col :md="8">
+                    <el-form-item label="来源" prop="from">
+                        <el-radio class="radio" v-model="formState.formData.from" label="1">原创</el-radio>
+                        <el-radio class="radio" v-model="formState.formData.from" label="2">转载</el-radio>
+                    </el-form-item>              
+                </el-col>
+                <el-col :md="8">
+                    <el-form-item label="会员可见" prop="isVip">
+                        <el-switch on-text="是" off-text="否" v-model="formState.formData.isVip"></el-switch>
+                    </el-form-item>              
+                </el-col>
+                <el-col :md="8">
+                    <el-form-item label="文章状态" prop="state">
+                        <el-select size="mini" v-model="formState.formData.status" placeholder="文章状态">
+                            <el-option v-for="status in postStatus" :key="status.value" :value="status.value" :label="status.label"></el-option>
+                        </el-select>
+                    </el-form-item>             
+                </el-col>
+            </el-row>
+            <el-row :span="24" >
+                <el-col :md="8">
+                    <el-form-item label="置顶" prop="isTop">
+                        <el-switch on-text="是" off-text="否" v-model="formState.formData.isTop" active-value="1" inactive-value="0"></el-switch>
+                    </el-form-item>              
+                </el-col>
+                <el-col :md="8">
+                    <el-form-item label="加精" prop="refined">
+                        <el-switch on-text="是" off-text="否" v-model="formState.formData.refined"></el-switch>
+                    </el-form-item>              
+                </el-col>
+                <el-col :md="8">
+                    <el-form-item label="星级" prop="star">
+                        <el-rate v-model="formState.formData.star"></el-rate>
+                    </el-form-item>             
+                </el-col>
+            </el-row>            
             <el-form-item label="标签/关键字" prop="tags">
                 <el-select style="width:80%" size="small" v-model="formState.formData.tags" multiple filterable allow-create placeholder="请选择文章标签">
                     <el-option v-for="item in contentTagList.docs" :key="item._id" :label="item.name" :value="item._id">
@@ -34,6 +58,16 @@
             <el-form-item label="文章类别" prop="categories">
                 <el-cascader size="small" expand-trigger="hover" :options="contentCategoryList.docs" v-model="formState.formData.categories" @change="handleChangeCategory" :props="categoryProps">
                 </el-cascader>
+            </el-form-item>
+            <el-form-item label="发布时间" prop="date">
+                <el-date-picker
+                    default-time="12:00:00"
+                    v-model="formState.formData.date"
+                    type="datetime"
+                    placeholder="选择日期时间"
+                    align="right"
+                    >
+                </el-date-picker>
             </el-form-item>
             <el-form-item label="内容摘要" prop="discription">
                 <el-input size="small" type="textarea" v-model="formState.formData.discription"></el-input>
@@ -108,12 +142,16 @@ import {
     mapGetters,
     mapActions
 } from 'vuex'
+const postStatus = [{label:'已发布',value:'publish'},{label:'草稿',value:'draft'},{label:'待审核',value:'pending'}]
+const postTop = [{label:'顶置',value:1},{label:'非置顶',value:0}]
+
 export default {
     props: {
         groups: Array
     },
     data() {
         return {
+            postStatus,postTop,
             content: '',
             defaultMsg: '初始文本',
             config: {
@@ -135,7 +173,6 @@ export default {
                 show:false,
                 formData:{}
             },
-
             rules: {
                 title: [{
                     required: true,
@@ -146,18 +183,6 @@ export default {
                     min: 5,
                     max: 50,
                     message: '5-50个非特殊字符',
-                    trigger: 'blur'
-                }
-                ],
-                stitle: [{
-                    required: true,
-                    message: '请输入简短标题',
-                    trigger: 'blur'
-                },
-                {
-                    min: 5,
-                    max: 40,
-                    message: '5-40个非特殊字符',
                     trigger: 'blur'
                 }
                 ],
@@ -335,6 +360,7 @@ export default {
                             categoryIdArr.push(item._id);
                         })
                         contentObj.categories = categoryIdArr;
+                        console.log('content:',contentObj)
                         this.$store.dispatch('showContentForm', {
                             edit: true,
                             formData: contentObj

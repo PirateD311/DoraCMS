@@ -8,6 +8,67 @@ const shortid = require('shortid');
 const validator = require('validator')
 const _ = require('lodash');
 const cheerio = require('cheerio')
+const Joi = require('joi')
+
+const Rules = {
+    create:Joi.object().keys({
+        title:Joi.string().required().min(5).max(50),
+        stitle:Joi.string().required().min(5).max(40),
+        categories:Joi.array().items(Joi.string()).single(),
+        tags:Joi.array(),   //need to format
+        discription:Joi.string().min(5).max(100),
+        comments:Joi.string().required().min(5),
+        date:Joi.date().default(Date.now()),
+        sImg:Joi.string(),
+        author:Joi.string(),
+        state:Joi.boolean().default(true),
+        status:Joi.string().default('publish'),
+        isTop:Joi.number().default(0),
+        clickNum:Joi.number().default(1),
+        form:Joi.string().default('1'),
+        isVip:Joi.boolean().default(false),
+        star:Joi.number().default(0).min(0).max(5),
+        hiddenContent:Joi.string(),
+        hiddenType:Joi.number().default(0),
+        refined:Joi.boolean()
+    }),
+    index:Joi.object().keys({
+        current:Joi.number().default(1),
+        pageSize:Joi.number().default(10),
+        title:Joi.string(),
+        sortby:Joi.string(),
+        typeId:Joi.string(),
+        tagName:Joi.string(),
+        searchkey:Joi.string(),
+        model:Joi.string().default('normal'),
+        state:Joi.boolean().default(true),
+        isVip:Joi.boolean(),
+        status:Joi.string().default('publish'),
+        isTop:Joi.number().default(0),
+    }),
+    update:Joi.object().keys({
+        _id:Joi.string().required(),
+        title:Joi.string(),
+        stitle:Joi.string().min(5).max(40),
+        categories:Joi.array().items(Joi.string()).single(),
+        tags:Joi.array(),   //need to format
+        discription:Joi.string().min(5).max(100),
+        comments:Joi.string().min(5),
+        date:Joi.date(),
+        sImg:Joi.string(),
+        // author:Joi.string(),
+        state:Joi.boolean(),
+        status:Joi.string(),
+        isTop:Joi.number(),
+        clickNum:Joi.number(),
+        form:Joi.string(),
+        isVip:Joi.boolean(),
+        star:Joi.number().min(0).max(5),
+        hiddenContent:Joi.string().empty(''),
+        hiddenType:Joi.number(),     
+        refined:Joi.boolean(),   
+    })
+}
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -23,7 +84,7 @@ function checkFormData(req, res, fields) {
     if (!fields.categories) {
         errMsg = '请选择文档类别!';
     }
-    if (!fields.tags) {
+    if (true || !fields.tags) { //allow empty tags
         errMsg = '请选择文档标签!';
     }
     if (!validator.isLength(fields.discription, 5, 100)) {
@@ -47,20 +108,23 @@ class Content {
     }
     async getContents(req, res, next) {
         try {
-            let current = req.query.current || 1;
-            let pageSize = req.query.pageSize || 10;
-            let sortby = req.query.sortby; //排序规则
-            let typeId = req.query.typeId; // 分类ID
-            let tagName = req.query.tagName; // 文章tag
-            let searchkey = req.query.searchkey; // 搜索关键字
-            let model = req.query.model; // 查询模式 full/normal/simple
-            let state = req.query.state;
-            let isVip = req.query.isVip; //只查询vip内容
-        
-            // pageSize = 3;
+            let {current,pageSize,
+                sortby, //排序规则
+                typeId, //分类id
+                tagName, // 文章tag
+                searchkey,// 搜索关键字
+                model,  // 查询模式 full/normal/simple
+                state,
+                isVip,//只查询vip内容
+                status,
+                isTop,
+            } = await Joi.validate(req.query,Rules.index,{stripUnknown:true})
            
             // 条件配置
-            let queryObj = {state:true}, sortObj = { date: -1 }, files = null;
+            let queryObj = {
+                state,status,isTop
+            }, 
+                sortObj = { date: -1 }, files = null;
 
             if(req.session.user ||req.session.adminUserInfo){
                 // delete queryObj.isVip;
@@ -68,14 +132,21 @@ class Content {
             }
 
             if (sortby) {
+                let pre = '-'
+                if( sortby[0]==='-' || sortby[0]==='+' ){
+                    pre = sortby[0]
+                    sortby = sortby.substr(1)
+                }
                 delete sortObj.date;
-                sortObj[sortby] = -1
+                sortObj[sortby] = pre==='-'?-1:1
             }
 
 
             if (state) {
                 queryObj.state = true
             }
+            if(queryObj.isTop===-1)delete queryObj.isTop            
+            if(queryObj.status==='all')delete queryObj.status            
 
             if (typeId && typeId != 'indexPage') {
                 queryObj.categories = typeId;
@@ -84,8 +155,6 @@ class Content {
                     queryObj.isVip = true;
                 }
             }
-
-    
 
             if (tagName) {
                 let targetTag = await ContentTagModel.findOne({ name: tagName });
@@ -117,19 +186,14 @@ class Content {
                 }
             } else if (model === 'normal') {
                 files = {
-                    id: 1,
-                    title: 1,
-                    sImg: 1,
-                    isTop: 1,
-                    categories: 1,
-                    commentNum: 1,
-                    date: 1,
-                    clickNum: 1,
-                    discription: 1,
-                    hiddenType:1,
+                    comments:0,
+                    images:0,
+                    likeUserIds:0,
                 }
+            }else if (model === 'all'){
+                files = {}
             }
-            
+            console.log(`查询条件:`,queryObj,'排序条件：',sortObj)
             const contents = await ContentModel.find(queryObj, files).sort(sortObj).skip(pageSize * (Number(current) - 1)).limit(Number(pageSize)).populate([{
                 path: 'author',
                 select: 'name -_id'
@@ -227,7 +291,8 @@ class Content {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
             try {
-                checkFormData(req, res, fields);
+                // checkFormData(req, res, fields);
+                let doc = await Joi.validate(fields,Rules.create,{stripUnknown:true})
             } catch (err) {
                 console.log(err.message, err);
                 res.send({
@@ -237,37 +302,37 @@ class Content {
                 })
                 return
             }
-
-            const groupObj = {
-                title: fields.title,
-                stitle: fields.stitle,
-                type: fields.type,
-                categories: fields.categories,
-                sortPath: fields.sortPath,
-                tags: fields.tags,
-                keywords: fields.keywords,
-                sImg: fields.sImg,
-                author: req.session.adminUserInfo._id,
-                state: fields.state,
-                isTop: fields.isTop,
-                from: fields.from,
-                discription: fields.discription,
-                comments: fields.comments,
-                isVip:fields.isVip,
-                hiddenType:fields.hiddenType,
-                hiddenContent:fields.hiddenContent,
-            }
+            doc.author = req.session.adminUserInfo._id
+            // const groupObj = {
+            //     title: fields.title,
+            //     stitle: fields.stitle,
+            //     type: fields.type,
+            //     categories: fields.categories,
+            //     sortPath: fields.sortPath,
+            //     tags: fields.tags,
+            //     keywords: fields.keywords,
+            //     sImg: fields.sImg,
+            //     author: req.session.adminUserInfo._id,
+            //     state: fields.state,
+            //     isTop: fields.isTop,
+            //     from: fields.from,
+            //     discription: fields.discription,
+            //     comments: fields.comments,
+            //     isVip:fields.isVip,
+            //     hiddenType:fields.hiddenType,
+            //     hiddenContent:fields.hiddenContent,
+            // }
             //提取内容中所有图片
-            if(groupObj.comments){
-                let imgs = getAllImgUrl(groupObj.comments)
+            if(doc.comments){
+                let imgs = getAllImgUrl(doc.comments)
                 console.log('提取的所有图片:',imgs)
-                groupObj.images = imgs
+                doc.images = imgs
             }
             //默认选择第一张图片作为特色图
-            if(groupObj.images && !groupObj.sImg){
-                groupObj.sImg = groupObj.images[0]
+            if(doc.images && !doc.sImg){
+                doc.sImg = doc.images[0]
             }
-            const newContent = new ContentModel(groupObj);
+            const newContent = new ContentModel(doc);
             try {
                 await newContent.save();
                 res.send({
@@ -289,7 +354,8 @@ class Content {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
             try {
-                checkFormData(req, res, fields);
+                // checkFormData(req, res, fields);
+                fields = await Joi.validate(fields,Rules.update,{stripUnknown:true})
             } catch (err) {
                 console.log(err.message, err);
                 res.send({
@@ -300,26 +366,7 @@ class Content {
                 return
             }
 
-            const contentObj = {
-                title: fields.title,
-                stitle: fields.stitle,
-                type: fields.type,
-                categories: fields.categories,
-                sortPath: fields.sortPath,
-                tags: fields.tags,
-                keywords: fields.keywords,
-                sImg: fields.sImg,
-                author: req.session.adminUserInfo._id,
-                state: fields.state,
-                isTop: fields.isTop,
-                from: fields.from,
-                discription: fields.discription,
-                comments: fields.comments,
-                isVip:fields.isVip,
-                tuijian:fields.tuijian,
-                hiddenType:fields.hiddenType,
-                hiddenContent:fields.hiddenContent,
-            }
+            const contentObj = fields
             const item_id = fields._id;
             //提取内容中所有图片
             if(contentObj.comments){
@@ -330,9 +377,10 @@ class Content {
             //默认选择第一张图片作为特色图
             if(contentObj.images && !contentObj.sImg){
                 contentObj.sImg = contentObj.images[0]
-            }            
+            }
+            console.log(`更新:`,contentObj)            
             try {
-                await ContentModel.findOneAndUpdate({ _id: item_id }, { $set: contentObj });
+                await ContentModel.findOneAndUpdate({ _id: item_id }, contentObj);
                 res.send({
                     state: 'success'
                 });

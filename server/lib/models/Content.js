@@ -26,11 +26,14 @@ var ContentSchema = new Schema({
     keywords: String,
     sImg: { type: String, default: "/upload/images/defaultImg.jpg" }, // 文章小图
     discription: String,
-    date: { type: Date, default: Date.now },
+    date: { type: Date, default: Date.now },    //发布时间
+    craeteDate: { type: Date, default: Date.now },    //创建时间
     updateDate: { type: Date, default: Date.now }, // 更新时间
     author: { type: String, ref: 'AdminUser' }, // 文档作者
     state: { type: Boolean, default: true },  // 是否在前台显示，默认显示
+    status:{type:String,default:'pubilsh'}, //publish draft pending
     isTop: { type: Number, default: 0 },  // 是否推荐，默认不推荐 0为不推荐，1为推荐
+    refined:{type:Boolean,default:false},//精品
     clickNum: { type: Number, default: 1 },
     comments: String,
     commentNum: { type: Number, default: 0 }, // 评论数
@@ -40,7 +43,7 @@ var ContentSchema = new Schema({
 
     isVip:{type:Boolean,default:false},//是否为vip可见
     isOverhead:{type: Boolean,default:false},//是否置顶
-    tuijian:{type:Number,default:0,min:0,max:5},//推荐级别
+    star:{type:Number,default:0,min:0,max:5},//推荐级别
 
     images:[String],    //内容中的所有图片资源
     hiddenContent:{type:String,default:''},
@@ -53,7 +56,8 @@ ContentSchema.set('toJSON', { getters: true, virtuals: true });
 ContentSchema.set('toObject', { getters: true, virtuals: true });
 
 ContentSchema.path('date').get(function (v) {
-    return moment(v).startOf('hour').fromNow();
+    // return moment(v).startOf('hour').fromNow();
+    return moment(v).format("YYYY-MM-DD HH:mm");
 });
 ContentSchema.path('updateDate').get(function (v) {
     return moment(v).format("YYYY-MM-DD HH:mm");
