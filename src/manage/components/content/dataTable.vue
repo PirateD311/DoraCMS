@@ -22,9 +22,7 @@
             <el-table-column prop="categories" label="类别" show-overflow-tooltip width="120">
                 <template scope="scope">{{typeof scope.row.categories == 'object' && scope.row.categories.length > 1 ? scope.row.categories[scope.row.categories.length-1].name : '其它'}}</template>
             </el-table-column>
-            <el-table-column prop="from" label="来源" show-overflow-tooltip>
-                <template scope="scope">{{scope.row.from === '1'?'原创':'转载'}}</template>
-            </el-table-column>
+
             <el-table-column prop="from" label="星级" >
                 <template scope="scope"> 
                     <el-button size="mini" type="primary" plain round @click="tuijianContent(scope.$index, dataList)">
@@ -43,6 +41,9 @@
                 </template>
             </el-table-column>
             <el-table-column prop="author.name" label="作者" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="from" label="来源" show-overflow-tooltip>
+                <template scope="scope">{{scope.row.from === '1'?'原创':'转载'}}</template>
             </el-table-column>
             <el-table-column label="操作" width="150" fixed="right">
                 <template scope="scope">

@@ -15,9 +15,20 @@ function mkdirDir(path) {
 
     }
 }
-getIpInfo()
+// getIpInfo()
 async function getIpInfo(){
     const rq = require('request-promise')
     let resp = await rq('http://ip.taobao.com/service/getIpInfo.php?ip=125.120.77.119')
     console.log('查询ip详情',JSON.parse(resp))
 }
+
+    function checkAreaScreen(area,screens){
+        for(var i =0 ;i<screens.length;i++){
+            if(area.indexOf(screens[i])>-1){
+                return true;
+            }
+        }
+        return false;
+    };
+
+    console.log(checkAreaScreen('浙江杭州',['陕西','海南','杭州']))

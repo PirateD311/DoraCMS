@@ -13,14 +13,14 @@ const Joi = require('joi')
 const Rules = {
     create:Joi.object().keys({
         title:Joi.string().required().min(5).max(50),
-        stitle:Joi.string().required().min(5).max(40),
+        stitle:Joi.string().empty(''),
         categories:Joi.array().items(Joi.string()).single(),
-        tags:Joi.array(),   //need to format
+        tags:Joi.array().items(Joi.string()).single(),   //need to format
         discription:Joi.string().min(5).max(100),
         comments:Joi.string().required().min(5),
         date:Joi.date().default(Date.now()),
-        sImg:Joi.string(),
-        author:Joi.string(),
+        sImg:Joi.string().empty(''),
+        // author:Joi.string().empty(''),
         state:Joi.boolean().default(true),
         status:Joi.string().default('publish'),
         isTop:Joi.number().default(0),
@@ -28,7 +28,7 @@ const Rules = {
         form:Joi.string().default('1'),
         isVip:Joi.boolean().default(false),
         star:Joi.number().default(0).min(0).max(5),
-        hiddenContent:Joi.string(),
+        hiddenContent:Joi.string().empty(''),
         hiddenType:Joi.number().default(0),
         refined:Joi.boolean()
     }),
@@ -293,6 +293,33 @@ class Content {
             try {
                 // checkFormData(req, res, fields);
                 let doc = await Joi.validate(fields,Rules.create,{stripUnknown:true})
+                doc.author = req.session.adminUserInfo._id
+                //提取内容中所有图片
+                if(doc.comments){
+                    let imgs = getAllImgUrl(doc.comments)
+                    console.log('提取的所有图片:',imgs)
+                    doc.images = imgs
+                }
+                //默认选择第一张图片作为特色图
+                if(doc.images && !doc.sImg){
+                    doc.sImg = doc.images[0]
+                }
+                if(!doc.stitle)doc.stitle = doc.title.substr(0,40)
+                const newContent = new ContentModel(doc);
+                try {
+                    await newContent.save();
+                    res.send({
+                        state: 'success',
+                        id: newContent._id
+                    });
+                } catch (err) {
+                    logUtil.error(err, req);
+                    res.send({
+                        state: 'error',
+                        type: 'ERROR_IN_SAVE_DATA',
+                        message: '保存数据失败:',
+                    })
+                }
             } catch (err) {
                 console.log(err.message, err);
                 res.send({
@@ -301,51 +328,6 @@ class Content {
                     message: err.message
                 })
                 return
-            }
-            doc.author = req.session.adminUserInfo._id
-            // const groupObj = {
-            //     title: fields.title,
-            //     stitle: fields.stitle,
-            //     type: fields.type,
-            //     categories: fields.categories,
-            //     sortPath: fields.sortPath,
-            //     tags: fields.tags,
-            //     keywords: fields.keywords,
-            //     sImg: fields.sImg,
-            //     author: req.session.adminUserInfo._id,
-            //     state: fields.state,
-            //     isTop: fields.isTop,
-            //     from: fields.from,
-            //     discription: fields.discription,
-            //     comments: fields.comments,
-            //     isVip:fields.isVip,
-            //     hiddenType:fields.hiddenType,
-            //     hiddenContent:fields.hiddenContent,
-            // }
-            //提取内容中所有图片
-            if(doc.comments){
-                let imgs = getAllImgUrl(doc.comments)
-                console.log('提取的所有图片:',imgs)
-                doc.images = imgs
-            }
-            //默认选择第一张图片作为特色图
-            if(doc.images && !doc.sImg){
-                doc.sImg = doc.images[0]
-            }
-            const newContent = new ContentModel(doc);
-            try {
-                await newContent.save();
-                res.send({
-                    state: 'success',
-                    id: newContent._id
-                });
-            } catch (err) {
-                logUtil.error(err, req);
-                res.send({
-                    state: 'error',
-                    type: 'ERROR_IN_SAVE_DATA',
-                    message: '保存数据失败:',
-                })
             }
         })
     }

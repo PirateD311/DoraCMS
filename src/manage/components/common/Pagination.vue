@@ -16,11 +16,11 @@
 export default {
     props: {
         pageInfo: Object,
-        pageType: String
+        pageType: String,
+        query:{},
     },
     methods: {
         handleSizeChange(val) {
-
             console.log(`每页 ${val} 条`);
             this.$store.dispatch('getAdminUserList', {
                 pageSize: val
@@ -29,10 +29,11 @@ export default {
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
             if (this.pageType === 'content') {
-                this.$store.dispatch('getContentList', {
+                console.log('query:',this.query)
+                this.$store.dispatch('getContentList', Object.assign({
                     current: val,
                     model:'all',
-                });
+                },this.query));
             } else if (this.pageType === 'adminUser') {
                 this.$store.dispatch('getAdminUserList', {
                     current: val

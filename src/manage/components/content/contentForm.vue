@@ -337,7 +337,6 @@ export default {
                 }
             });
         }
-
     },
     computed: {
         ...mapGetters([

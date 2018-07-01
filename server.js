@@ -36,7 +36,7 @@ const system = require('./server/routers/system');
 const isCacheable = () => useMicroCache
 const microCache = lurCache({
     max: 500,
-    maxAge: 1000 * 60 * 60 * 6
+    maxAge: 1000 * 60 * 60 * 1
 })
 
 function createRenderer(bundle, template) {
@@ -47,7 +47,7 @@ function createRenderer(bundle, template) {
         // for component caching
         cache: lurCache({
             max: 1000,
-            maxAge: 1000 * 60 * 60 * 6
+            maxAge: 1000 * 60 * 60 * 1
         }),
 
         // this is only needed when vue-server-renderer is npm-linked

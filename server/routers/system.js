@@ -51,7 +51,6 @@ router.post('/upload',async function (req, res, next) {
         fields = [],
         docs = [];
     console.log('start upload');
-
     //存放目录
     let updatePath = settings.UPLOAD_PATH+'images/'||"public/upload/images/";
     let smallImgPath = "public/upload/smallimgs/";
