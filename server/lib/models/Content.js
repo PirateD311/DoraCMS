@@ -30,6 +30,7 @@ var ContentSchema = new Schema({
     craeteDate: { type: Date, default: Date.now },    //创建时间
     updateDate: { type: Date, default: Date.now }, // 更新时间
     author: { type: String, ref: 'AdminUser' }, // 文档作者
+    contributor: { type: String, ref: 'User' }, // 投稿人
     state: { type: Boolean, default: true },  // 是否在前台显示，默认显示
     status:{type:String,default:'pubilsh'}, //publish draft pending
     isTop: { type: Number, default: 0 },  // 是否推荐，默认不推荐 0为不推荐，1为推荐

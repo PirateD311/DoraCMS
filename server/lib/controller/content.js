@@ -10,6 +10,8 @@ const _ = require('lodash');
 const cheerio = require('cheerio')
 const Joi = require('joi')
 
+const {content} = require('../service')
+
 const Rules = {
     create:Joi.object().keys({
         title:Joi.string().required().min(5).max(50),
@@ -44,7 +46,7 @@ const Rules = {
         state:Joi.boolean().default(true),
         isVip:Joi.boolean(),
         status:Joi.string().default('publish'),
-        isTop:Joi.number().default(0),
+        isTop:Joi.number(),
     }),
     update:Joi.object().keys({
         _id:Joi.string().required(),
@@ -107,105 +109,13 @@ class Content {
         // super()
     }
     async getContents(req, res, next) {
+        // if(req.session.user ||req.session.adminUserInfo){
+        //         // delete queryObj.isVip;
+        //         if(isVip)queryObj.isVip = true;
+        // }
         try {
-            let {current,pageSize,
-                sortby, //排序规则
-                typeId, //分类id
-                tagName, // 文章tag
-                searchkey,// 搜索关键字
-                model,  // 查询模式 full/normal/simple
-                state,
-                isVip,//只查询vip内容
-                status,
-                isTop,
-            } = await Joi.validate(req.query,Rules.index,{stripUnknown:true})
-           
-            // 条件配置
-            let queryObj = {
-                state,status,isTop
-            }, 
-                sortObj = { date: -1 }, files = null;
-
-            if(req.session.user ||req.session.adminUserInfo){
-                // delete queryObj.isVip;
-                if(isVip)queryObj.isVip = true;
-            }
-
-            if (sortby) {
-                let pre = '-'
-                if( sortby[0]==='-' || sortby[0]==='+' ){
-                    pre = sortby[0]
-                    sortby = sortby.substr(1)
-                }
-                delete sortObj.date;
-                sortObj[sortby] = pre==='-'?-1:1
-            }
-
-
-            if (state) {
-                queryObj.state = true
-            }
-            if(queryObj.isTop===-1)delete queryObj.isTop            
-            if(queryObj.status==='all')delete queryObj.status            
-
-            if (typeId && typeId != 'indexPage') {
-                queryObj.categories = typeId;
-                if(typeId === 'vip'){
-                    delete queryObj.categories;
-                    queryObj.isVip = true;
-                }
-            }
-
-            if (tagName) {
-                let targetTag = await ContentTagModel.findOne({ name: tagName });
-                if (targetTag) {
-                    queryObj.tags = targetTag._id;
-                    // 如果有标签，则查询全部类别
-                    delete queryObj.categories;
-                }
-            }
-
-            if (searchkey) {
-                console.log('包括关键词.',searchkey)
-                let reKey = new RegExp(searchkey, 'i')
-                // queryObj.comments = { $regex: reKey }
-                queryObj.title = { $regex: reKey }
-            }
-
-            if (model === 'simple') {
-                files = {
-                    id: 1,
-                    title: 1,
-                    sImg: 1,
-                    stitle: 1,
-                    updateDate: 1,
-                    clickNum:1,
-                    isVip:1,
-                    likeNum:1,
-                    commentNum:1,
-                }
-            } else if (model === 'normal') {
-                files = {
-                    comments:0,
-                    images:0,
-                    likeUserIds:0,
-                }
-            }else if (model === 'all'){
-                files = {}
-            }
-            console.log(`查询条件:`,queryObj,'排序条件：',sortObj)
-            const contents = await ContentModel.find(queryObj, files).sort(sortObj).skip(pageSize * (Number(current) - 1)).limit(Number(pageSize)).populate([{
-                path: 'author',
-                select: 'name -_id'
-            },
-            {
-                path: 'categories',
-                select: 'name defaultUrl _id'
-            }, {
-                path: 'tags',
-                select: 'name _id'
-            }]).exec();
-            const totalItems = await ContentModel.count(queryObj);
+            let data = req.query
+            let {contents,totalItems,current,pageSize} = await content.getContents(data)
             res.send({
                 state: 'success',
                 docs: contents,
@@ -216,6 +126,7 @@ class Content {
                 }
             })
         } catch (err) {
+            console.log(err)
             logUtil.error(err, req)
             res.send({
                 state: 'error',
@@ -233,28 +144,13 @@ class Content {
     async getOneContent(req, res, next) {
         try {
             let targetId = req.query.id;
-            const content = await ContentModel.findOneAndUpdate({ _id: targetId }, { '$inc': { 'clickNum': 1 } }).populate([{
-                path: 'author', 
-                select: 'name -_id'
-            },
-            {
-                path: 'tags',
-                select: 'name _id'
-            },
-            {
-                path: 'categories',
-                select: 'name _id'
-            }]).exec();
-            const commentNum = await MessageModel.count({ contentId: targetId });
-            content && (content.commentNum = commentNum);
-            // 推荐文章查询
-            const totalContents = await ContentModel.count({});
-            const randomArticles = await ContentModel.find({}, 'stitle sImg').skip(Math.floor(totalContents * Math.random())).limit(4);
+            let result = await content.getContentById(targetId)
+            // {content,randomArticles,totalContents,commentNum}
             res.send({
                 state: 'success',
-                doc: content || {},
+                doc: result.content || {},
                 // messages,
-                randomArticles
+                randomArticles:result.randomArticles
             })
         } catch (err) {
             logUtil.error(err, req)
@@ -292,25 +188,17 @@ class Content {
         form.parse(req, async (err, fields, files) => {
             try {
                 // checkFormData(req, res, fields);
-                let doc = await Joi.validate(fields,Rules.create,{stripUnknown:true})
-                doc.author = req.session.adminUserInfo._id
-                //提取内容中所有图片
-                if(doc.comments){
-                    let imgs = getAllImgUrl(doc.comments)
-                    console.log('提取的所有图片:',imgs)
-                    doc.images = imgs
-                }
-                //默认选择第一张图片作为特色图
-                if(doc.images && !doc.sImg){
-                    doc.sImg = doc.images[0]
-                }
-                if(!doc.stitle)doc.stitle = doc.title.substr(0,40)
-                const newContent = new ContentModel(doc);
                 try {
-                    await newContent.save();
+                    if(req.session.adminUserInfo){
+                        fields.author = req.session.adminUserInfo._id
+                    }else if(req.session.user){
+                        files.author = req.session.user._id
+                    }
+    
+                    let {id} = await content.addContent(fields)
                     res.send({
                         state: 'success',
-                        id: newContent._id
+                        id
                     });
                 } catch (err) {
                     logUtil.error(err, req);
