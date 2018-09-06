@@ -4,7 +4,7 @@ const formidable = require('formidable');
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
 const shortid = require('shortid');
 const validator = require('validator')
-
+const {contentCategoryService} = require('../service')
 function checkFormData(req, res, fields) {
     let errMsg = '';
     if (fields._id && !siteFunc.checkCurrentId(fields._id)) {
@@ -16,9 +16,9 @@ function checkFormData(req, res, fields) {
     if (!fields.defaultUrl) {
         errMsg = '请输入用于seo的url!';
     }
-    if (!validator.isLength(fields.comments, 5, 50)) {
-        errMsg = '5-50个非特殊字符!';
-    }
+    // if (!validator.isLength(fields.comments, 5, 50)) {
+    //     errMsg = '5-50个非特殊字符!';
+    // }
     if (errMsg) {
         res.send({
             state: 'error',
@@ -34,21 +34,7 @@ class ContentCategory {
     }
     async getContentCategories(req, res, next) {
         try {
-            let current = req.query.current || 1;
-            let pageSize = req.query.pageSize || 10;
-            let model = req.query.model; // 查询模式 full/simple
-            let parentId = req.query.parentId; // 分类ID
-
-            let queryObj = {};
-            if (parentId) {
-                queryObj['parentId'] = parentId;
-            }
-            if (model === 'full') {
-                pageSize = '1000'
-            }
-
-            const ContentCategories = await ContentCategoryModel.find(queryObj).sort({ sortId: 1 });
-            const totalItems = await ContentCategoryModel.count(queryObj);
+            let {ContentCategories,totalItems,current,pageSize} = await contentCategoryService.getContentCategory(req.query)
             res.send({
                 state: 'success',
                 docs: ContentCategories,
@@ -95,7 +81,9 @@ class ContentCategory {
                 parentId: fields.parentId,
                 enable: fields.enable,
                 defaultUrl: fields.defaultUrl,
-                comments: fields.comments
+                comments: fields.comments,
+                img: fields.img,
+                type: fields.type,
             }
 
             const newContentCategory = new ContentCategoryModel(groupObj);
@@ -149,7 +137,9 @@ class ContentCategory {
                 enable: fields.enable,
                 defaultUrl: fields.defaultUrl,
                 sortPath: fields.sortPath,
-                comments: fields.comments
+                comments: fields.comments,
+                img: fields.img,
+                type: fields.type,
             }
             const item_id = fields._id;
             try {

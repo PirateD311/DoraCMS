@@ -1,6 +1,6 @@
 <template>
     <div class="dr-AdminResourceForm">
-        <el-dialog width="35%" size="small" title="填写分类信息" :visible.sync="dialogState.show" :close-on-click-modal="false">
+        <el-dialog width="80%" size="small" title="填写分类信息" :visible.sync="dialogState.show" :close-on-click-modal="false">
             <el-form :model="dialogState.formData" :rules="cateRules" ref="cateRuleForm" label-width="120px" class="demo-ruleForm">
                 <el-form-item v-show="dialogState.type==='children' && !dialogState.edit" label="父对象" prop="label">
                     <el-input size="small" :disabled="true" v-model="dialogState.formData.parentObj.name"></el-input>
@@ -21,8 +21,17 @@
                     <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="dialogState.formData.keywords"> </el-input>
                 </el-form-item>
                 <el-form-item label="描述" prop="comments">
-                    <el-input size="small" v-model="dialogState.formData.comments"></el-input>
+                    <el-input type="textarea" size="small" :rows="4" v-model="dialogState.formData.comments" placeholder=""></el-input>
                 </el-form-item>
+                <!-- 小说站额外数据 -->
+                <el-form-item label="封面图" prop="comments">
+                    <el-upload class="avatar-uploader" action="/system/upload?type=images" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <img style="width:80%" v-if="dialogState.formData.img" :src="dialogState.formData.img" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+
+                <!-- 小说站额外数据 -->
                 <el-form-item>
                     <el-button size="medium" type="primary" @click="submitForm('cateRuleForm')">{{dialogState.edit ? '更新' : '保存'}}</el-button>
                 </el-form-item>
@@ -83,6 +92,29 @@ export default {
         confirm() {
             this.$store.dispatch('hideContentCategoryForm')
         },
+        handleAvatarSuccess(res, file) {
+            let imageUrl = res;
+            this.dialogState.formData.img = imageUrl
+            // this.$store.dispatch('showContentForm', {
+            //     edit: this.formState.edit,
+            //     formData: Object.assign({}, this.formState.formData, {
+            //         sImg: imageUrl
+            //     })
+            // });
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isPNG = file.type === 'image/png';
+            const isGIF = file.type === 'image/gif';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+            if (!isJPG && !isPNG && !isGIF) {
+                this.$message.error('上传图片只能是 JPG,PNG,GIF 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传图片大小不能超过 2MB!');
+            }
+            return (isJPG || isPNG || isGIF) && isLt2M;
+        },        
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {

@@ -12,6 +12,21 @@ export function reqJsonData(url, params = {}, method = 'post') {
     }
 
 }
+export async function request(url,params={},method='get'){
+    try {
+        let resp 
+        if (method === 'get') {
+            resp  = await Axios.get('/manage' + url, { params })
+        } else if (method === 'post') {
+            resp  = await Axios.post('/manage' + url, params)
+        }  
+        console.log(`[${url}][${method}] ==> `,resp)
+        return resp.data
+    } catch (error) {
+        console.error(error)
+
+    }
+}
 export default {
 
     logOut() {

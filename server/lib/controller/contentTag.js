@@ -4,6 +4,8 @@ const formidable = require('formidable');
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
 const shortid = require('shortid');
 const validator = require('validator')
+const {contentTagService} = require('../service')
+
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -31,21 +33,7 @@ class ContentTag {
     }
     async getContentTags(req, res, next) {
         try {
-            let current = req.query.current || 1;
-            let pageSize = req.query.pageSize || 10;
-            let model = req.query.model; // 查询模式 full/simple
-            let searchkey = req.query.searchkey, queryObj = {};
-            if (model === 'full') {
-                pageSize = '1000'
-            }
-
-            if (searchkey) {
-                let reKey = new RegExp(searchkey, 'i')
-                queryObj.name = { $regex: reKey }
-            }
-
-            const contentTags = await ContentTagModel.find(queryObj).sort({ date: -1 }).skip(10 * (Number(current) - 1)).limit(Number(pageSize));
-            const totalItems = await ContentTagModel.count();
+            let {contentTags,totalItems,current,pageSize} = await contentTagService.getContentTags(req.query)
             res.send({
                 state: 'success',
                 docs: contentTags,

@@ -46,7 +46,10 @@ var ContentCategorySchema = new Schema({
         type: String,
         default: "0"
     }, //存储所有父节点结构
-    comments: String
+    comments: String,
+    type:{type:String,default:'category'},
+    img:{type:String,default:''},
+    
 });
 
 

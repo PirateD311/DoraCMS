@@ -88,15 +88,7 @@ export default {
                     message: '请选择资源类型',
                     trigger: 'change'
                 }],
-                comments: [{
-                    message: '请填写备注',
-                    trigger: 'blur'
-                }, {
-                    min: 2,
-                    max: 30,
-                    message: '请输入2-30个字符',
-                    trigger: 'blur'
-                }]
+
             },
             options: [{
                 value: '0',

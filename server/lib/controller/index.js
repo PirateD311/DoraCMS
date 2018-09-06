@@ -13,3 +13,4 @@ exports.DataOptionLog = require('./dataOptionLog');
 exports.SystemOptionLog = require('./systemOptionLog');
 exports.Ads = require('./ads');
 exports.Crawler = require('./crawler');
+exports.Book = require('./book');

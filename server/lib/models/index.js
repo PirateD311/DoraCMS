@@ -43,3 +43,5 @@ exports.DataOptionLog = require('./DataOptionLog');
 exports.SystemOptionLog = require('./SystemOptionLog');
 exports.Ads = require('./Ads');
 exports.AdsItems = require('./AdsItems');
+
+exports.Book = require('./Book');

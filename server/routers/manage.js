@@ -16,7 +16,8 @@ const {
   UserNotify,
   Notify,
   Ads,
-  Crawler
+  Crawler,
+  Book
 } = require('../lib/controller');
 const {
   service,
@@ -223,5 +224,9 @@ router.post('/crawler',Crawler.createCrawlerTask);
 router.get('/crawler/:name',(req,res,next)=>{req.query.name = req.query.name||req.params.name;next();},Crawler.getCrawlerTask);
 router.get('/crawler/do/execute',Crawler.execulateTask);
 router.get('/crawler/do/testTask',Crawler.testTask);
+
+//书籍相关
+router.post('/book',authToken,authPower,service.bodyParser,Book.addBook)
+router.get('/book',authToken,authPower,Book.getBooks)
 
 module.exports = router

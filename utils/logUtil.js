@@ -31,6 +31,7 @@ let logUtil = {
     },
 
     error(error, req, resTime) {
+        console.log(error)
         if (error) {
             if (typeof (error) == "string") {
                 errorLogger.error('***** node server error *****', error);

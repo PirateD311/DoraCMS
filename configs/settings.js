@@ -40,10 +40,13 @@ const settings = {
     UPLOAD_PATH: path.join(__dirname,'../../source/upload/')
 };
 
-// switch(process.env.VERSION){
-switch('NOVEL'){
+//switch(process.env.VERSION){
+switch('COSER'){
     case 'NOVEL':Object.assign(settings,{
         URL: 'mongodb://xiaoshuo:12liu555@139.196.113.98:3717/xiaoshuo',
+    });break; 
+    case 'COSER':Object.assign(settings,{
+        URL: 'mongodb://fuli:12liu555@139.196.113.98:3717/fuli',
     });break; 
 }
 

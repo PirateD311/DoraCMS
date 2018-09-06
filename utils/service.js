@@ -425,8 +425,16 @@ let systemService = {
         oldPsd += decipher.update(data, "hex", "utf8");
         oldPsd += decipher.final("utf8");
         return oldPsd;
-    }
+    },
 
+    //处理post请求的中间件
+    bodyParser: function bodyParser(req,res,next){
+        let form = new formidable.IncomingForm()
+        form.parse(req, async (err, fields, files) => {
+            req.body = fields
+            next()
+        })
+    }
 };
 
 
