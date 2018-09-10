@@ -54,8 +54,20 @@
                         </div>
                     </el-card>
                 </div>
+
             </el-col>
         </el-row>
+        <el-row :gutter="24">
+            <el-col :span="12">
+                <h6>最近注册</h6>
+                <v-chart :options='initChartData(basicInfo.statUsers.last7day)'></v-chart>
+            </el-col>
+            <el-col :span="12">
+                <h6>最近文章</h6>
+                <v-chart :options='initChartData(basicInfo.statContents.last7day)'></v-chart>        
+            </el-col>
+        </el-row>
+
         <el-row :gutter="24">
             <el-col :xs="24" :md="12">
                 <div class="grid-content bg-purple-light">
@@ -106,6 +118,8 @@
             </el-col>
 
         </el-row>
+
+        
     </div>
 </template>
 <script>
@@ -113,18 +127,51 @@
         mapGetters,
         mapActions
     } from 'vuex'
-
+    import {request,reqJsonData} from '../../store/services'
     export default {
         name: 'admin-main',
         data() {
             return {
-
+                lastUsers:{
+                        xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [820, 932, 901, 934, 1290, 1330, 1320],
+                        type: 'line',
+                        areaStyle: {}
+                    }]
+                }
             }
         },
 
         methods: {
             getToPage(targetPage) {
                 this.$router.push(targetPage);
+            },
+            initChartData(list=[]){
+                let x = list.map(v=>v.date);
+                  let  y = list.map(v=>v.count)
+                return {
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: x
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: y,
+                        type: 'line',
+                        areaStyle: {}
+                    }]
+                }
             }
         },
         computed: {

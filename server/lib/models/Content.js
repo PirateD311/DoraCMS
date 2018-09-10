@@ -19,7 +19,8 @@ var ContentSchema = new Schema({
     },
     title: String,
     stitle: String,
-    type: { type: String, default: "content" }, // 发布形式 默认为普通文档,约定 singer 为单页面文档
+    // 发布形式 默认为文章,约定 singer 为单页面文档  book为书籍类
+    type: { type: String, default: "content" },
     categories: [{ type: String, ref: 'ContentCategory' }], //文章类别
     sortPath: String, //存储所有父节点结构
     tags: [{ type: String, ref: 'ContentTag' }], // 标签
@@ -49,7 +50,7 @@ var ContentSchema = new Schema({
     images:[String],    //内容中的所有图片资源
     hiddenContent:{type:String,default:''},
     hiddenType:{type:Number,default:0},//0:无隐藏,1:登录可见,2:回复可见
-
+    bookid:{type:String,ref:"Book"},
 });
 
 

@@ -38,7 +38,38 @@ class BookController {
             })            
         }        
     }
-
+    async updateBook(req,res,next){
+         try{
+            let doc = await bookService.updateBook(req.query)
+            res.send({
+                state:'success',
+                doc
+            })
+        }catch(error){
+            logUtil.error(error, req);
+            res.send({
+                state: 'error',
+                type: 'ERROR',
+                message: error,
+            })            
+        }         
+    }
+    async removeBook(req,res,next){
+         try{
+            let doc = await bookService.removeBook(req.query)
+            res.send({
+                state:'success',
+                doc
+            })
+        }catch(error){
+            logUtil.error(error, req);
+            res.send({
+                state: 'error',
+                type: 'ERROR',
+                message: error,
+            })            
+        }  
+    }
 }
 
 module.exports = new BookController();

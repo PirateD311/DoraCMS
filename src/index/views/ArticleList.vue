@@ -67,6 +67,7 @@
                                     <div v-if="checkCateList">
                                         <CatesMenu :typeId="$route.params.typeId" />
                                     </div>
+                                    <AdsPannel id="H1gLkQR1dX" />
                                     <Tag :tags="tags.data" />
                                     <br>
                                     <HotContents :hotItems="hotlist" :typeId="$route.params.typeId" v-if="hotlist.length > 0" />

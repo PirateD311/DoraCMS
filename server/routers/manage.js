@@ -228,5 +228,7 @@ router.get('/crawler/do/testTask',Crawler.testTask);
 //书籍相关
 router.post('/book',authToken,authPower,service.bodyParser,Book.addBook)
 router.get('/book',authToken,authPower,Book.getBooks)
+router.get('/book/update',authToken,authPower,Book.updateBook)
+router.get('/book/remove',authToken,authPower,Book.removeBook)
 
 module.exports = router

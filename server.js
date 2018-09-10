@@ -3,6 +3,9 @@ const isProd = process.env.NODE_ENV === 'production'
 global.NODE_ENV = isProd
 //const useMicroCache = process.env.MICRO_CACHE !== 'false'
 const useMicroCache = isProd
+//全局项目跟目录
+global.ROOTPATH = __dirname
+
 
 const fs = require('fs')
 const path = require('path')

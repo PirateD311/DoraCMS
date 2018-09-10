@@ -19,7 +19,8 @@ const actions = {
 const mutations = {
     ['receiveAdsList'](state, { doc, hasNext, hasPrev, page, path }) {
         state.lists = {
-            data: doc, hasNext, hasPrev, page, path
+            data: doc, hasNext, hasPrev, page, path,
+            
         }
     }
 }

@@ -24,7 +24,7 @@ var BookSchema = new Schema({
     tags: [{ type: String, ref: 'ContentTag' }], // 标签
     keywords: String,
     sImg: { type: String, default: "/upload/images/defaultImg.jpg" }, // 书的封面图
-    discription: String,
+    description: String,
     date: { type: Date, default: Date.now },    //发布时间
     craeteDate: { type: Date, default: Date.now },    //创建时间
     updateDate: { type: Date, default: Date.now }, // 更新时间

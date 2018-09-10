@@ -20,8 +20,8 @@ const settings = {
     PASSWORD: '12liu555',
 
     // 站点基础信息配置
-    DORACMSAPI: 'http://api.html-js.cn', // 系统服务提供商
-    SYSTEMLOGPATH: '/root/logs', // 服务器日志保存目录
+    DORACMSAPI: 'https://www.cosfuli.com', // 系统服务提供商
+    SYSTEMLOGPATH: path.join(__dirname,'../logs'), // 服务器日志保存目录
     // 邮件相关设置
     email_findPsd: 'findPsd',
     email_reg_active: 'reg_active',
@@ -37,11 +37,11 @@ const settings = {
     system_batch_delete_not_allowed: '对不起，该模块不允许批量删除！',
 
     //上传路径
-    UPLOAD_PATH: path.join(__dirname,'../../source/upload/')
+    UPLOAD_PATH: path.join(__dirname,'../../source/upload/'),
 };
 
 //switch(process.env.VERSION){
-switch('COSER'){
+switch('NOVEL'){
     case 'NOVEL':Object.assign(settings,{
         URL: 'mongodb://xiaoshuo:12liu555@139.196.113.98:3717/xiaoshuo',
     });break; 

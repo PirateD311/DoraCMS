@@ -288,7 +288,9 @@ const state = {
         adminUserCount: 0,
         regUserCount: 0,
         contentCount: 0,
-        messageCount: 0
+        messageCount: 0,
+        statUsers:{last7day:[]},
+        statContents:{last7day:[]},
     },
     tuijian:{
         list:[]

@@ -11,13 +11,21 @@ import Axios from 'axios';
 // 自定义全局组件Loading
 import Loading from './manage/components/loading'
 import * as filters from './filters'
+import ECharts from 'vue-echarts/components/ECharts.vue'
+
+// 手动引入 ECharts 各模块来减小打包体积
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/polar'
+
 
 import store from './manage/store/index.js'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 Vue.use(Loading);
-
+Vue.component('v-chart', ECharts)
 // register global utility filters.
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])

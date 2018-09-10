@@ -20,6 +20,7 @@ const Rules = {
         date:Joi.date().default(Date.now()),
         sImg:Joi.string().empty(''),
         author:Joi.string(),
+        contributor:Joi.string(),
         state:Joi.boolean().default(true),
         status:Joi.string().default('publish'),
         isTop:Joi.number().default(0),
@@ -80,27 +81,17 @@ class ContentService {
             typeId, //分类id
             tagName, // 文章tag
             searchkey,// 搜索关键字
-            model,  // 查询模式 full/normal/simple
-            state,
+            state,  //弃用的字段
             isVip,//只查询vip内容
-            status,
-            isTop,
+            status, //文章状态
+            isTop,  //置顶文章
+            model,  // 查询模式 full/normal/simple
         } = await Joi.validate(data,Rules.index,{stripUnknown:true})
         // 条件配置
         let queryObj = {
             state,status
         }, 
-        sortObj = { date: -1 }, files = null;          
-        //排序规则
-        if (sortby) {
-            let pre = '-'
-            if( sortby[0]==='-' || sortby[0]==='+' ){
-                pre = sortby[0]
-                sortby = sortby.substr(1)
-            }
-            delete sortObj.date;
-            sortObj[sortby] = pre==='-'?-1:1
-        }       
+        sortObj = { date: -1 }, files = null;            
         //过滤项
         if(queryObj.status==='all')delete queryObj.status  //返回所有状态文章          
         if (typeId && typeId != 'indexPage') {  //分类过滤
@@ -120,15 +111,28 @@ class ContentService {
         }     
         if (searchkey) {    //标题关键词搜索
             console.log('包括关键词.',searchkey)
-            let reKey = new RegExp(searchkey, 'i')
+            // let reKey = new RegExp(searchkey, 'i')
             // queryObj.comments = { $regex: reKey }
-            queryObj.title = { $regex: reKey }
-        }        
+            queryObj.title = { $regex: searchkey }
+        }    
+        //排序规则
+        if (sortby) {
+            let pre = '-'
+            if( sortby[0]==='-' || sortby[0]==='+' ){
+                pre = sortby[0]
+                sortby = sortby.substr(1)
+            }
+            delete sortObj.date;
+            sortObj[sortby] = pre==='-'?-1:1
+        }           
+
         //返回的字段  
         if (model === 'simple') {
             files = {
                 id: 1,
                 title: 1,
+                author: 1,
+                type:1,
                 sImg: 1,
                 stitle: 1,
                 updateDate: 1,
@@ -228,14 +232,14 @@ class ContentService {
     }
     //
 
-        getAllImgUrl(html){
-            let cheerio = require('cheerio')
-            let $ = cheerio.load(html)
-            let imgUrls = []
-            $('img').each((i,e)=>{
-                if($(e).attr('src'))imgUrls.push($(e).attr('src'))
-            })
-            return imgUrls
-        }
+    getAllImgUrl(html){
+        let cheerio = require('cheerio')
+        let $ = cheerio.load(html)
+        let imgUrls = []
+        $('img').each((i,e)=>{
+            if($(e).attr('src'))imgUrls.push($(e).attr('src'))
+        })
+        return imgUrls
+    }
 }
 module.exports = new ContentService()

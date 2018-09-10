@@ -10,7 +10,7 @@ const shortid = require('shortid');
 const validator = require('validator')
 const _ = require('lodash')
 const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../../utils');
-
+const {statisticsService} = require('../service')
 function checkFormData(req, res, fields) {
     let errMsg = '';
     if (fields._id && !siteFunc.checkCurrentId(fields._id)) {
@@ -84,6 +84,9 @@ class AdminUser {
                 path: 'author',
                 select: 'userName _id enable date logo'
             }]).populate('replyAuthor').populate('adminAuthor').exec();
+
+            let [statUsers,statContents] = await Promise.all([statisticsService.statRecentSignUsers(),statisticsService.statRecentContents()])
+
             res.send({
                 state: 'success',
                 adminUserCount,
@@ -91,7 +94,8 @@ class AdminUser {
                 regUsers,
                 contentCount,
                 messageCount,
-                messages
+                messages,
+                statUsers,statContents,
             });
         } catch (error) {
             logUtil.error(err, req);

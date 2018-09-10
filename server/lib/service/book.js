@@ -8,12 +8,13 @@ const shortid = require('shortid');
 const Rule = {
     create:Joi.object({
         name:Joi.string().required(),
-        categories:Joi.string().required(),
         author:Joi.string(),
+
         type:Joi.string().default('novel'),
         keywords:Joi.string(),
+        categories:Joi.array().items(Joi.string()).single(),
         sImg:Joi.string(),
-        discription:Joi.string(),
+        description:Joi.string(),
         serialize:Joi.boolean(),
         wordNum:Joi.number(),
         clickNum:Joi.number(),
@@ -23,7 +24,7 @@ const Rule = {
         name:Joi.string(),
         author:Joi.string(),
         serialize:Joi.boolean(),
-        categories:Joi.string(),
+        categories:Joi.array().items(Joi.string()).single(),
         type:Joi.string(),
     }),
     page:Joi.object({current:Joi.number().default(1),pageSize:Joi.number().default(10)}),
@@ -39,8 +40,7 @@ class BookService{
         }
         book = await BookModel.create(book)
         return book
-    }
-    
+    } 
     async getBooks(data = {}){
         let {pageSize=10,current=1,} = await Joi.validate(data,Rule.page,{stripUnknown:true})
         let queryObj = await Joi.validate(data,Rule.query,{stripUnknown:true}),
@@ -53,7 +53,26 @@ class BookService{
 
         ]).exec()
         let totalItems = await BookModel.count(queryObj)
-        return {pageSize,current,docs}
+        return {pageSize,current,docs,totalItems}
+    }
+    async updateBook(data = {}){
+        let id = await Joi.validate(data.id,Joi.string().required()),
+            update = await Joi.validate(data,Joi.object({
+                categories:Joi.array().items(Joi.string()).single(),
+                sImg:Joi.string(),
+                description:Joi.string(),
+                serialize:Joi.boolean(),
+                wordNum:Joi.number(),
+                clickNum:Joi.number(),
+                likeNum:Joi.number(),           
+            }),{stripUnknown:true})
+        let doc = await BookModel.findByIdAndUpdate(id,update,{new:true})
+        return doc
+    }
+    async removeBook( data = {}){
+        let id = await Joi.validate(data.id,Joi.string().required()) 
+        let doc = await BookModel.findByIdAndRemove(id)
+        return doc
     }
 
 
