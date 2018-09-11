@@ -87,7 +87,7 @@ router.get('/adminResource/deleteResource', authToken, authPower, AdminResource.
  * 此api名称尽量不要改
  */
 router.get('/systemConfig/getConfig', authToken, authPower, SystemConfig.getSystemConfigs)
-
+router.get('/systemConfig/editConfig', authToken, authPower, SystemConfig.editSystemConfig)
 router.post('/systemConfig/updateConfig', authToken, authPower, SystemConfig.updateSystemConfig)
 
 

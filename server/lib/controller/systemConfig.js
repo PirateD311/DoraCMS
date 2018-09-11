@@ -5,7 +5,7 @@ const { service, settings, validatorUtil, logUtil, siteFunc } = require('../../.
 const shortid = require('shortid');
 const validator = require('validator')
 const fs = require('fs')
-
+const Joi = require('joi')
 
 function checkFormData(req, res, fields) {
     let errMsg = '';
@@ -151,6 +151,25 @@ class SystemConfig {
         })
 
     }
+
+    async editSystemConfig(req,res,next){
+        let data = req.query
+
+        let update = await Joi.validate(data,Joi.object({
+            banner:Joi.string(),
+            navigation:Joi.string(),
+            block:Joi.string(),
+        }),{stripUnknown:true});
+        let configId = data.id
+        if(update.banner){
+            let banner = JSON.parse(update.banner)
+        }
+        let config = await SystemConfigModel.findByIdAndUpdate(configId,update,{new:true})
+
+        return config
+    }
+
+
 
 }
 
