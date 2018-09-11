@@ -44,7 +44,7 @@ class BookService{
     async getBooks(data = {}){
         let {pageSize=10,current=1,} = await Joi.validate(data,Rule.page,{stripUnknown:true})
         let queryObj = await Joi.validate(data,Rule.query,{stripUnknown:true}),
-            sortBy = {craeteDate:-1}
+            sortBy = {createDate:-1}
         if(queryObj.name)queryObj.name = {'$regex':queryObj.name}
 
         let docs = await BookModel.find(queryObj).limit(pageSize).skip(pageSize*current-pageSize).sort(sortBy).populate([

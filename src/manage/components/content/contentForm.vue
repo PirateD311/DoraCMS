@@ -49,29 +49,59 @@
                 <el-button size="small" @click="newTag.show=true" type="primary" icon="el-icon-circle-plus" circle>新增</el-button>
                 <TagForm :dialogState="newTag"></TagForm>
             </el-form-item>
-            <el-form-item label="缩略图" prop="sImg">
-                <el-upload class="avatar-uploader" action="/system/upload?type=images" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                    <img v-if="formState.formData.sImg" :src="formState.formData.sImg" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-            </el-form-item>
-            <el-form-item label="文章类别" prop="categories">
-                <el-cascader size="small" expand-trigger="hover" :options="contentCategoryList.docs" v-model="formState.formData.categories" @change="handleChangeCategory" :props="categoryProps">
-                </el-cascader>
-            </el-form-item>
-            <el-form-item label="发布时间" prop="date">
-                <el-date-picker
-                    default-time="12:00:00"
-                    v-model="formState.formData.date"
-                    type="datetime"
-                    placeholder="选择日期时间"
-                    align="right"
-                    >
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="内容摘要" prop="discription">
-                <el-input size="small" type="textarea" v-model="formState.formData.discription"></el-input>
-            </el-form-item>
+            <el-row>
+                <el-col :md="6" :sm="12">
+                    <el-form-item label="书目" prop="bookId">
+                        <el-select v-model="formState.formData.bookId" placeholder="请选择书籍">
+                            <el-option v-for="item in books"
+                                :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>  
+                </el-col>
+                <el-col :md="6" :sm="12">
+                    <el-form-item label="章节序号" prop="sortId">
+                        <el-input-number v-model="formState.formData.sortId" :min="0"  label="序号"></el-input-number>
+                        
+                    </el-form-item>
+                    
+                </el-col>
+                
+                <el-col :md="6" :sm="12">
+                    <el-form-item label="文章类别" prop="categories">
+                        <el-cascader size="small" expand-trigger="hover" :options="contentCategoryList.docs" v-model="formState.formData.categories" @change="handleChangeCategory" :props="categoryProps">
+                        </el-cascader>
+                    </el-form-item>             
+                </el-col>
+                <el-col :md="6" :sm="12">
+                    <el-form-item label="发布时间" prop="date">
+                        <el-date-picker
+                            default-time="12:00:00"
+                            v-model="formState.formData.date"
+                            type="datetime"
+                            placeholder="选择日期时间"
+                            align="right"
+                            >
+                        </el-date-picker>
+                    </el-form-item>        
+                </el-col>
+            </el-row> 
+            <el-row>
+                <el-col :md="6" :sm="12">
+                    <el-form-item label="缩略图" prop="sImg">
+                        <el-upload class="avatar-uploader" action="/system/upload?type=images" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                            <img v-if="formState.formData.sImg" :src="formState.formData.sImg" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                    </el-form-item>              
+                </el-col>
+                <el-col :md="12" :sm="12">
+                    <el-form-item label="内容摘要" prop="discription">
+                        <el-input size="small" :autosize="{ minRows: 4, maxRows: 6}" type="textarea" v-model="formState.formData.discription"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-form-item label="文档详情" prop="comments">
                 <Ueditor @ready="editorReady"></Ueditor>
             </el-form-item>
@@ -135,6 +165,7 @@
 
 <script>
 import services from '../../store/services.js';
+import {request} from '../../store/services'
 import Ueditor from '../common/Ueditor.vue';
 import TagForm from '../contentTag/tagForm';
 import _ from 'lodash';
@@ -169,6 +200,7 @@ export default {
                 label: 'name',
                 children: 'children'
             },
+            books:[],
             newTag:{
                 show:false,
                 formData:{}
@@ -347,7 +379,7 @@ export default {
             return this.$store.getters.contentFormState
         }
     },
-    mounted() {
+    async mounted() {
         // 针对手动页面刷新
         if (this.$route.params.id && !this.formState.formData.title) {
             services.getOneContent(this.$route.params).then((result) => {
@@ -382,6 +414,10 @@ export default {
         this.$store.dispatch('getContentTagList', {
             pageSize: 200
         });
+        let {docs} = await request('/book',)
+        this.books = docs.map(v=>{
+            return {label:v.name,value:v._id}
+        })
     }
 }
 

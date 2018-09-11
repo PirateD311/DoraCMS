@@ -64,8 +64,9 @@
                     <el-input v-model="tempData.author" ></el-input>
                 </el-form-item>
                <el-form-item label="文章类别" prop="categories">
-                <el-cascader size="small" expand-trigger="hover" :options="contentCategoryList.docs" v-model="tempData.categories"  :props="categoryProps">
-                </el-cascader>
+                    <el-tag type="info" v-for="item in tempData.categories" >{{item.name||item }}</el-tag>
+                    <el-cascader size="small" expand-trigger="hover" :options="contentCategoryList.docs" v-model="tempData.categories"  :props="categoryProps">
+                    </el-cascader>
                 </el-form-item>   
                 <el-form-item label="缩略图" prop="sImg">
                     <el-upload class="avatar-uploader" action="/system/upload?type=images" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
@@ -98,7 +99,7 @@ export default {
     data(){
         return {
             listData:[],
-            tempData:{},
+            tempData:{categories:[]},
             listQuery:{current:1,pageSize:10},
             options:{},
             dialog1:{title:'创建',visible:false,status:'create'},       
@@ -106,7 +107,6 @@ export default {
             categoryProps: {
                 value: '_id',
                 label: 'name',
-                children: 'children'
             },  
         }
     },

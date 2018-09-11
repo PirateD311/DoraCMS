@@ -29,6 +29,11 @@ var SystemConfigSchema = new Schema({
     globalTips:{
         type:String,default:''
     },
+    //banner配置
+    banner:{ type: String,default:'' },
+    navigation:{ type: String, default:''},
+    block:{type:String,default:''},
+
 });
 
 SystemConfigSchema.pre('save',true,function(next,done){

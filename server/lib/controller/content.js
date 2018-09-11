@@ -224,8 +224,10 @@ class Content {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
             try {
-                // checkFormData(req, res, fields);
-                fields = await Joi.validate(fields,Rules.update,{stripUnknown:true})
+                await content.updateContentById(fields._id||fields.id,fields)
+                res.send({
+                    state: 'success'
+                });
             } catch (err) {
                 console.log(err.message, err);
                 res.send({
@@ -234,33 +236,6 @@ class Content {
                     message: err.message
                 })
                 return
-            }
-
-            const contentObj = fields
-            const item_id = fields._id;
-            //提取内容中所有图片
-            if(contentObj.comments){
-                let imgs = getAllImgUrl(contentObj.comments)
-                console.log('提取的所有图片:',imgs)
-                contentObj.images = imgs
-            }
-            //默认选择第一张图片作为特色图
-            if(contentObj.images && !contentObj.sImg){
-                contentObj.sImg = contentObj.images[0]
-            }
-            console.log(`更新:`,contentObj)            
-            try {
-                await ContentModel.findOneAndUpdate({ _id: item_id }, contentObj);
-                res.send({
-                    state: 'success'
-                });
-            } catch (err) {
-                logUtil.error(err, req);
-                res.send({
-                    state: 'error',
-                    type: 'ERROR_IN_SAVE_DATA',
-                    message: '更新数据失败:',
-                })
             }
         })
 

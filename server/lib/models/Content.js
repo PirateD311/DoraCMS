@@ -50,7 +50,8 @@ var ContentSchema = new Schema({
     images:[String],    //内容中的所有图片资源
     hiddenContent:{type:String,default:''},
     hiddenType:{type:Number,default:0},//0:无隐藏,1:登录可见,2:回复可见
-    bookid:{type:String,ref:"Book"},
+    bookId:{type:String,ref:"Book"},
+    sortId:{type:Number,default:1},//书籍文章排序的序列号
 });
 
 
@@ -64,6 +65,7 @@ ContentSchema.path('date').get(function (v) {
 ContentSchema.path('updateDate').get(function (v) {
     return moment(v).format("YYYY-MM-DD HH:mm");
 });
+
 
 var Content = mongoose.model("Content", ContentSchema);
 
