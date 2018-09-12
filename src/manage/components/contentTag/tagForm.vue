@@ -38,16 +38,6 @@ export default {
                     trigger: 'blur'
                 }
                 ],
-                comments: [{
-                    required: true,
-                    message: '请填写备注',
-                    trigger: 'blur'
-                }, {
-                    min: 2,
-                    max: 30,
-                    message: '请输入5-30个字符',
-                    trigger: 'blur'
-                }]
             }
         };
     },
