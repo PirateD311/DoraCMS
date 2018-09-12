@@ -9,8 +9,7 @@
                         <img :class="{blur:item.isVip}" v-lazy="item.sImg.replace('http://oz7btgiar.bkt.clouddn.com/small','/upload/images')"  :alt="item.title" />
                     </router-link>
                 </div>
-            </el-col>
-            
+            </el-col>           
             <el-col :xs="24" :sm="24" :md="17" :lg="17" class='discription'>
                 <div class="grid-content bg-purple-light title">
                     <h2>

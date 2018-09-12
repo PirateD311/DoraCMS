@@ -29,7 +29,6 @@
                                     </div>
                                     <div class="article-tag">
                                         <a v-for="(tag, i) in article.doc.tags.slice(0,6)" :href="'/tag/' + tag.name"><el-tag   :type="randomTagType(i)">{{tag.name}}</el-tag></a>
-                                                                                
                                     </div>
                                     <div v-if="!article.doc.isVip || loginState.logined" >
                                         <div v-html="article.doc.comments"></div>
@@ -75,13 +74,14 @@
                                             </el-tab-pane>
                                         </el-tabs>                                                                               
                                     </el-row>
-                                    
+                                    <AdsPannel once id="80xCanP18" />
                                     <Messages :userMessageList="messages.data" :contentId="article.doc._id" />
                                 </div>
                             </el-col>
                             <el-col :xs="0" :sm="7" :md="7" :lg="7" class="content-mainbody-right">
                                 <div class="grid-content bg-purple-light title">
                                     <CatesMenu :typeId="typeId" />
+                                    <AdsPannel id="lZlTe6hLo" />
                                     <RecentContents :recentItems="recentArticle" />
                                     <HotContents :hotItems="hotlist" :typeId="$route.params.typeId" v-if="hotlist.length > 0" />
                                 </div>

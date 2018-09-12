@@ -1,6 +1,6 @@
 <template>
     <div class="ads">
-        <div class="content-ads" v-if="ads">
+        <div class="content-ads" v-if="ads&&ads.state">
             <div class="img-pannel" v-if="ads.type == '1'">
                 <div v-if="ads.items.length == 1" class="box">
                     <a :href="ads.items[0].link" target="_blank" ><img :src="ads.items[0].sImg" :alt="ads.items[0].alt" /></a>

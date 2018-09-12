@@ -48,6 +48,7 @@
                                     </div>
                                     <Pagination  :pageInfo="topics.pageInfo" :typeId="typeId" />
                                 </div>
+                                <AdsPannel once id="80xCanP18" />
                             </el-col>
                             <el-col :xs="24" :sm="17" :md="17" :lg="17" v-else style="min-height: 300px;">
                                 <div v-if="fullscreenLoading">
@@ -67,9 +68,10 @@
                                     <div v-if="checkCateList">
                                         <CatesMenu :typeId="$route.params.typeId" />
                                     </div>
-                                    <AdsPannel id="H1gLkQR1dX" />
+                                    <AdsPannel id="o_1QEZ9vn" />
                                     <Tag :tags="tags.data" />
                                     <br>
+                                    <AdsPannel id="49CqwlR2q" />
                                     <HotContents :hotItems="hotlist" :typeId="$route.params.typeId" v-if="hotlist.length > 0" />
                                 </div>
                             </el-col>
