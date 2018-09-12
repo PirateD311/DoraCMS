@@ -58,6 +58,8 @@ class BookService{
     async updateBook(data = {}){
         let id = await Joi.validate(data.id,Joi.string().required()),
             update = await Joi.validate(data,Joi.object({
+                name:Joi.string(),
+                author:Joi.string(),
                 categories:Joi.array().items(Joi.string()).single(),
                 sImg:Joi.string(),
                 description:Joi.string(),

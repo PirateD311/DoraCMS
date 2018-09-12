@@ -20,7 +20,7 @@ export async function request(url,params={},method='get'){
         let resp 
         switch(method){
             case 'get' :resp = await Axios.get(API_ROOT + url,{params});break;
-            case 'post':resp = await Axios.get(API_ROOT + url,params);break;
+            case 'post':resp = await Axios.post(API_ROOT + url,params);break;
             case 'put':resp = await Axios.put(API_ROOT + url,params);break;
             case 'delete':resp = await Axios.delete(API_ROOT + url,params);break;            
             default:break;

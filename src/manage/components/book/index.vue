@@ -144,14 +144,15 @@ export default {
             let data = await request('/book',this.tempData,'post')
             await this.getList()
             this.dialog1.visible = false
+            this.$message(`创建成功.`)
         },
         async updateData(){
             await request('/book/update',Object.assign(this.tempData,{id:this.tempData._id}),'get')
             await this.getList()
-            dialog1.visible=false
+            this.dialog1.visible=false
             this.$forceUpdate();
         },
-        async resetTemp(){},
+        async resetTemp(){this.tempData = {}},
         async handleRemove(id){
             try{
                 await this.$confirm('确定删除？')
