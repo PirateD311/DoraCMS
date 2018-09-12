@@ -32,11 +32,18 @@ class PageDataService {
         let books = []
         pageData.block.map(v=>books = books.concat(v.books))
         console.log(`所有需要的书籍：`,books)
-        books = await Book.find({_id:{$in:books}})
+        books = await Book.find({_id:{$in:books}}).populate([{
+            path:'categories',select:'_id name '
+        }])
         console.log(`查到的书籍:`,books)
-        pageData.block = pageData.block.map(v=>
-                            v.books=v.books.map(
-                                    v2=>books.find(v3=>v3._id===v2)||v2))
+        pageData.block = pageData.block.map(v=>{
+            return {
+                title:v.title,
+                sortId:v.sortId,
+                books:books.filter(v2=>v.books.indexOf(v2._id)>-1)
+            }
+        })
+
         console.log(`页面数据:`,pageData)
 
         return pageData
@@ -47,7 +54,9 @@ class PageDataService {
             book:{},
             articles:[],
         }
-        pageData.book = await Book.findById(bookId)
+        pageData.book = await Book.findById(bookId).populate([{
+            path:'categories',select:'_id name '
+        }])
         let articles = await Content.find({bookId},{title:1,sortId:1}).sort({sortId:-1,}).limit(40)
         pageData.articles = articles
 
@@ -93,7 +102,9 @@ class PageDataService {
             query.name = {$regex:data.keyword}
         }
 
-        pageData.books = await Book.find(query).sort(sort).limit(pageSize).skip(current*pageSize-pageSize)
+        pageData.books = await Book.find(query).sort(sort).limit(pageSize).skip(current*pageSize-pageSize).populate([{
+            path:'categories',select:'_id name '
+        }])
         pageData.totalItem = await Book.count(query)
 
         return pageData

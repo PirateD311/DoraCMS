@@ -164,8 +164,11 @@ class SystemConfig {
         if(update.banner){
             let banner = JSON.parse(update.banner)
         }
+        console.log(`id:`,configId,`upadte:`,update)
         let config = await SystemConfigModel.findByIdAndUpdate(configId,update,{new:true})
-
+        res.send({
+            state: 'success'
+        });
         return config
     }
 

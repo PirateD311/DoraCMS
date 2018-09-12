@@ -1,5 +1,21 @@
 <template>
     <div>
+        <!-- 书籍首页配置 -->
+        <el-row>
+            <el-col :md="12" :span="8">
+                <BannerConfig></BannerConfig>
+
+
+            </el-col>
+            <el-col :md="12" :span="8">
+                <NavConfig></NavConfig>
+            </el-col>
+            <el-col :md="12" :span="8">
+            <BlockConfig></BlockConfig>
+            </el-col>
+        </el-row>
+        
+
         <!-- 横向筛选列 -->
         <el-row>
             <el-col :span="24">
@@ -12,8 +28,7 @@
                     </el-form-item>
                     <el-form-item label="">
                         <el-button size="small" class="filter-item" type="primary"  icon="el-icon-add" @click="handleCreate">新增</el-button>
-                    </el-form-item>
-                    
+                    </el-form-item>                  
                 </el-form>            
             </el-col>
         </el-row>
@@ -22,7 +37,7 @@
         <el-row>
             <el-col :span="24">
                 <el-table :data="listData"    style="width: 100%"  >
-     
+                    <el-table-column label="id" prop="id" width="100px" ></el-table-column>
                     <el-table-column label="书名/作者" width="100%">
                         <template scope="scope">
                             {{scope.row.name}}/{{scope.row.author}}
@@ -43,7 +58,6 @@
                             <el-button type="" @click="dialog1.status='edit';dialog1.visible=true;tempData=scope.row">编辑</el-button>
                         </template>
                     </el-table-column>
-                    
                 </el-table>                
             </el-col>
         </el-row>
@@ -88,16 +102,25 @@
 </template>
 <script>
 import {request} from '../../store/services'
-
+import BannerConfig from './bannerConfig'
+import NavConfig from './navConfig'
+import BlockConfig from './blockConfig'
 import {
     mapGetters,
     mapActions
 } from 'vuex'
 export default {
     name:'',
-    components:{},
+    components:{
+        BannerConfig,NavConfig,BlockConfig
+    },
     data(){
         return {
+            indexConfig:{
+                banner:[],
+                navigation:[],
+                block:[],
+            },
             listData:[],
             tempData:{categories:[]},
             listQuery:{current:1,pageSize:10},

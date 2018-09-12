@@ -14,7 +14,7 @@ describe(__filename+'',()=>{
         console.log(`result:`,JSON.stringify(result,null,2))
     })
 
-    it.only('书籍文章页.',async ()=>{
+    it('书籍文章页.',async ()=>{
         let result = await pageData.article('H1lBpScM-M')
         console.log(`result:`,JSON.stringify(result,null,2))
     })
