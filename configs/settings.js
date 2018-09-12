@@ -41,7 +41,7 @@ const settings = {
 };
 
 //switch(process.env.VERSION){
-switch('NOVEL'){
+switch('COSER'){
     case 'NOVEL':Object.assign(settings,{
         URL: 'mongodb://xiaoshuo:12liu555@139.196.113.98:3717/xiaoshuo',
     });break; 
