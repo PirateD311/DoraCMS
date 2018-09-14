@@ -9,10 +9,10 @@ const Rule = {
     create:Joi.object({
         name:Joi.string().required(),
         author:Joi.string(),
-
         type:Joi.string().default('novel'),
         keywords:Joi.string(),
         categories:Joi.array().items(Joi.string()).single(),
+        tags:Joi.array().items(Joi.string()).single(),
         sImg:Joi.string(),
         description:Joi.string(),
         serialize:Joi.boolean(),
@@ -61,6 +61,7 @@ class BookService{
                 name:Joi.string(),
                 author:Joi.string(),
                 categories:Joi.array().items(Joi.string()).single(),
+                tags:Joi.array().items(Joi.string()).single(),
                 sImg:Joi.string(),
                 description:Joi.string(),
                 serialize:Joi.boolean(),
@@ -68,6 +69,7 @@ class BookService{
                 clickNum:Joi.number(),
                 likeNum:Joi.number(),           
             }),{stripUnknown:true})
+            console.log(`更新:`,update)
         let doc = await BookModel.findByIdAndUpdate(id,update,{new:true})
         return doc
     }

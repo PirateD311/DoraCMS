@@ -9,8 +9,12 @@ describe(__filename+'',()=>{
         console.log(`result:`,JSON.stringify(result,null,2))
     })
 
-    it('书籍列表页.',async ()=>{
-        let result = await pageData.bookList()
+    it.only('书籍列表页.',async ()=>{
+        let query = {
+            // categories:'kzB-YhWSj',
+            // tags:"SJt8XdGbG"
+        }
+        let result = await pageData.bookList(query)
         console.log(`result:`,JSON.stringify(result,null,2))
     })
 

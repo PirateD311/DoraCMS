@@ -1,16 +1,33 @@
 let path = require('path');
+let fs = require('fs')
 const { settings } = require('../utils');
 
 //日志根目录
 
 let isDevEnv = (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'FAT') ? true : false;
 let baseLogPath = isDevEnv ? path.resolve(__dirname, '../logs') : settings.SYSTEMLOGPATH;
+
 //错误日志目录
 let errorPath = "/error";
 //错误日志文件名
 let errorFileName = "error";
 //错误日志输出完整路径
 let errorLogPath = baseLogPath + errorPath + "/" + errorFileName;
+deepMkdir(errorLogPath)
+//安全的创建多级目录
+function deepMkdir(dir){
+    dir = path.normalize(dir)
+    let a = path.parse(dir)
+    let b = ''
+    for(let v of dir.split(path.sep)){
+        if(v){
+            b = path.join(b,v)
+            if(!fs.existsSync(b)){
+                fs.mkdirSync(b)
+            }
+        }
+    }
+}
 
 
 //响应日志目录
@@ -19,7 +36,7 @@ let responsePath = "/response";
 let responseFileName = "response";
 //响应日志输出完整路径
 let responseLogPath = baseLogPath + responsePath + "/" + responseFileName;
-
+deepMkdir(responseLogPath)
 module.exports = {
     "appenders":
     [

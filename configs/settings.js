@@ -21,7 +21,7 @@ const settings = {
 
     // 站点基础信息配置
     DORACMSAPI: 'https://www.cosfuli.com', // 系统服务提供商
-    SYSTEMLOGPATH: path.join(__dirname,'../logs'), // 服务器日志保存目录
+    SYSTEMLOGPATH: path.join(__dirname,'../../logs'), // 服务器日志保存目录
     // 邮件相关设置
     email_findPsd: 'findPsd',
     email_reg_active: 'reg_active',

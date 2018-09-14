@@ -9,7 +9,7 @@ class PageDataService {
         //各大板块及其数据
         let pageData = {
             banner:[{href:'',img:'',}],
-            navigation:[{icon:'',name:'',href:''}],
+            navigation:[{icon:'',name:'',href:'',group:''}],
             block:[
                 {
                     title:'',
@@ -92,7 +92,7 @@ class PageDataService {
         //分类、标签、作者 筛选
         //阅读、点赞、等排序
         let query = await Joi.validate(data,Joi.object({
-            categores:Joi.string(),
+            categories:Joi.string(),
             tags:Joi.string(),
             serialize:Joi.string(),
         }),{stripUnknown:true}),
@@ -101,10 +101,22 @@ class PageDataService {
         if(data.keyword){
             query.name = {$regex:data.keyword}
         }
-
-        pageData.books = await Book.find(query).sort(sort).limit(pageSize).skip(current*pageSize-pageSize).populate([{
-            path:'categories',select:'_id name '
-        }])
+        if(data.sort){
+            let d = -1,
+                sortKey = data.sort
+            if(data.sort[0]==='-'||data.sort[0]==='+'){
+                sortKey = data.sort.slice(1)
+                d =  (data.sort[0]==='-'?-1:1)
+            }
+            if(['clickNum'].indexOf(sortKey)>-1){
+                sort = {};sort[sortKey] = d
+            }
+        }
+        console.log(`query:`,query,'sort:',sort)
+        pageData.books = await Book.find(query).sort(sort).limit(pageSize).skip(current*pageSize-pageSize).populate([
+            {path:'categories',select:'_id name '},
+            {path:'tags',select:'_id name '},
+            ])
         pageData.totalItem = await Book.count(query)
 
         return pageData

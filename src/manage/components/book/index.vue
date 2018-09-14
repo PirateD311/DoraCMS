@@ -2,21 +2,13 @@
     <div>
         <!-- 书籍首页配置 -->
         <el-row>
-            <el-col :md="12" :span="8">
-                <BannerConfig></BannerConfig>
-
-
-            </el-col>
-            <el-col :md="12" :span="8">
-                <NavConfig></NavConfig>
-            </el-col>
-            <el-col :md="12" :span="8">
-            <BlockConfig></BlockConfig>
-            </el-col>
-        </el-row>
-        
-
-        <!-- 横向筛选列 -->
+            <el-col :span="24">
+            <el-tabs v-model="activeName" >
+                <el-tab-pane label="Banner配置" name="first"><BannerConfig></BannerConfig></el-tab-pane>
+                <el-tab-pane label="导航配置" name="second"><NavConfig></NavConfig></el-tab-pane>
+                <el-tab-pane label="首页区块配置" name="third"><BlockConfig></BlockConfig></el-tab-pane>
+                <el-tab-pane label="书籍列表" name="fourth">
+               <!-- 横向筛选列 -->
         <el-row>
             <el-col :span="24">
                 <el-form :model="listQuery" ref="form" label-width="80px" :inline="true">
@@ -31,7 +23,7 @@
                     </el-form-item>                  
                 </el-form>            
             </el-col>
-        </el-row>
+        </el-row>   
         <br>
         <!-- 中心表格 -->
         <el-row>
@@ -67,7 +59,13 @@
                 <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.current" :page-sizes="[3,10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
                 </el-pagination>          
             </el-col>
+        </el-row>              
+                </el-tab-pane>
+            </el-tabs>       
+            </el-col>
         </el-row>
+
+
         <!-- 表单对话框 -->
         <el-dialog :title="dialog1.title" :visible.sync="dialog1.visible">
             <el-form  ref="dataForm" :model="tempData" label-position="left" label-width="70px" style='width: 90%; margin-left:5%;'>
@@ -82,6 +80,13 @@
                     <el-cascader size="small" expand-trigger="hover" :options="contentCategoryList.docs" v-model="tempData.categories"  :props="categoryProps">
                     </el-cascader>
                 </el-form-item>   
+                <el-form-item label="标签/关键字" prop="tags">
+                    <el-select style="width:80%" size="small" v-model="tempData.tags" multiple filterable allow-create placeholder="请选择书籍标签">
+                        <el-option v-for="item in contentTagList.docs" :key="item._id" :label="item.name" :value="item._id">
+                        </el-option>
+                    </el-select>
+        
+                </el-form-item>                
                 <el-form-item label="缩略图" prop="sImg">
                     <el-upload class="avatar-uploader" action="/system/upload?type=images" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
                         <img v-if="tempData.sImg" :src="tempData.sImg" class="avatar" style="width:100%">
@@ -105,6 +110,11 @@ import {request} from '../../store/services'
 import BannerConfig from './bannerConfig'
 import NavConfig from './navConfig'
 import BlockConfig from './blockConfig'
+import TagForm from '../contentTag/tagForm';
+import Waterfall from 'vue-waterfall/lib/waterfall'
+import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
+
+
 import {
     mapGetters,
     mapActions
@@ -112,17 +122,22 @@ import {
 export default {
     name:'',
     components:{
-        BannerConfig,NavConfig,BlockConfig
+        BannerConfig,NavConfig,BlockConfig,TagForm,
+        Waterfall,
+        WaterfallSlot
     },
     data(){
         return {
+            activeName:'first',
             indexConfig:{
                 banner:[],
                 navigation:[],
                 block:[],
             },
+            tempData:{},
             listData:[],
-            tempData:{categories:[]},
+            showAddTag:false,
+            newTag:{show:false, formData:{}},
             listQuery:{current:1,pageSize:10},
             options:{},
             dialog1:{title:'创建',visible:false,status:'create'},       
@@ -200,7 +215,7 @@ export default {
     async created(){await this.getList()},
     async mounted(){
         this.$store.dispatch('getContentCategoryList');
-        this.$store.dispatch('getContentTagList', {
+        this.$store.dispatch('d', {
             pageSize: 200
         });
     },

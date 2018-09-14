@@ -12,6 +12,8 @@
             <el-table :data="navigation" border>
                 <el-table-column label="名称" prop="name">
                 </el-table-column>
+                <el-table-column label="分组" prop="group">
+                </el-table-column>
                 <el-table-column label="图标">
                     <template scope="scope">
                         <img style="height:50px" :src="scope.row.icon" >
@@ -32,7 +34,10 @@
             <el-form  ref="dataForm" :model="tempData" label-position="left" label-width="70px" style='width: 90%; margin-left:5%;'>
                 <el-form-item label="名称" prop="name">
                     <el-input v-model="tempData.name" ></el-input>
-                </el-form-item>            
+                </el-form-item>   
+                 <el-form-item label="组" prop="group">
+                    <el-input v-model="tempData.group" placeholder="导航分组，如top,index等" ></el-input>
+                </el-form-item>           
                 <el-form-item label="链接" prop="href">
                     <el-input v-model="tempData.href" ></el-input>
                 </el-form-item>        
