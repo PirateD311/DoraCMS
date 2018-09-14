@@ -40,14 +40,14 @@ module.exports = {
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({ name: 'manifest', chunks: ['vendor'] }),
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compressor: {
+        //         warnings: false
+        //     },
+        //     output: {
+        //         comments: false
+        //     }
+        // }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
         }),
