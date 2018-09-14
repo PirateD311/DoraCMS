@@ -39,7 +39,7 @@ class Ads {
             if (model === 'full') {
                 pageSize = '1000'
             }
-
+            if(req.query.state)queryObj.state=true
             const Ads = await AdsModel.find(queryObj).sort({ date: -1 }).skip(10 * (Number(current) - 1)).limit(Number(pageSize)).populate([{
                 path: 'items'
             }]).exec();

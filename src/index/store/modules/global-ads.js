@@ -2,32 +2,36 @@ import api from '~api'
 
 const state = () => ({
     lists: [],
-    allAds : {}
+    allAds : {
+        time:''
+    }
 })
 
 const actions = {
     async ['getAdsList']({ commit, state }, config={}) {
         if(state.allAds[config.id]){
-            // console.log(`广告${config.id}已缓存.`,state.allAds)
             return state.allAds[config.id]
-        }
-        const { data } = await api.get('ads/getOne', { ...config })
-        if (data.doc && data.state === 'success') {
-            commit('receiveAdsList', {
-                ...config,
-                ...data
-            })
-            return data.doc
+        }else{
+            if(!state.allAds.time){
+                const { data } = await api.get('ads/getAll', { ...config })
+                if (data.docs && data.state === 'success') {
+                    commit('receiveAdsList', {
+                        ...config,
+                        ...data
+                    })
+                    return data.docs.find(v=>v.id == config.id)
+                }              
+            }
         }
     }
 }
 
 const mutations = {
-    ['receiveAdsList'](state, { doc, hasNext, hasPrev, page, path }) {
-        state.lists = {
-            data: doc, hasNext, hasPrev, page, path, 
+    ['receiveAdsList'](state, { docs, hasNext, hasPrev, page, path }) {
+        for(let doc of docs){
+            state.allAds[doc.id] = doc
         }
-        state.allAds[doc.id] = doc
+        state.allAds.time = new Date().getTime()
     }
 }
 
