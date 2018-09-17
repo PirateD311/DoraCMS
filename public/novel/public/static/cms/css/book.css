@@ -1,0 +1,91 @@
+/*免费页开始*/
+/*头部*/
+.my-back{position: relative;text-align: center;padding: 0 0.2rem;height: 0.88rem;line-height: 0.88rem;border-bottom: 1px solid #DDDDDD;background-color: #FFFFFF;}
+.my-back span{font-size: 0.32rem;color: #333333;display: block; }
+.my-back img:first-of-type{margin-top: 0.26rem;width: 0.2rem;}
+/*今日限免, 免费精品*/
+.show-book, .finished-list{padding: 0 0.2rem;border-bottom: 0.2rem solid #F6F6F6;background-color: #FFFFFF;font-size: 0.32rem;}
+.show-book .show-book-name, .finished-list .finished-list-name{padding: 0.32rem 0 0 0;}
+
+/*倒计时*/
+.show-book .show-book-name p:first-of-type, .finished-list .finished-list-name p{display: inline-block;padding-left:0.12rem;margin-right: 0.1rem;font-size: 0.32rem;color: #0f0e0e;border-left: 0.05rem solid #CEA552;}
+.show-book .show-book-name p.countdown{vertical-align: top;margin-top: 0.05rem;border-radius: 0.1rem 0.1rem;line-height: 0.35rem;display: inline-block;font-size: 0.22rem;color: #666666;}
+.show-book .show-book-name p.countdown .time-num{color: #CEA552;border: 1px solid #B0B0B0;padding: 1px;border-radius: 0.05rem;} 
+ 
+/*今日限免书籍*/
+.show-book .freeBook-list li{padding-bottom: 0.40rem;}
+.show-book .freeBook-list li a{display: block;}
+.show-book .freeBook-list li a img{box-shadow: 0px 3px 5px #dfdfdf, 0px 0px 5px #ddd;width: 1.58rem;height: 2.22rem;float: left;}
+.show-book .freeBook-list li .saleBook-list-right{margin-left: 0.3rem;}
+.show-book .freeBook-list li .saleBook-list-right h3{color: #333333;font-size: 0.32rem;margin-top: 0.15rem;}
+.show-book .freeBook-list li .saleBook-list-right .author{margin: 0.2rem 0;color: #b0b0b0;font-size: 0.28rem;}
+.show-book .freeBook-list li .saleBook-list-right .saleBook-info{letter-spacing: 1.3px;height: 0.7rem;width: 5rem;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;line-height: 0.36rem;color: #9a9a9a;font-size: 0.24rem;overflow: hidden;text-overflow: ellipsis;}
+.show-book .freeBook-list li .saleBook-list-right .saleBook-price{margin-top: 0.14rem;font-size: 0.24rem;}
+.show-book .freeBook-list li .saleBook-list-right .saleBook-price .nomal-type, .index-list .saleBook-list li .saleBook-list-right .saleBook-price .sale-type{border: 1px solid #DDDDDD;border-radius: 0.08rem 0.08rem;color: #666666;padding: 0 0.1rem;}
+/*免费精品书籍*/
+.show-book .saleBook-list li{margin-bottom: 0.32rem;}
+.show-book ul.saleBook-list li a{display: block;}
+.show-book .saleBook-list li a img{box-shadow: 0px 3px 5px #dfdfdf, 0px 0px 5px #ddd;width: 1.58rem;height: 2.22rem;float: left;}
+.show-book .saleBook-list li .saleBook-list-right{margin-left: 0.3rem;}
+.show-book .saleBook-list li .saleBook-list-right h3{color: #333333;font-size: 0.32rem;}
+.show-book .saleBook-list li .saleBook-list-right .author{margin: 0.10rem 0 0.12rem 0;color: #666666;font-size: 0.28rem;}
+.show-book .saleBook-list li .saleBook-list-right .saleBook-info{width: 5.15rem;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;line-height: 0.36rem;color: #999999;font-size: 0.24rem;overflow: hidden;text-overflow: ellipsis;}
+.show-book .saleBook-list li .saleBook-list-right .saleBook-price{margin-top: 0.14rem;font-size: 0.24rem;}
+.show-book .saleBook-list li .saleBook-list-right .saleBook-price .nomal-type, .show-book .saleBook-list li .saleBook-list-right .saleBook-price .sale-type{border: 1px solid #DDDDDD;border-radius: 0.08rem 0.08rem;color: #666666;padding: 0 0.1rem;}
+/*免费页结束*/
+
+/*完本页开始*/
+#change{position: absolute;top: 13px;right: 50px;width: 15px;}
+/*滑动图片*/
+.finished-list .swiperOne .swiper-wrapper .swiper-slide a{display: block;margin-bottom: 0.4rem;}
+.finished-list .swiperOne .swiper-wrapper .swiper-slide a img{width: 1.58rem;height: 2.22rem;display: block;box-shadow: 0px 3px 5px #dfdfdf, 0px 0px 5px #ddd;}
+.finished-list .swiperOne .swiper-wrapper .swiper-slide a p{margin-top:0.24rem;font-size: 0.28rem;color: #666666;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+/*最新完本*/
+/*.finished-list .saleBook-list li{margin-bottom: 0.32rem;}
+.finished-list .saleBook-list li a{width: 1.58rem;display: block;}
+.finished-list .saleBook-list li a img{width: 100%;height: 2.22rem;display: block;}
+.finished-list .saleBook-list li .saleBook-list-right{margin-left: 0.3rem;}
+.finished-list .saleBook-list li .saleBook-list-right h3{color: #333333;font-size: 0.32rem;}
+.finished-list .saleBook-list li .saleBook-list-right .author{margin: 0.10rem 0 0.12rem 0;color: #666666;font-size: 0.28rem;}
+.finished-list .saleBook-list li .saleBook-list-right .saleBook-info{width: 5.15rem;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;line-height: 0.36rem;color: #999999;font-size: 0.24rem;overflow: hidden;text-overflow: ellipsis;}
+.finished-list .saleBook-list li .saleBook-list-right .saleBook-price{margin-top: 0.14rem;font-size: 0.24rem;}
+.finished-list .saleBook-list li .saleBook-list-right .saleBook-price .nomal-type, .finished-list .saleBook-list li .saleBook-list-right .saleBook-price .sale-type{border: 1px solid #DDDDDD;border-radius: 0.08rem 0.08rem;color: #666666;padding: 0 0.1rem;}*/
+
+.finished-list .finished-list-name .classify-sel-box{position: relative;}
+.finished-list .finished-list-name .classify-sel-box .classify-sel{border: none;margin-right: 0.3rem;}
+.finished-list .finished-list-name .classify-sel-box .classify-sel option{font-size: 0.28rem;}
+.finished-list .finished-list-name .classify-sel-box .select-down-img{position: absolute;right: 0;top: 0.2rem;}
+/*分页页数开始*/
+.finished-list .page-btn{margin: 20px 0;position: relative;}
+.finished-list .page-btn p{position: absolute;top: 0;text-align: center;}
+.finished-list .page-btn p.prev{left: 0;margin-left: 0.3rem;}
+.finished-list .page-btn p.next{right: 0;margin-right: 0.3rem;}
+.finished-list .page-btn p{display: inline-block;width: 70px;line-height:38px;text-align: center;font-size: 14px;color: #666666;border: 1px solid #666666;border-radius: 2px;box-sizing: border-box;}
+.finished-list .page-btn .center a{font-size: 13px !important;line-height: 25px;margin-top: 3px;}
+.finished-list .page-btn .enable-btn{background-color: #d2d2d2 !important;color: #999999 !important;border-color: #D2D2D2 !important;}
+.finished-list .page-num-list{max-height: 120px;overflow: auto;}
+.finished-list .page-num-list li{line-height: 30px;text-align: left;border-bottom: 1px solid #CCCCCC;}
+.finished-list .page-num-list li a{display: inline-block;width: 100%;font-size: 14px;color: #666666;text-indent: 5px;}
+.finished-list .page-select-box{width: 129px;position: relative;margin: 0 auto;}
+.finished-list .page-select{width: 100%;height: 40px;line-height: 40px;font-size: 14px;color: #ffa44a;text-indent: 15px;border: 1px solid #ebb47d;background-color: #fbe8d5;box-sizing: border-box;}
+.finished-list .select-down-img{position: absolute;top: 16px;right: 7px;width: 13px;}
+.finished-list .dic-page-btn{margin: 20px auto;position: relative;}
+/*分页页数结束*/
+/*完本页结束*/
+/*遮罩层*/
+.myMask{max-width: 800px;margin: 0 auto;position: fixed;left: 0;right: 0;top: 0.88rem;bottom: 0;background: #666666;z-index: 999;opacity: 0.6;display: none;}
+.choose-book{max-width: 800px;margin: 0 auto;position: fixed;left: 0;right: 0;top: 0.88rem;z-index: 999999;background: #ffffff;padding: 0.3rem 0.2rem;display: none;}
+.choose-book>p{color: #999999;font-size: 0.26rem;margin-bottom: 0.3rem;}
+.choose-book .one, .choose-book .two, .choose-book .three{font-size: 0.26rem;}
+.choose-book .one .num, .choose-book .two .pro, .choose-book .three .price{float: left;width: 6.4rem;margin-left: 0.1rem;}
+.choose-book .left{color: #000000;font-size: 0.28rem;float: left;vertical-align: top;}
+.choose-book li{color: #666666;font-size: 0.26rem;float: left;border: 1px solid #666666;width: 1.37rem; text-align: center;margin: 0 0 0.2rem 0.2rem;border-radius: 0.06rem 0.06rem;}
+.choose-book #sub{font-size: 0.28rem;color: #FFFFFF;background: #FF4800;width: 2.14rem;line-height: 0.6rem;text-align: center;border-radius: 0.08rem 0.08rem;margin: 0.26rem auto 0 auto;}
+/*颜色类*/
+.choose-book .liColor{border: 1px solid #FF4800;color: #FF4800;}
+
+div.fl.saleBook-list-right h3{
+	margin-top: 0;
+}
+
+

@@ -13,6 +13,7 @@ const favicon = require('serve-favicon')
 const express = require('express')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const nunjucks = require('nunjucks')
 const compression = require('compression')
 const lurCache = require('lru-cache')
 const ueditor = require("ueditor")
@@ -22,6 +23,8 @@ const bodyParser = require('body-parser')
 const { createBundleRenderer } = require('vue-server-renderer')
 const config = require('./src/api/config-server')
 const resolve = file => path.resolve(__dirname, file)
+const nunjucksFilter = require('./utils/middleware/nunjucksFilter');
+
 
 const serverInfo =
     `express/${require('express/package.json').version} ` +
@@ -33,6 +36,7 @@ const { AdminResource } = require('./server/lib/controller');
 // 引入 api 路由
 const routes = require('./server/routers/api')
 const foreground = require('./server/routers/foreground')
+const html = require('./server/routers/html')
 const manage = require('./server/routers/manage');
 const system = require('./server/routers/system');
 
@@ -93,9 +97,20 @@ if (isProd) {
 const serve = (path, cache) => express.static(resolve(path), { maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0 })
 
 // 引用 esj 模板引擎
-app.set('views', path.join(__dirname, 'dist'))
-app.engine('.html', require('ejs').__express)
-app.set('view engine', 'ejs')
+// app.set('views', path.join(__dirname, 'dist'))
+// app.engine('.html', require('ejs').__express)
+// app.set('view engine', 'ejs')
+
+// 引用 nunjucks 模板引擎
+let env = nunjucks.configure(path.join(__dirname, 'views'), { // 设置模板文件的目录，为views
+    noCache: process.env.NODE_ENV !== 'production',
+    autoescape: true,
+    express: app
+});
+// nunjucks过滤器
+nunjucksFilter(env);
+
+app.set('view engine', 'html');
 
 app.use(favicon('./favicon.ico'))
 app.use(compression({ threshold: 0 }))
@@ -140,15 +155,18 @@ app.use(express.static(path.join(__dirname, '../source')));
 
 app.use('/server', serve('./dist/server', true))
 app.use('/static', serve('./dist/static', true))
+app.use('/public', serve('./public/novel/public', true))
 app.use('/manifest.json', serve('./manifest.json'))
 app.use('/service-worker.js', serve('./dist/service-worker.js'))
 // api 路由
 app.use('/', foreground);
+app.use('/', html);
 app.use('/api', routes);
 app.use('/system', system);
 
 // 前台路由, ssr 渲染
 app.get(['/', '/page/:current(\\d+)?', '/:cate1?___:typeId?/:current(\\d+)?',
+// app.get([ '/page/:current(\\d+)?', '/:cate1?___:typeId?/:current(\\d+)?',
     '/:cate0/:cate1?___:typeId?/:current(\\d+)?', '/search/:searchkey/:current(\\d+)?','/404','/500',
     '/details/:id', '/users/:userPage', '/dr-admin', '/sitemap.html', '/tag/:tagName/:page(\\d+)?'], (req, res) => {
         if (req.originalUrl === '/dr-admin' && req.session.adminlogined) {

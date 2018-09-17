@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <title>小说排行榜_CC小说网</title>
+  <link href="http://novel.cckanshu.com/public/static/admin/img/avatar.jpg" rel="icon" type="image/x-icon" />
+  <style type="text/css">
+    .row {
+      margin: 0 !important;
+    }
+
+    body {
+      background-color: #FFFFFF !important;
+    }
+  </style>
+  <link href="/public/static/cms/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/static/cms/css/css.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <!--点击顶部右侧按钮出现的更多分类-->
+  <!--头部分类列表-->
+  {% include "../components/header.html" %}
+
+  {% macro topIcon(index) %}
+    {% if index === 1 %}
+        <img class="top-icon" src="/public/static/cms/picture/top1.png" />
+    {% elif index === 2 %}
+        <img class="top-icon" src="/public/static/cms/picture/top2.png" />
+    {% elif index === 3 %}
+      <img class="top-icon" src="/public/static/cms/picture/top3.png" />
+    {% else %}
+      <i class="xuhao">{{index}}</i>
+    {% endif %}
+  {% endmacro %}
+
+  <!--头部-->
+  <div class="back-head clearfix">
+    <!--返回-->
+    <a class="fl" href="/">
+      <img class="fl" src="/public/static/cms/picture/return.png" align="absmiddle" alt="" width="10" />
+      <span class="return">返回</span>
+    </a>
+    <!--title-->
+    <span class="all-books">排行榜</span>
+    <!--右侧列表按钮-->
+    <img class="fr show-list" src="/public/static/cms/picture/more.png" align="absmiddle" alt="" width="10" />
+  </div>
+  <!--主体-->
+  <div class="main top">
+    <div class="row">
+      <!--主体左侧：各个榜单-->
+      <div class="col-md-3 col-sm-3 col-xs-3 left">
+        <ul class="rank-list">
+          {# {% for rank in rankList %}
+            <li data-id={{rank.sortId}} id={{"firstBang" if loop.first else ""}}>
+              <a href="javascript:;">{{rank.title}}</a>
+            </li>
+          {% endfor %} #}
+          {% for tag in systemData.contentTags %}
+            <li class={{"active" if rankId == (loop.index - 1) else ""}}>
+              <a href={{'/bookListRank/'+(loop.index - 1)}}>{{tag.name}}榜</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <!--主体右侧：小说列表-->
+      <div class="col-md-9 col-sm-9 col-xs-9 right">
+        <!--榜单1：打赏榜-->
+        {# {% for rank in rankList %}
+          <ul class={{"bang"+rank.sortId}}>
+            {% for book in rank.books %}
+              <li>
+                <div class="row">
+                  <div class="col-md-6 col-sm-5 col-xs-6 one">
+                    <div class="two clearfix">
+                      {{topIcon(loop.index)}}
+                      <a href={{'/book'+ book._id}}>
+                        <img src={{book.sImg}} alt="" width="80">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-7 col-xs-6 three">
+                    <a href="../column/book.html?id=51">
+                      <h3>{{book.name}}</h3>
+                      <br/>
+                      <p class="p1">
+                        <span>作者：</span>{{book.author}}</p>
+                      <div class="p2">{{book.description}}</div>
+                    </a>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endfor %} #}
+        <ul>
+            {% for book in bookList %}
+              <li>
+                <div class="row">
+                  <div class="col-md-6 col-sm-5 col-xs-6 one">
+                    <div class="two clearfix">
+                      {{topIcon(loop.index)}}
+                      <a href={{'/book'+ book._id}}>
+                        <img src={{book.sImg}} alt="" width="80">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-7 col-xs-6 three">
+                    <a href={{'/book/'+book._id}}>
+                      <h3>{{book.name}}</h3>
+                      <br/>
+                      <p class="p1">
+                        <span>作者：</span>{{book.author}}</p>
+                      <div class="p2">{{book.description}}</div>
+                    </a>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+  <script src="/public/static/cms/js/jquery.min.js"></script>
+  <script src="/public/static/cms/js/jquery.cookie.js"></script>
+  <script src="/public/static/cms/js/fastclick.min.js"></script>
+  <script src="/public/static/cms/js/common.js"></script>
+  <script>
+    //点击榜单导航进行切换
+    {# $(function () {
+      $(".left,.right").height($(window).height() - 40);
+      $(".rank-list li").on("click", function () {
+        var rankId = $(this).attr("data-id");
+        $(this).addClass("active").siblings("li").removeClass("active");
+        $(".bang" + rankId).removeClass("bang-display").siblings("ul").addClass("bang-display");
+      });
+      $("#firstBang").click()
+    }); #}
+  </script>
+</body>
+
+</html>

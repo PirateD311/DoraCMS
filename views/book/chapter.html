@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="baidu-site-verification" content="ah19LaDhGp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <title>娇妻迷乱</title>
+  <link href="/public/static/cms/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/static/cms/css/css.css" rel="stylesheet">
+  <link href="http://novel.cckanshu.com/public/static/admin/img/avatar.jpg" rel="icon" type="image/x-icon">
+
+  <script type="text/javascript" src="/public/static/cms/js/adaptation.js"></script>
+</head>
+
+<body class="white-bg" style="" rlt="1">
+  <script src="/public/static/cms/js/jquery.min.js"></script>
+  <script src="/public/static/cms/js/bootstrap.min.js"></script>
+  <script src="/public/static/cms/js/common.js"></script>
+  <!--点击顶部右侧按钮出现的更多分类-->
+  <!--头部分类列表-->
+  {% include "../components/header.html" %}
+
+  <!--头部-->
+  <div class="back-head clearfix">
+    <a class="fl" onclick="javascript:history.go(-1);">
+      <img class="fl" src="/public/static/cms/picture/return.png" align="absmiddle" alt="" width="10">
+      <span class="return">返回</span>
+    </a>
+    <span class="all-books">目录</span>
+    <img class="fr show-list" src="/public/static/cms/picture/more.png" align="absmiddle" alt="" width="10">
+  </div>
+  <div class="main zj-mulu">
+    <div>
+      <div class="ml-top">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="col-xs-8 col-sm-8 px clearfix padding0">
+            <h3 class="fl">共{{detailData.articles.length}}章</h3>
+            {# <div class="fl directory-order">
+              <a class="active" href="./chapter.html?id=191&desc=1">正序</a>
+              <a href="./chapter.html?id=191&desc=2">倒序</a>
+            </div> #}
+          </div>
+        </div>
+      </div>
+      <div class="ml-ul-con">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <ul class="lists">
+            {% for art in detailData.articles %}
+              <li class="list-lis">
+                <a class="clearfix " href={{"/bookDetail/" + art._id}}>{{art.title}}</a>
+              </li>
+            {% endfor %}
+          </ul>
+          {# <div class="page-btn dic-page-btn clearfix">
+            <input type="hidden" id='bookid' name="bookid" value="191" />
+            <input type="hidden" id='page' name="page" value="" />
+            <input type="hidden" id='desc' name="desc" value="1" />
+            <p class="prev" class="enable-btn">上一页</p>
+            <div class="page-select-box">
+              <select class="page-select" id="listPage">
+                <option value="1" {if condition="$pageParam.p eq 1" }selected {/if}>第1页</option>
+                <option value="2" {if condition="$pageParam.p eq 2" }selected {/if}>第2页</option>
+              </select>
+              <img class="select-down-img" src="/public/static/cms/picture/select_down_dic.png" />
+            </div>
+            <p class="next">下一页</p>
+          </div> #}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+  </script>
+  <p class="to-top" style="display: none;"></p>
+  <div id="cli_dialog_div"></div>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="keywords" content="小说，免费小说，小说阅读网，原创小说，女生小说，男生小说，热门小说，都市小说、玄幻小说，言情小说，CC小说网，CC小说" />
+    <meta name="description" content="CC小说网-最好看的男女生原创小说阅读网站，本站提供女生爱读豪门总裁、都市情感、灵异悬疑等，男生爱读玄幻奇幻、都市校园、历史军事等一系列小说在线阅读。" />
+    <title>CC小说-男生女生小说_CC小说旗下网站</title>
+    <link href="http://novel.cckanshu.com/public/static/admin/img/avatar.jpg" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="/public/static/cms/css/chunhuacss.css">
+    <link href="/public/static/cms/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/static/cms/css/css.css" rel="stylesheet" />
+    <link href="/public/static/cms/css/book.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/static/cms/css/sign.css">
+    <link rel="stylesheet" href="/public/static/cms/css/reward.css">
+    <link href="/public/static/cms/css/swiper.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/static/cms/css/helpCenter.css">
+    <script type="text/javascript" src="/public/static/cms/js/adaptation.js"></script>
+    <script src="/public/static/cms/js/jquery.min.js"></script>
+    <script src="/public/static/cms/js/jquery.cookie.js"></script>
+    <script src="/public/static/cms/js/common.js"></script>
+    <script src="/public/static/cms/js/bootstrap.min.js"></script>
+    <script src="/public/static/cms/js/swiper.min.js"></script>
+    <style>
+        .ovfl {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+
+</head>
+
+<html>
+
+<body class="index">
+
+    <!--头部-->
+    <header class="white-bg clearfix">
+        <a href="/">
+            <img class="logo" src="/public/static/cms/picture/logohead.png" />
+        </a>
+        <span class="type">
+            <a class="active" href="./index.html?sex=1">男生</a>
+            <a href="./index.html?sex=2">女生</a>
+        </span>
+        <a href="../user/index.html">
+            <img class="user" style="right: 15px !important;" src="/public/static/cms/picture/usericon.png" />
+        </a>
+    </header>
+    <!--主体-->
+    <div class="main">
+        <!--轮播图开始-->
+        <div class="swiper-container swiper-container1">
+            <div class="swiper-wrapper">
+                {% for novel in indexData.banner %}
+                    <div class="swiper-slide">
+                        <a href={{novel.href}}>
+                            <img class="img-responsive" style="" width="100%;" src={{novel.img}} />
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!--阅读记录开始-->
+        <div class="read-record">
+            <a href="../document/detail.html?id=76672" id="read-record-url">
+                <span>上次阅读</span>
+                <div class="read-content">
+                    <p id="read-content-book">桃花林里桃花红</p>
+                    <p id="read-content-title">第一章春意荡漾</p>
+                </div>
+                <img src="/public/static/cms/images/book_next.png" />
+            </a>
+        </div>
+        <!--阅读记录结束-->
+        <!--icon分类-->
+        <div class="box2">
+            <ul class="index-icon">
+                {% for nav in indexData.navigation %}
+                    {% if nav.group === 'home' %}
+                        <li class="col-xs-3 col-sm-3">
+                            <a href={{nav.href}}>
+                                <img src={{nav.icon}}>
+                                <p>{{nav.name}}</p>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="clear"></div>
+        </div>
+
+        <!--搜索框-->
+        <div class="index-search">
+            <form action="../search/search.html?keyword='总裁'">
+                <div class="search-box">
+                    <img src="/public/static/cms/picture/index_search.png" />
+                    <input name="keyword" type="text" />
+                </div>
+                <p class="search-icon">搜索
+                    <input type="submit" />
+                </p>
+            </form>
+        </div>
+        <!--内容显示-->
+        <!--本期精选开始-->
+        {% for block in indexData.block %}
+            {% if block.title !== '口碑分享' %}
+                <div class="box33">
+                    <h3 class="panel-title">{{block.title}}</h3>
+                    {% for book in block.books.slice(0, 3) %}
+                        {% include "./components/home/purePic.html" %}
+                    {% endfor %}
+                    <div class="clear"></div>
+                    <ul class="list-group">
+                        {% for book in block.books.slice(3) %}
+                            {% include "./components/home/pureWord.html" %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="index-list has-slider like-list">
+                    <h3 class="title clearfix">{{block.title}}</h3>
+                    <ul class="saleBook-list" id="change-list">
+                        {% for book in block.books.slice(0, 1) %}
+                            <li>
+                                <a class="clearfix saleBook-list-left" href={{book.href}}>
+                                    <img src="http://avatar.lmyd5.com/20170724/597570d2c9d8b.jpg" class="fl" />
+                                    <div class="fl saleBook-list-right">
+                                        <h3>{{book.name}}</h3>
+                                        <p class="author">{{book.author}}</p>
+                                        <p class="saleBook-info ovfl">{{book.description}}</p>
+                                        <p class="saleBook-price">
+                                            <span class="nomal-type">{{book.name}}</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="list-group">
+                        {% for book in block.books.slice(1) %}
+                            {% include "./components/home/pureWord.html" %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!--底部图片开始-->
+        <div class="index-foot">
+            <div class="index-foot-con">
+                <p class="to-contact">
+                    <a href="">联系客服</a>|
+                    <a href="">联系合作</a>
+                </p>
+                <!-- <p class="to-contact">版权所有&nbsp;©&nbsp;西安诚优科技有限公司</p>
+                <p class="to-contact">novel.cckanshu.com</p> -->
+            </div>
+        </div>
+    </div>
+    <!--书架漂浮-->
+    <a href="../user/myshelf.html" class="index-to-shelf">书架</a>
+    <!--js文件-->
+    <script>
+        $(function () {
+            //轮播图
+            var mySwiper = new Swiper('.swiper-container1', {
+                loop: true,
+                autoplay: 3000,
+                autoplayDisableOnInteraction: false, //用户滑动之后继续轮播,默认为true不轮播
+                pagination: '.swiper-pagination'
+            });
+        });
+    </script>
+</body>
+
+</html>

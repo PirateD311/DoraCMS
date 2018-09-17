@@ -1,0 +1,15 @@
+  <!--点击顶部右侧按钮出现的更多分类-->
+  <!--头部分类列表-->
+  <div class="head-list">
+    <div class="head-list-mask"></div>
+    <div class="head-list-con">
+      {% for nav in systemData.headerNavigation %}
+        {% if nav.group === 'headBar' %}
+        {% endif %}
+        <a href={{nav.href}}}>
+          <img src={{nav.icon}} alt="" />
+          <p>{{nav.name}}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </div>

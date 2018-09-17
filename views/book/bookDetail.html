@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <title>{{aricleData.name}}</title>
+    <link href="http://novel.cckanshu.com/public/static/admin/img/avatar.jpg" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="/public/static/cms/css/read.css" />
+    <link rel="stylesheet" href="/public/static/cms/css/reward.css" />
+    <script type="text/javascript" src="/public/static/cms/js/adaptation.js"></script>
+    <script type="text/javascript" src="/public/static/cms/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/static/cms/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/public/static/cms/js/fastclick.min.js"></script>
+</head>
+
+<body class="read-body" oncopy="return false;" oncut="return false;" oncontextmenu="return false" onselectstart="return false;">
+    <!--顶部条-->
+    <div class="read-top">
+        <div class="read-top-booknum" onclick="window.history.back()">&nbsp;{{aricleData.name}}</div>
+        <div class="read-top-btn">
+            <a href="../pay/index.html">充值</a>
+            <a href="../user/myshelf.html">最近阅读</a>
+            <a href="/">首页</a>
+        </div>
+    </div>
+
+    <div class="read-main" style="padding-bottom:10px">
+
+        <!--章节标题-->
+        <div class="read-title-wrap">
+            <p class="read-title">{{aricleData.article.title}}</p>
+        </div>
+
+        <!--背景和字体大小设置-->
+        <ul class="set-wrap">
+            <li class="set-item active">默认</li>
+            <li class="set-item">护眼</li>
+            <li class="set-item">白天</li>
+            <li class="set-item">夜间</li>
+            <li class="set-item">A+</li>
+            <li class="set-item">A-</li>
+        </ul>
+
+        <!--小说内容-->
+        <div class="chapter-con">
+            <p>
+                {{aricleData.article.comments | safe}}
+            </p>
+        </div>
+        <script type="text/javascript">
+            var jw = '191';
+            if (jw == '17') {
+                var a = $(".chapter-con p").html();
+                var b = a.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g, "<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+                $(".chapter-con p").html(b);
+            } else if (jw == 93) {
+                $(".chapter-con p").css({
+                    "textIndent": "0"
+                });
+            } else if (jw == 91) {
+                $('p').find('br').remove();
+                $(".chapter-con p").css({
+                    "textIndent": "1em"
+                });
+            } else if (jw == 65) {
+                $('.chapter-con').find('br').remove();
+                $(".chapter-con p").css({
+                    "textIndent": "1em"
+                });
+            } else if (jw == 45 || jw == 94) {
+                $('p br:nth-child(2n-1)').remove();
+            } else if (jw == 69) {
+                $('p').find('br').after('<br>');
+            } else if (jw == 25 || jw == 83 || jw == 68 || jw == 64 || jw == 59 || jw == 61 || jw == 70 || jw == 66 ||
+                jw == 63 || jw == 62 || jw == 56 || jw == 55 || jw == 54 || jw == 57 || jw == 77 || jw == 71 || jw ==
+                97 || jw == 98) {
+                $('.chapter-con').find('br').remove();
+            } else if (jw >= 103) {
+                $('.chapter-con').find('br').after('<br/>');
+                $('.chapter-con').find('br').after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            }
+        </script>
+
+        <div class="read-line"></div>
+
+        <!--菜单目录下一章-->
+        <div class="book-options">
+            {# <a href="javascript:;" class="read-menu" type="1">菜单</a> #}
+            {% if aricleData.preArticle._id %}
+                <a class="read-menu" href={{"/bookDetail/"+aricleData.preArticle._id}}>上一章</a>
+            {% endif %}
+            <a href={{"/book/"+aricleData.article.bookId}}>目录</a>
+            {% if aricleData.nextArticle._id %}
+                <a class="toNext" href={{"/bookDetail/"+aricleData.nextArticle._id}}>下一章</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!--菜单弹窗-->
+    {# <div class="menu-alert">
+        <a href={{"/book/"+aricleData.article.bookId}}>书籍详情</a>
+        <a class="no-read-last" href={{"/bookDetail/"+aricleData.preArticle._id}}>上一章</a>
+    </div> #}
+    <!-- 微信二维码弹框 -->
+    <div class="forceAlert-mask" id="tankuang" style="display: none;">
+        <div class="forceAlert-box" style="width:100%;height:100%;position: fixed;background: rgba(0,0,0,0.5);top:0;left:0;">
+            <span>长按识别作者授权公众号继续阅读</span>
+            <i>由于版权问题，
+                <br>请扫描下方二维码继续阅读</i>
+            <img class="forceAlert-code" src="/public/static/admin/img/none.png" alt="微信二维码">
+            <p style="color: white;">长按上图识别二维码</p>
+        </div>
+    </div>
+    <!-- 赞赏 -->
+    <div class="praise" style="padding-bottom:20px">
+        <p class="praise-words">您的支持，将鼓励我继续创作！</p>
+        <div class="praise-options">
+            <div></div>
+            <div class="praise-btn">赞赏作者</div>
+            <div></div>
+        </div>
+    </div>
+    <!-- 遮罩层 -->
+    <div class="reward-mask"></div>
+    <!-- 赞赏详细  红包-->
+    <div class="praise-box">
+        <div class="top-bar">
+            <div style='background-image:url("http://novel.cckanshu.com/public/static/cms/img/eyes.png")'></div>
+        </div>
+
+        <ul class="praise-box-nav clearfix">
+            <li class="sub-nav1 show-donate active">红包 (现金)</li>
+        </ul>
+
+        <!--红包开始-->
+        <div class="red-packet">
+            <div class="money clearfix">
+                <div class="money-num">1元</div>
+                <div class="money-num">2元</div>
+                <div class="money-num active">5元</div>
+                <div class="money-num">10元</div>
+            </div>
+
+            <p class="support">支持原创，作家会收到你的红包</p>
+            <div class="red-packet-pay">
+                <div class="red-packet-pay-wx start-pay" style="background-color:#86DB49">
+                    <img class="pay-icon" src="/public/static/cms/picture/wechat_charge.png">
+                    <span class="pay-name">微信</span>
+                    <span class="pay-symbol">&nbsp;¥&nbsp;</span>
+                    <em class="pay-num">5</em>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="reward-item item-3" id="rewardDonate">
+
+    </div>
+    <div class="other-pay-way" style="">
+        <div class="wx">微信</div>
+        <div class="zfb">支付宝</div>
+    </div>
+    <script type="text/javascript" src="/public/static/cms/js/read.js"></script>
+    <script src="/public/static/cms/js/common.js"></script>
+    <input id="headsrc" type="hidden" value="https://static.gungunbook.com/images/head.png" />
+    <script>
+
+        // 隐藏mask
+        $(".reward-mask").on("click", function () {
+            $(".reward-mask").hide();
+            $(".praise-box,.reward-box,.other-pay-way").slideUp();
+        });
+        // 切换红包金额
+        $(".money-num").on("click", function () {
+            $(".money-num").removeClass("active");
+            $(this).addClass("active");
+            $(".other-money-num").slideUp();
+            $(".pay-num").html(parseInt(this.innerHTML));
+            $(".other-money-num").css({
+                "background": "#fff",
+                "color": "#333"
+            });
+            $(".other-money-num").val("");
+            $(".pay-symbol").show();
+        });
+        // 点击其他金额
+        $(".other-money").on("click", function () {
+            $(".other-money-num").slideToggle();
+            $(".money-num").removeClass("active");
+            if ($(".other-money-num").is(":hidden")) {
+                $(".other-money-num").blur()
+            } else {
+                $(".other-money-num").focus();
+            }
+            $(".pay-symbol").hide();
+            $(".pay-num").html("");
+        })
+    </script>
+</body>
+
+</html>

@@ -4,4 +4,5 @@ module.exports = {
     contentTagService:require('./contentTag'),
     bookService:require('./book'),
     statisticsService:require('./statistics'),
+    pageDataService:require('./pageData'),
 }

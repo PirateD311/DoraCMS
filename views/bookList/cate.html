@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <link href="/public/static/cms/css/css.css" rel="stylesheet">
+  <link href="http://novel.cckanshu.com/public/static/admin/img/avatar.jpg" rel="icon" type="image/x-icon">
+  <title>小说书库-CC小说网</title>
+</head>
+
+<body class="classify-body">
+  <!--点击顶部右侧按钮出现的更多分类-->
+  <!--头部分类列表-->
+  {% include "../components/header.html" %}
+
+  <!--头部-->
+  <div class="back-head clearfix">
+    <!--返回-->
+    <a class="fl" href="/">
+      <img class="fl" src="/public/static/cms/picture/return.png" align="absmiddle" alt="" width="10" />
+      <span class="return">返回</span>
+    </a>
+    <!--title-->
+    <span class="all-books">书库</span>
+    <!--右侧列表按钮-->
+    <img class="fr show-list" src="/public/static/cms/picture/more.png" align="absmiddle" alt="" width="10" />
+  </div>
+  <!--分类-->
+  <div class="classify-main">
+    <!--女生频道-->
+    <div class="classify">
+      <h2 class="clearfix">
+        <i></i>热门分类</h2>
+      <ul class="classify-list clearfix">
+        {% for type in bookTypes.docs %}
+          <li class="classify-hot">
+            <a href={{"/bookList/type/" + type._id}}>{{type.name}}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <script src="/public/static/cms/js/jquery.min.js"></script>
+  <script src="/public/static/cms/js/jquery.cookie.js"></script>
+  <script src="/public/static/cms/js/common.js"></script>
+</body>
+
+</html>

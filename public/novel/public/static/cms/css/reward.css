@@ -1,0 +1,147 @@
+/*打赏*/
+.reward-box{display: none;position: fixed;left: 0;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.75);z-index: 50;background-color: #F2F2F2;}
+.reward-box .reward-box-nav li{float: left;width: 50%;text-align: center;line-height: 40px;}
+.reward-box .reward-box-nav li img{width: 50px;}
+.reward-box .reward-box-nav li a{font-size: 14px;color: #FFFFFF;display: block;}
+.reward-box .reward-box-nav li.active{border-bottom: 2px solid #ff4800;box-sizing: border-box;color: #ff4800;}
+.edit-num .num-box{background-color: #FFFFFF;box-shadow: none !important;color: #333333 !important;}
+.edit-num i img{margin-bottom: 6px;}
+.ticket-btns{margin-top: 0 !important;}
+.ticket-mask p,.ticket-mask span{color: #FFFFFF !important;}
+.ticket-mask .no-ticket{display: none;}
+.ticket-mask .ticket-num{background-color: rgba(0,0,0,0);padding-top: 10px;margin-bottom: 0 !important;}
+.ticket-mask .send-hint span{color: #333333 !important;}
+.donate-ul{margin-top: 5px;}
+.donate-ul li{float: left;position: relative;width: 16.6666%;text-align: center;line-height: 25px;padding: 5px 0;margin-bottom: 10px;}
+.donate-ul li img{width: 35px;}
+.donate-ul li p{font-size: 12px !important;}
+.donate-ul li .ds-checked{display: none;width: 15px;position: absolute;top: 10px;right:10px;}
+.donate-ul li.active .ds-checked{display: block;}
+.reward-fot,.ds-money .tit{ margin-left: 20px;}
+.reward-input input{line-height: 23px;width: 80px;font-size: 14px;}
+.ds-money{font-size: 14px !important;}
+.reward-box-nav li{width: 33.3333%;text-align: center;font-size: 16px;color: #333333;}
+.reward-item{display: none;}
+.item-1{display: block;}
+.month-ticket-box{display: none;}
+.has-ticket{display: block;}
+.rec-list{margin:20px;}
+.rec-list li{width: 20%;float: left;text-align: center;}
+.rec-list li span{width: 80%;margin: 0 auto;display: inline-block;background-color: #a1a1a1;line-height: 35px;font-size: 14px;color: #FFFFFF;text-align: center;}
+.no-rec-ticket{font-size: 16px;color: #666666;margin: 30px 0;text-align: center;}
+.rec-list li.active span{background-color: #ff4800;color: #FFFFFF;}
+.send-rec{width: 80%;margin: 10px auto 30px !important;line-height: 35px;background-color: #ff4800;border-radius: 2px;text-align: center;font-size: 15px;color: #FFFFFF !important;}
+.rec-ticket{width: 80%;margin: 9px auto !important;font-size: 14px;color: #666666;}
+.rec-ticket span{color: #ff4800;}
+.reward-fot{margin-right: 0;}
+.reward-inpu{margin-left: 0;}
+.edit-num .num-box{width: 18%;text-align: center;}
+.cannot-do{display: none;width: 85%;margin: 30px auto;font-size: 15px;color: #666666;}
+.cannot-do a{margin-left: 5px;color: #ff4800;}
+.reward-no-login{display: none;margin: 30px auto;font-size: 15px;color: #666666;text-align: center;}
+.reward-no-login a{margin-left: 5px;color: #ff4800;}
+/*月票弹出框*/
+.mask{display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.3);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4c000000,endColorstr=#4c000000);z-index: 20;}
+.ticket-alert-box{display: none;width: 85%;position: fixed; top: 35%; left: 0; margin: 0 auto; right: 0; background: #fffffe;box-shadow: 0px 2px 8px #969696; border-radius: 5px; z-index: 3000;}
+.ticket-alert-main{width: 80%;margin: 20px auto;}
+.ticket-main p{margin-top: 15px;height: auto !important;line-height: 20px !important;}
+.ticket-main .tit{font-size: 18px;color: #666666;text-align: center;margin-bottom: 20px;}
+.ticket-main .hint{font-size: 15px;color: #333333;margin-top: 10px;text-align: center;}
+.ticket-main .rule{display: inline-block;width: 100%;font-size: 13px;color: #a28811;margin-top: 10px; margin-bottom: 20px;;text-align: center;text-decoration: underline;}
+.ticket-btns{width: 80%;margin: 0 auto;margin-top: 30px;margin-bottom: 20px;}
+.ticket-btns p{width: 45%;height:36px !important;line-height: 36px !important;text-align: center;font-size: 16px;color: #666666;border: 1px solid #CCCCCC;border-radius: 2px;cursor: pointer;}
+.ticket-btns .act{border: 1px solid #ff4800;background-color: #ff4800;color: #FFFFFF !important;}
+.ticket-cancel{width: 30% !important;}
+.no-ticket-btn{width: 100% !important;}
+.no-ticket-btn a{color: #FFFFFF;}
+.ticket-num{font-size: 14px !important;color: #333333;margin-top: 0 !important;padding: 3px 0;text-align: left !important;padding-left: 20px;}
+.ticket-num b{font-weight: normal;color: #ff4800;}
+.send-ticket{font-size: 16px;color: #333333;line-height: 30px;margin:20px;}
+.edit-num i img{display: inline-block;cursor: pointer;width: 17px;}
+.edit-num .num-box{display: inline-block;width: 18%;height: 26px;line-height: 26px;text-align: center;margin-top: 3px;border: 1px solid #CCCCCC;border-radius: 2px;box-shadow: 3px 3px 10px #CCCCCC;font-size: 16px;color: #666666;}
+.send-success,.send-fail{display: none;}
+.send-hint{font-size: 16px;color: #333333 !important;padding: 30px 0;text-align: center;}
+.blue-font{color: #00dac8;margin: 0 5px;}
+.send-hint img{margin-top: 4px;margin-right: 5px;width: 20px;}
+.send-hint span.fl{margin-top: 3px;}
+.send-nun-tit{margin-right: 10px;}
+.reward-icon{float: left;width: 15px;height: 15px;margin-top: 15px;background: url(../images3/pc_check.png) no-repeat;background-size: cover;}
+.reward-checked{background: url(../images3/pc_selected.png) no-repeat;background-size: cover;}
+.reward-input img{width: 15px;margin: 7px 8px;vertical-align: middle;}
+.reward-input img.ds-reduce{margin-top: 12px;}
+.reward-input input{border: 1px solid #CCCCCC;text-indent: 10px;}
+.reward-fot,.ds-money .tit{font-size: 15px;color: #333333;margin-top: 2px;}
+.ds-money-num{font-size: 15px;color: #ff4800;}
+.ds-money{margin-top: 3px;margin-left: 5px;}
+#reward-font{margin: 15px 0;box-shadow: 3px 3px 10px #CCCCCC,-2px -2px 8px #CCCCCC;;border: 1px solid #CCCCCC;width:70%;border-radius: 2px;font-size: 14px;text-indent: 10px;height: 30px;line-height: 30px;-webkit-user-select:auto;-khtml-user-select:auto;-moz-user-select:auto;-ms-user-select:auto;user-select:auto;}
+.ds-btn{height: 28px;line-height: 28px;padding: 0 15px;margin:15px 0 15px 15px;background-color: #ff4800;font-size: 16px;color: #FFFFFF;border-radius: 5px;}
+
+
+/*赞赏弹出框*/
+.praise-box{display: none; position: fixed;left: 0;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.75);z-index: 50;background-color: #F2F2F2;}
+.praise-box .top-bar{ background:#fff ; padding: 12px 40px; }
+.praise-box .top-bar div{ height: 50px;  background:#fff url(../images3/eyes.png); background-size: 100% 100%}
+.praise-box .praise-box-nav li{float: left;width: 50%;text-align: center;line-height: 44px; color: #333; font-size: 16px; height: 44px; background: #fff}
+.praise-box .praise-box-nav li a{font-size: 14px;color: #FFFFFF;display: block;}
+.praise-box .praise-box-nav li.active{color: #df5e49; background: #f2f2f2}
+
+/*红包区*/
+/*.red-packet{ display: none;}*/
+.red-packet .money{ padding: 5px 0 15px 18px;}
+.red-packet .money div{float: left; width: 21%; height: 44px; background: #fff; border-radius: 3px; text-align: center; font-size: 16px; line-height: 44px; color: #333; margin:2% 3.5% 0 0; }
+.red-packet .money div.active{ color:#df5e49; }
+.red-packet .support{font-size: 14px; color: #666; padding-left: 10px; margin-bottom: 14px;}
+.red-packet-pay{background: #fff; overflow: hidden; padding-bottom: 30px;}
+.red-packet-pay-wx{ width: 82%; height: 36px; background: #1cacea; margin: 15px auto; line-height: 36px; color: #fff; font-size: 14px; text-align: center; border-radius: 18px;}
+.pay-icon{   width: 16px; vertical-align: middle; margin-bottom: 3px}
+.red-packet-pay-other{ width: 82%; height: 36px; background: #fff; margin: 0 auto;  line-height: 36px; color: #666; font-size: 14px; text-align: center; border-radius: 18px; border: 1px solid #ddd; }
+.other-money-num{display: none; width: 82%; height: 36px; background: #fff; border-radius: 36px;  box-sizing: border-box; padding-left: 20px; margin-bottom: 20px; line-height: 36px;}
+.other-pay-way{display: none; position: fixed;left: 0;bottom: 0;width: 100%; height: 100px; background-color:#fff;z-index: 50; color: #333;}
+.other-pay-way div{line-height: 50px; font-size: 16px; text-align: center; }
+.other-pay-way div:nth-child(1){ border-bottom: 1px solid #f2f2f2; }
+.other-pay-way div:nth-child(2){color: #333;}
+
+/*捧场区*/
+/*.item-3{display: block}*/
+.reward-no-login{display: none;margin: 30px auto;font-size: 15px;color: #666666;text-align: center;}
+.reward-no-login a{margin-left: 5px;color: #ff4800;}
+.cannot-do{display: none;width: 85%;margin: 30px auto;font-size: 15px;color: #666666;}
+.cannot-do a{margin-left: 5px;color: #ff4800;}
+.donate-ul{margin-top: 5px;}
+.donate-ul li{float: left;position: relative;width: 16.6666%;text-align: center;line-height: 25px;padding: 5px 0;margin-bottom: 10px;}
+.donate-ul li img{width: 35px;}
+.donate-ul li p{font-size: 13px;}
+.donate-ul li .ds-checked{display: none;width: 15px;position: absolute;top: 10px;right:10px;}
+.donate-ul li.active{color: #df5e49;}
+.donate-ul li.active .ds-checked{display: block;}
+.donate-ul li span{font-size: 12px;}
+.reward-inform{font-size: 14px; color: #999; margin-bottom: 14px; padding-left: 10px;}
+.gift-num-wrap{background: #fff; padding: 15px 0}
+.gift-num-wrap p{float: left; line-height: 22px; padding-left: 10px; color: #333; }
+.gift-num-wrap p:nth-last-child(1){padding-left: 5px;}
+.gift-num-wrap p:nth-child(1){font-size: 15px;}
+.gift-num-box{float: left;}
+.gift-num-box li{float: left; width: 49px; height: 22px; box-sizing: border-box; border: 1px solid #999; margin-left: 10px; line-height: 22px; text-align: center; font-size: 14px;}
+.gift-num-box li.active{border-color: #df5e49; color: #df5e49;}
+.other-gift-num span{}
+#reward-num{display: none; width: 100%; height: 100%; padding-left: 5px;box-sizing: border-box}
+.leave-word{background: #fff;}
+.leave-word p{ float: left; padding-left: 10px; color: #333; font-size: 15px;}
+.leave-word #reward-font{float: left; width: 76%; height: 22px; font-size: 14px; color: #999;  padding-left: 10px; box-sizing: border-box; border: 1px solid #ccc; line-height: 22px; margin:0 0 0 10px; box-shadow:none;}
+.count-all{ background: #fff; padding: 15px 0 21px 0;}
+.count-all p{color: #333; font-size: 14px; float: left;}
+.count-all p:nth-child(1){font-size: 15px; padding-left: 10px; float: left;}
+.count-all em{ color:#df5e49; padding-left: 10px; float: left;}
+.count-all span{color:#df5e49;}
+.reward-input input{line-height: 23px;width: 80px;font-size: 14px;}
+.reward-input img{width: 15px;margin: 7px 8px;vertical-align: middle;}
+.reward-input img.ds-reduce{margin-top: 12px;}
+.reward-input input{border: 1px solid #CCCCCC;text-indent: 10px;}
+.ds-money{font-size: 14px !important;}
+.ds-money-num{font-size: 15px;color: #ff4800;}
+.ds-btn-wrap{background: #fff; padding-bottom: 25px;}
+.ds-btn-wrap .ds-btn{display: block; width: 99px; height: 26px; background:#df5e49; color: #fff; font-size: 14px; line-height: 26px; text-align: center; margin: 0 auto ; border-radius: 3px;}
+.reward-fot,.ds-money .tit{ margin-left: 20px;}
+/*#reward-font{float: left;margin:13px 16px !important;width: 60% !important;box-shadow: none !important;}*/
+
+.reward-mask{display:none; position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: rgba(0,0,0,.3); z-index: 40;}

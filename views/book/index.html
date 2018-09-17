@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <title>{{detailData.book.name}}</title>
+  <link rel="stylesheet" href="/public/static/cms/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/public/static/cms/css/css.css">
+  <link rel="stylesheet" href="/public/static/cms/css/reward.css">
+  <link href="http://novel.cckanshu.com/public/static/admin/img/avatar.jpg" rel="icon" type="image/x-icon">
+  <style type="text/css">
+    .downapp a {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .downapp a img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="book-body">
+
+  <!--点击顶部右侧按钮出现的更多分类-->
+  <!--头部分类列表-->
+  {% include "../components/header.html" %}
+
+  <div class="back-head clearfix">
+    <a class="fl" onclick="javascript:history.go(-1);">
+      <img class="fl" src="/public/static/cms/picture/return.png" align="absmiddle" alt="" width="10">
+      <span class="return">返回</span>
+    </a>
+    <span class="all-books">{{detailData.book.name}}</span>
+    <img class="fr show-list" src="/public/static/cms/picture/more.png" align="absmiddle" alt="" width="10">
+  </div>
+  <div class="main mainmain">
+    <div class="container">
+      <div class="book-detail clearfix bg-type5">
+        <div class="fl pr">
+          <img class="book-cover" src={{detailData.book.sImg}} alt="" width="90" height="126">
+          <!--连载-->
+          <p class="book-status">
+            <img src="/public/static/cms/picture/book_ing.png">
+            <span class="ing">完结</span>
+          </p>
+        </div>
+        <div class="fl book-right">
+          <a href="" class="book-name">{{detailData.book.name}}</a>
+          <a href="">
+            <span class="author-name">{{detailData.book.author}}</span>&nbsp;著
+            <span class="type-line">|</span>
+            {% for cate in detailData.book.categories %}
+              <span class="type">{{cate.name}}</span>
+            {% endfor %}
+          </a>
+          <p>{{detailData.book.wordNum}}字</p>
+          <p>
+            <span>{{detailData.book.star}}人气</span>
+          </p>
+        </div>
+      </div>
+      <ul class="book-operate reward-list clearfix">
+        <!--disabled-->
+        <li class="book-operate-item">
+          <a href="javascript:;">
+            <p>13473</p>
+            <p class="operate">点击数</p>
+            <i></i>
+          </a>
+        </li>
+        <li class="book-operate-item">
+          <a href="javascript:;">
+            <p>161</p>
+            <p class="operate">打赏数</p>
+            <i></i>
+          </a>
+        </li>
+        <li class="book-operate-item go-boost">
+          <a href="javascript:;">
+            <p>72992</p>
+            <p class="operate">购买数</p>
+            <i></i>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <p>0</p>
+            <p class="operate">书迷数</p>
+          </a>
+        </li>
+      </ul>
+      <div class="row jianjie row-border" style="margin-top: 0!important;">
+        <div class="col-md-12 col-sm-12 col-xs-12 jianjie-con">
+          <div class="book-tit">
+            <span>简介</span>
+          </div>
+          <div class="book-detail-con">
+            <div class="abstract">
+              <div class="abstract-content con-hidden">{{detailData.book.description}}</div>
+              <img src="/public/static/cms/picture/down.png" width="15">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row new-zj row-border">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="book-tit">
+            <span>目录</span>
+            <a href={{'/bookAllChapter/' + detailData.book._id}} class="fr">全部章节
+              <img src="/public/static/cms/picture/book_next.png">
+            </a>
+          </div>
+          <ul>
+            {% for art in detailData.articles %}
+              <li>
+                <a style="font-size: 12px;" href={{"/bookDetail/" + art._id}}>
+                  <i class="new">最新</i>{{art.title}}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="height:55px"></div>
+    <footer class="footer book-footer">
+      <ul class="clearfix">
+        <li class="auto-sub" href="javascript:;">
+          <img src="../../images/book_dy.png" width="16">
+          <p>敬请期待</p>
+        </li>
+        <li class="to-read">
+          <a href="/bookDetail">立即阅读</a>
+        </li>
+        <li class="book-collect">
+          <a href="javascript:;">
+            <img src="../../images/book_add.png" width="20">
+            <p>加入书架</p>
+          </a>
+        </li>
+      </ul>
+    </footer>
+    <div id="shelf_tip" style="display:none;position:fixed;top:50%;left:50%;transform: translate(-50%,-50%);background: #4b4942;padding:30px 20px;color:#fff;border-radius: 5px">
+
+      <p style="font-size: 20px;text-align: center" id="shelf_tip_content">已加入书架</p>
+    </div>
+
+    <!-- <div class="other-pay-way">
+  <div class="qqqb">qq钱包</div>
+  <div class="wx">微信</div>
+  <div class="zfb">支付宝</div>
+</div> -->
+
+    <div class="reward-mask"></div>
+    <input id="bookId" type="hidden" value="2019670">
+    <script src="/public/static/cms/js/jquery.min.js"></script>
+    <script src="/public/static/cms/js/bootstrap.min.js"></script>
+    <script src="/public/static/cms/js/common.js"></script>
+    <script>
+      // 隐藏mask
+      $(".reward-mask").on("click", function () {
+        $(".reward-mask").hide();
+        $(".praise-box,.reward-box,.other-pay-way").slideUp();
+      });
+
+      //     //简介点击
+      $(".abstract").on("click", function () {
+        $(".abstract-content").toggleClass("con-hidden");
+        if ($(".abstract-content").hasClass("con-hidden")) {
+          $(".abstract img").attr("src", "../../images/down.png");
+        } else {
+          $(".abstract img").attr("src", "../../images/up.png");
+        }
+      });
+
+      window.onload = function () {
+        $("#sinaEmotion .right").hide();
+      }
+      
+    </script>
+
+  </div>
+  <p class="to-top" style="display: none;"></p>
+  <p class="to-top" style="display: none;"></p>
+  <div id="qb-sougou-search" style="display: none; opacity: 0;">
+    <p>搜索</p>
+    <p class="last-btn">复制</p>
+    <iframe src=""></iframe>
+  </div>
+</body>
+
+</html>

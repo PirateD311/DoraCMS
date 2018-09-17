@@ -96,7 +96,14 @@ var siteFunc = {
             idState = false;
         }
         return idState;
-    }
+    },
+    renderLocalStr() {
+        let str = [' ', '  '];
+        if (settings.lang == 'en') {
+            str = ['  ', '    ']
+        }
+        return str;
+    },
 
 };
 module.exports = siteFunc;

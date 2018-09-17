@@ -1,0 +1,15 @@
+<li>
+    <p>
+        <a href={{'/book/'+ book._id}}>
+            {% for cate in book.categories %}
+                <span>[{{cate.name}}]</span>
+            {% endfor %}
+            <span>{{book.name}}</span>
+        </a>
+    </p>
+    <p>
+        <a href={{'/book/'+ book._id}}>
+            <span class='ovfl'>{{book.description}}</span>
+        </a>
+    </p>
+</li>
