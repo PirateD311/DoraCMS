@@ -42,7 +42,7 @@ var ContentSchema = new Schema({
     likeNum: { type: Number, default: 0 }, // 喜欢数
     likeUserIds: {type:String,default:""}, // 喜欢该文章的用户ID集合
     from: { type: String, default: '1' }, // 来源 1为原创 2为转载
-
+    fromUrl:{type:String,default:''},//来源的url
     isVip:{type:Boolean,default:false},//是否为vip可见
     isOverhead:{type: Boolean,default:false},//是否置顶
     star:{type:Number,default:0,min:0,max:5},//推荐级别
@@ -50,7 +50,8 @@ var ContentSchema = new Schema({
     images:[String],    //内容中的所有图片资源
     hiddenContent:{type:String,default:''},
     hiddenType:{type:Number,default:0},//0:无隐藏,1:登录可见,2:回复可见
-    bookid:{type:String,ref:"Book"},
+    bookId:{type:String,ref:"Book"},
+    sortId:{type:Number,default:1},//书籍文章排序的序列号
 });
 
 
@@ -64,6 +65,7 @@ ContentSchema.path('date').get(function (v) {
 ContentSchema.path('updateDate').get(function (v) {
     return moment(v).format("YYYY-MM-DD HH:mm");
 });
+
 
 var Content = mongoose.model("Content", ContentSchema);
 

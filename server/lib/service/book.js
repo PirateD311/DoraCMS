@@ -9,10 +9,10 @@ const Rule = {
     create:Joi.object({
         name:Joi.string().required(),
         author:Joi.string(),
-
         type:Joi.string().default('novel'),
         keywords:Joi.string(),
         categories:Joi.array().items(Joi.string()).single(),
+        tags:Joi.array().items(Joi.string()).single(),
         sImg:Joi.string(),
         description:Joi.string(),
         serialize:Joi.boolean(),
@@ -44,7 +44,7 @@ class BookService{
     async getBooks(data = {}){
         let {pageSize=10,current=1,} = await Joi.validate(data,Rule.page,{stripUnknown:true})
         let queryObj = await Joi.validate(data,Rule.query,{stripUnknown:true}),
-            sortBy = {craeteDate:-1}
+            sortBy = {createDate:-1}
         if(queryObj.name)queryObj.name = {'$regex':queryObj.name}
 
         let docs = await BookModel.find(queryObj).limit(pageSize).skip(pageSize*current-pageSize).sort(sortBy).populate([
@@ -58,7 +58,10 @@ class BookService{
     async updateBook(data = {}){
         let id = await Joi.validate(data.id,Joi.string().required()),
             update = await Joi.validate(data,Joi.object({
+                name:Joi.string(),
+                author:Joi.string(),
                 categories:Joi.array().items(Joi.string()).single(),
+                tags:Joi.array().items(Joi.string()).single(),
                 sImg:Joi.string(),
                 description:Joi.string(),
                 serialize:Joi.boolean(),
@@ -66,6 +69,7 @@ class BookService{
                 clickNum:Joi.number(),
                 likeNum:Joi.number(),           
             }),{stripUnknown:true})
+            console.log(`更新:`,update)
         let doc = await BookModel.findByIdAndUpdate(id,update,{new:true})
         return doc
     }

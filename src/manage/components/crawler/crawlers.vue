@@ -25,7 +25,7 @@
 import DataTable from './dataTable.vue';
 import TopBar from '../common/TopBar.vue';
 import Pagination from '../common/Pagination.vue';
-import AddCrawler from './addCrawler.vue';
+import AddCrawler from './AddCrawler'
 import {
     mapGetters,
     mapActions

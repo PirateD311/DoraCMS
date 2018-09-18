@@ -8,7 +8,6 @@
             <el-table-column prop="articleCount" label="文章链接数" width="80"></el-table-column>
             <el-table-column prop="doneCount" label="完成数" width="80"></el-table-column>
             <el-table-column prop="ratio" label="完成度" width="80"></el-table-column>
-
             <el-table-column label="操作">
                 <template scope="scope">
                     <el-button size="mini" type="primary" plain round @click="showTaskInfo(scope.$index, dataList)"><i class="fa fa-edit"></i></el-button>

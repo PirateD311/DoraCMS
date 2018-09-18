@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <el-row :gutter="10">
-            <el-col :span="12">
-                <div class="dr-adminGroupForm">
+    <div v-loading="loading">
+        <el-tabs v-model="cardName" type="card">
+            <el-tab-pane name="first" label="配置">
+                  <div class="dr-adminGroupForm">
                     <el-form :model="task"  size="mini"  label-width="100px" class="demo-ruleForm">
                         <el-form-item label="爬虫任务名" prop="name">
                             <el-input size="small" v-model="task.opt.name"></el-input>
@@ -15,9 +15,12 @@
                         </el-form-item>
                         <el-form-item  label="文章匹配规则" prop="articleUrlMatch">
                             <el-row :gutter="5">                   
-                                <el-col :span="10"><el-select size="mini" v-model="task.opt.articleUrlMatch.type"><el-option key="jquery" label="jquery" value="jquery"></el-option></el-select></el-col>
+                                <el-col :span="6">
+                                    <el-select size="mini" v-model="task.opt.articleUrlMatch.type"><el-option key="jquery" label="jquery" value="jquery"></el-option></el-select>
+                                </el-col>
                                 <el-col :span="12"><el-input  size="mini" v-model="task.opt.articleUrlMatch.value"></el-input></el-col>
-                            </el-row>        
+                            </el-row>   
+                            <br>     
                             <el-row :gutter="5">
                                 <el-col :span="16"><el-input placeholder="测试连接" size="mini" v-model="testArticleListUrl"></el-input></el-col>
                                 <el-col :span="8"><el-button  type="success" @click="testArticleList"  size="mini" >测试</el-button></el-col>
@@ -25,35 +28,47 @@
                         </el-form-item>            
                         <el-form-item label="标题匹配规则" prop="articleTitleMatch">
                             <el-row :gutter="5">
-                                <el-col :span="8"><el-select size="mini" v-model="task.opt.articleTitleMatch.type"><el-option key="jquery" label="jquery" value="jquery"></el-option></el-select></el-col>
+                                <el-col :span="6"><el-select size="mini" v-model="task.opt.articleTitleMatch.type"><el-option key="jquery" label="jquery" value="jquery"></el-option></el-select></el-col>
                                 <el-col :span="12"><el-input  size="mini" v-model="task.opt.articleTitleMatch.value"></el-input></el-col>
                             </el-row>                          
                         </el-form-item>
                         <el-form-item label="正文匹配规则" prop="articleContentMatch">
                             <el-row :gutter="5">                   
-                                <el-col :span="8"><el-select size="mini" v-model="task.opt.articleContentMatch.type"><el-option key="jquery" label="jquery" value="jquery"></el-option></el-select></el-col>
+                                <el-col :span="6"><el-select size="mini" v-model="task.opt.articleContentMatch.type"><el-option key="jquery" label="jquery" value="jquery"></el-option></el-select></el-col>
                                 <el-col :span="12"><el-input  size="mini" v-model="task.opt.articleContentMatch.value"></el-input></el-col>
-                            </el-row>     
+                            </el-row>   
+                            <br>  
                             <el-row :gutter="5">
                                 <el-col :span="16"><el-input placeholder="测试连接" size="mini" v-model="testPageUrl"></el-input></el-col>
                                 <el-col :span="8"><el-button  type="success"  @click="testArticlePage" size="mini" >测试</el-button></el-col>
                             </el-row>                                         
                         </el-form-item>   
                         <br>
+                        
                         <el-form-item>
                             <el-button size="medium" type="primary" @click="createCrawlerTask" >创建</el-button>
                         </el-form-item>
                     </el-form>
-                </div>            
-            </el-col>
-            <el-col :span="10">
+                </div>                  
+            </el-tab-pane>
+            <el-tab-pane label="预览" name="second">
+                <el-row :gutter="5">
+                    <el-col :span="16"><el-input placeholder="测试连接" size="mini" v-model="testArticleListUrl"></el-input></el-col>
+                    <el-col :span="8"><el-button  type="success" @click="testArticleList"  size="mini" >测试</el-button></el-col>
+                </el-row>              
                 <div v-if="articleList">
                     <div>总计:{{articleList.length}}</div>
-                    <el-table :data="cutPage(articleList)" stripe height="300">
+                    <el-table :data="cutPage(articleList)" stripe height="800">
                         <el-table-column prop="lable" label="标签"></el-table-column>
                         <el-table-column prop="url" label="地址"></el-table-column>
                     </el-table>              
                 </div>
+            </el-tab-pane>
+            <el-tab-pane label="预览单页" name="thrid">
+                <el-row :gutter="5">
+                    <el-col :span="16"><el-input placeholder="测试连接" size="mini" v-model="testPageUrl"></el-input></el-col>
+                    <el-col :span="8"><el-button  type="success"  @click="testArticlePage" size="mini" >测试</el-button></el-col>
+                </el-row>    
                 <div v-if="page">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">{{page.title}}</div>
@@ -61,11 +76,12 @@
                         </div>
                     </el-card>
                 </div>
-            </el-col>
+            </el-tab-pane>
+            
+            
+        </el-tabs>
 
-        </el-row>
     </div>
-
 </template>
 <script>
 import services from '../../store/services.js';
@@ -87,9 +103,11 @@ export default {
                     articleContentMatch:{type:'jquery',value:'#content'},
                 }
             },
+            cardName:'first',
+            loading:false,
             currentPage:1,
             pageSize:20,
-            articleList:[{label:'aaa',url:'asgasg'}],
+            articleList:[],
             page:{title:"",content:""}
         };
     },
@@ -106,11 +124,10 @@ export default {
             console.log(resp)
             if(resp.data.state === 'success'){
                 this.$message('创建成功!')
-                this.$router.push('/crawler');
+                this.$router.push('/crawlers');
             }else{
                 this.$message('创建失败!')
             }
-
         },
         async testArticleList(){
             if(this.testArticleListUrl){
@@ -119,11 +136,14 @@ export default {
                     option:JSON.stringify(this.task.opt),
                     url:this.testArticleListUrl
                 }
+                this.loading = true
                 let resp = await services.testCrawlerTask(params)
+                this.loading = false
                 if(resp.data.state === 'success'){
                     this.$message('测试成功.')
                     this.articleList = resp.data.doc
                     console.log(resp.data)
+                    this.cardName = "second"
                 }else{
                     this.$message('测试失败.')
                 }
@@ -146,10 +166,13 @@ export default {
                     option:JSON.stringify(this.task.opt),
                     url:this.testPageUrl
                 }
+                this.loading = true
                 let resp = await services.testCrawlerTask(params)
+                this.loading = false
                 if(resp.data.state === 'success'){
                     this.$message('测试成功.')
                     this.page = resp.data.doc
+                    this.cardName = "thrid"
 
                 }else{
                     this.$message('测试失败.')
@@ -162,12 +185,6 @@ export default {
     computed: {
     },
     mounted() {
-        // 针对手动页面刷新
-        console.log(this.$route.params)
-        if (this.$route.params.name) {
-            console.log('params:',this.$route.params)
-            this.getCrawlerTaskDetail(this.$route.params.name)
-        }
     }
 }
 </script>

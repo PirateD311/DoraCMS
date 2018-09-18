@@ -5,6 +5,7 @@ if (typeof window == "undefined") {
 }
 
 export function reqJsonData(url, params = {}, method = 'post') {
+    method = method.toLowerCase()
     if (method === 'get') {
         return Axios.get('/' + url, { params })
     } else if (method === 'post') {
@@ -14,12 +15,16 @@ export function reqJsonData(url, params = {}, method = 'post') {
 }
 export async function request(url,params={},method='get'){
     try {
+        const API_ROOT = '/manage'
+        method = method.toLowerCase()
         let resp 
-        if (method === 'get') {
-            resp  = await Axios.get('/manage' + url, { params })
-        } else if (method === 'post') {
-            resp  = await Axios.post('/manage' + url, params)
-        }  
+        switch(method){
+            case 'get' :resp = await Axios.get(API_ROOT + url,{params});break;
+            case 'post':resp = await Axios.post(API_ROOT + url,params);break;
+            case 'put':resp = await Axios.put(API_ROOT + url,params);break;
+            case 'delete':resp = await Axios.delete(API_ROOT + url,params);break;            
+            default:break;
+        }
         console.log(`[${url}][${method}] ==> `,resp)
         return resp.data
     } catch (error) {

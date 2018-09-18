@@ -1,6 +1,6 @@
 <template>
     <div class="dr-adminGroupForm">
-        <el-form :model="task" :inline="true" :label-position="left" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form :model="task" :inline="true" label-position="left" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="爬虫任务名" prop="name">
                 <el-input size="small" v-model="task.name"></el-input>
             </el-form-item>
@@ -10,12 +10,14 @@
             <el-form-item label="文章列表地址" prop="articleList">
                 <el-input size="small" v-model="task.opt.articleList"></el-input>
             </el-form-item>
+            <br>
             <el-form-item  label="文章匹配规则" prop="articleUrlMatch">
                 <el-select size="mini" v-model="task.opt.articleUrlMatch.type"></el-select>
             </el-form-item>
             <el-form-item  label="" prop="articleUrlMatch">
                 <el-input  size="mini" v-model="task.opt.articleUrlMatch.value"></el-input>
-            </el-form-item>            
+            </el-form-item>  
+            <br>          
             <el-form-item label="标题匹配规则" prop="articleTitleMatch">
                 <el-input size="small" v-model="task.opt.articleTitleMatch.type"></el-input>        
             </el-form-item>
@@ -29,7 +31,6 @@
                 <el-button size="medium" type="primary" @click="excTask()">执行</el-button>
                 <el-button v-if="!isRealTimeData" size="medium" type="warning" @click="realTimeData()">实时监控</el-button>
                 <el-button v-else size="medium" type="success"><i class="el-icon-loading"></i>实时监控中</el-button>
-                <el-button size="medium" @click="backToList">返回</el-button>
             </el-form-item>
         </el-form>
         <el-card class="box-card">
@@ -47,9 +48,16 @@
                     <el-col class="info-item" :span="8">终止时间:<el-tag size="mini">{{task.info.stopTime||'暂无'}}</el-tag></el-col>
                     <el-col class="info-item" :span="8">进度:<el-progress style="width:200px;display: inline-block;" :text-inside="true" :stroke-width="18" :percentage="calProgress()"></el-progress></el-col>
                 </el-row>
+                <el-tabs v-model="tabName" type="card">
+                    <el-tab-pane label="列表" name="first">              
                 <el-row>
-                    <el-table :data="cutPage(task.articleTasks,currentPage)" stripe fit="false" style="width: 100%;" height="600">
-                        <el-table-column prop="content" label="正文" type="expand">
+                    <div>
+
+                    </div>
+                    <el-table :data="cutPage(task.articleTasks,currentPage)" stripe fit="false" style="width: 100%;" height="600"
+                        :default-sort = "{prop: 'sortId', order: 'descending'}"
+                    >
+                        <el-table-column prop="content" label="正文" type="expand" >
                             <template slot-scope="props">
                                 <el-card class="box-card">
                                 <div slot="header" class="clearfix">
@@ -61,7 +69,9 @@
                                 </el-card>                       
                             </template>                
                         </el-table-column>         
-
+                        <el-table-column prop="sortId" label="序号" width="100" sortable>
+                        </el-table-column>
+                        
                         <el-table-column class="success-row"
                             prop="lable"
                             label="标签"
@@ -69,17 +79,28 @@
                         </el-table-column>
                         <el-table-column width="400"
                             prop="url"
-                            label="地址">
+                            label="地址"
+                            sortable
+                            >
                         </el-table-column>
-                        <el-table-column prop="content" label="内容">
+                        <el-table-column prop="content" label="状态" >
                             <template slot-scope="scope">
                                 <div>
-                                    <div v-if="scope.row.content"><el-tag type="success"><i class="el-icon-success"></i>&nbsp;&nbsp;完成</el-tag></div>
+                                    <div v-if="scope.row.content">
+                                        <el-tag type="success"><i class="el-icon-success"></i>已完成</el-tag>
+                                        <el-tag v-if="scope.row.doneTime" type="success"><i class="el-icon-success"></i>{{scope.row.doneTime}}</el-tag>
+                                    </div>
                                     <div v-else><el-tag type="warning"><i class="el-icon-warning"></i>待执行</el-tag></div>
                                 </div>
                             </template>
                         </el-table-column>                
-            
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="" @click="editContentInfo(scope.row)">发布</el-button>
+                                
+                            </template>
+                        </el-table-column>
+                        
                     </el-table>                    
                 </el-row>
                 <el-row>
@@ -88,7 +109,14 @@
                             @current-change="switchPage" layout="prev, pager, next" :total="task.articleTasks.length" :page-size="pageSize">
                         </el-pagination>
                     </div>
-                </el-row>
+                </el-row>                      
+                    </el-tab-pane>
+                    <el-tab-pane label="发布" name="second">
+                        
+                    </el-tab-pane>
+                    
+                </el-tabs>
+
             </div>
         </el-card>
     </div>
@@ -104,6 +132,7 @@ import {
 export default {
     data() {
         return {
+            tabName:'first',
             rules: {
                 name: [{
                     required: true,
@@ -135,6 +164,17 @@ export default {
         // ItemForm
     },
     methods: {
+         editContentInfo(rowData) {
+            
+            rowData.title = rowData.title
+            rowData.comments = rowData.content
+            console.log('rowData:',rowData)
+            this.$store.dispatch('showContentForm', {
+                crawlerPublish:true,
+                formData: rowData
+            });
+            this.$router.push('/addContent');
+        },       
         calProgress(){
             if(this.task.articleTasks.length>0){
                 let done = 0
@@ -167,7 +207,6 @@ export default {
         async realTimeData(){
             let task = this.task
             this.isRealTimeData = true
-            this.reverse
             if(task.info.running){
                 console.log('任务执行中.');
                 await this.getCrawlerTaskDetail(task.name)
@@ -176,28 +215,23 @@ export default {
                 },5000)
             }else{
                 this.isRealTimeData = false
+                this.$message(`请先启动任务!`,'error')
             }
         },
         async getCrawlerTaskDetail(name){
-            services.getOneCrawlerTask({name}).then((result) => {
-                console.log('result:',result)
-                if (result.data.state === 'success') {
-                    if (result.data.doc) {
-                        this.task = result.data.doc.data
-                        console.log('Task:',this.task)
-                    } else {
-                        this.$message({
-                            message: '参数非法,请重新操作！',
-                            type: 'warning',
-                            onClose: () => {
-                                this.$router.push('/ads');
-                            }
-                        });
-                    }
+            let result = await services.getOneCrawlerTask({name})
+            console.log('result:',result)
+            if (result.data.state === 'success') {
+                if (result.data.doc) {
+                    this.task = result.data.doc.data
+                    this.$forceUpdate()
+                    console.log('Task:',this.task)
                 } else {
-                    this.$message.error(result.data.message);
+                    this.$message(`查询任务详情错误!`);
                 }
-            });
+            } else {
+                this.$message.error(result.data.message);
+            }
         },
         async excTask() {
             let resp = await services.excCrawlerTask({name:this.task.name})

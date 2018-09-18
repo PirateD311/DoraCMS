@@ -8,6 +8,7 @@ const { JSDOM } = jsdom;
 const fs = require('fs')
 const IM = require('immutable')
 const DIRPATH = __dirname
+const path = require('path')
 let executingTasks = IM.List([])
 const opt = {
     name:'默认任务',
@@ -40,7 +41,9 @@ class ArticleCrawlerTask{
         }
         if(!option.reload){
             try{
-                let data = require('./data/'+this.opt.name+'.json')
+                // let data = require('./data/'+this.opt.name+'.json')
+                let data = fs.readFileSync(path.join(__dirname,'./data/'+this.opt.name+'.json'),'utf-8')
+                data = JSON.parse(data)
                 this.data = Object.assign(this.data,data)
                 this.opt = data.opt
                 console.log('继续任务成功!')
@@ -99,17 +102,18 @@ class ArticleCrawlerTask{
     }   
     async handleArticlePage(){
         let tasks = this.data.articleTasks,
-            i = 0
+            i = 0,sortId=0
         console.log('待爬取文章总数:',tasks.length)
         for(let task of tasks){
+            sortId++
             if(!task.title || !task.content){
                 i++
                 let {title,content} = await this.getArticle(task.url)
                 task.title = title
                 task.content = content
-                if(i%10===0){
-                    this.log()
-                }
+                task.sortId = sortId
+                task.doneTime = moment().format('YYYY-MM-DD hh:mm:ss')
+                this.log()
             }
         }
         this.log()
@@ -140,11 +144,16 @@ class ArticleCrawlerTask{
     }
     log(){
         this.data.info = this.info
-        let tasks = IM.List(this.data.articleTasks),
-            doneCount = tasks.count(v=>v.url && v.content && v.title)||0,
+        let fileName = DIRPATH+'/data/'+this.opt.name+'.json'
+        let tasks = this.data.articleTasks,
+            doneTasks = tasks.filter(v=>v.url && v.content && v.title),
+            doneCount = doneTasks.length,
             ratio = parseInt(doneCount/tasks.size*10000)/100||0
         console.log('--------------  当前进度【 %d% 】---- [总数 %d ][已完成 %d] [待完成 %d]',ratio,tasks.size,doneCount,tasks.size-doneCount)
+        let temp = require(fileName)
+
         fs.writeFileSync(DIRPATH+'/data/'+this.opt.name+'.json',JSON.stringify(this.data,null,2))
+        
     }
 }
 
@@ -188,9 +197,9 @@ module.exports.createCrawlerTask = function(option){
 module.exports.listCrawlerTasks = function(){
     let tasks = fs.readdirSync(DIRPATH+'/data')
     console.log('任务列表:',tasks)
-    tasks = tasks.map(v=>{
+    tasks = tasks.filter(v=>v[0]!=='.').map(v=>{
         try {
-            let task = require(DIRPATH+'/data/'+v),
+            let task = JSON.parse(fs.readFileSync(path.join(DIRPATH,'./data/'+v))),
                 listArticle = IM.List(task.articleTasks),
                 doneCount = listArticle.count(_=>_.title&&_.content),
                 ratio = parseInt(doneCount/listArticle.size*10000)/100

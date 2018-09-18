@@ -32,10 +32,12 @@ class StatisticsService {
             status:"publish",
             date:{$lte:moment().toISOString(),$gte:moment().subtract(LAST_DAY,'days').toISOString(),}
         }
-        let last7daydocs = await Content.find(qryLast7day,{likeNum:1,clickNum:1,})
+        let last7daydocs = await Content.find(qryLast7day,{likeNum:1,clickNum:1,date:1})
+        console.log(`docs`,last7daydocs)
         for(let i = 0;i<LAST_DAY;i++){
             let date = moment().subtract(i,'day').format('MM-DD'),
                 docs = last7daydocs.filter(v=>moment(v.date).format('MM-DD')===date)
+            console.log(date,`  => docs:`,docs)
             stat.last7day.push({
                 date,docs,count:docs.length
             })

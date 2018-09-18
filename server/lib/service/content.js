@@ -17,9 +17,10 @@ const Rules = {
         tags:Joi.array().items(Joi.string()).single(),   //need to format
         discription:Joi.string().min(5).max(100),
         comments:Joi.string().required().min(5),
-        date:Joi.date().default(Date.now()),
+        date:Joi.date(),
         sImg:Joi.string().empty(''),
         author:Joi.string(),
+        bookId:Joi.string(),
         contributor:Joi.string(),
         state:Joi.boolean().default(true),
         status:Joi.string().default('publish'),
@@ -30,12 +31,14 @@ const Rules = {
         star:Joi.number().default(0).min(0).max(5),
         hiddenContent:Joi.string().empty(''),
         hiddenType:Joi.number().default(0),
-        refined:Joi.boolean()
+        refined:Joi.boolean(),
+        sortId:Joi.number(),
     }),
     index:Joi.object().keys({
         current:Joi.number().default(1),
         pageSize:Joi.number().default(10),
         title:Joi.string(),
+        bookId:Joi.string(),
         sortby:Joi.string(),
         typeId:Joi.string(),
         tagName:Joi.string(),
@@ -45,10 +48,12 @@ const Rules = {
         isVip:Joi.boolean(),
         status:Joi.string().default('publish'),
         isTop:Joi.number(),
+        sortId:Joi.number(),
     }),
     update:Joi.object().keys({
         // _id:Joi.string().required(),
         title:Joi.string(),
+        bookId:Joi.string(),
         stitle:Joi.string().min(5).max(40),
         categories:Joi.array().items(Joi.string()).single(),
         tags:Joi.array(),   //need to format
@@ -67,6 +72,7 @@ const Rules = {
         hiddenContent:Joi.string().empty(''),
         hiddenType:Joi.number(),     
         refined:Joi.boolean(),   
+        sortId:Joi.number(),
     })
 }
 class ContentService {
@@ -86,6 +92,7 @@ class ContentService {
             status, //文章状态
             isTop,  //置顶文章
             model,  // 查询模式 full/normal/simple
+            bookId,
         } = await Joi.validate(data,Rules.index,{stripUnknown:true})
         // 条件配置
         let queryObj = {
@@ -100,7 +107,8 @@ class ContentService {
                 delete queryObj.categories;
                 queryObj.isVip = true;
             }
-        }       
+        } 
+        if(bookId)queryObj.bookId = bookId      
         if (tagName) {  //标签过滤
             let targetTag = await ContentTagModel.findOne({ name: tagName });
             if (targetTag) {
@@ -194,7 +202,7 @@ class ContentService {
             return {content,commentNum,totalContents,randomArticles}
     }
     //文章发布
-    async addContent(data = {}){
+    async addContent(data = {},oneTitle=false){
         let doc = await Joi.validate(data,Rules.create,{stripUnknown:true})
         //提取内容中所有图片
         if(doc.comments){
@@ -206,13 +214,18 @@ class ContentService {
         if(doc.images && !doc.sImg){
             doc.sImg = doc.images[0]
         }
-        if(!doc.stitle)doc.stitle = doc.title.substr(0,40)        
-        const newContent = await ContentModel.create(doc);
+        if(!doc.stitle)doc.stitle = doc.title.substr(0,40)  
+        let newContent
+        if(oneTitle){
+            newContent = await ContentModel.findOneAndUpdate({title:doc.title},doc,{upsert:true,new:true,setDefaultsOnInsert:true})
+        }else{
+            newContent = await ContentModel.create(doc);
+        }      
         return {id:newContent._id,content:newContent}
     }
     //编辑修改帖子
     async updateContentById(id,data = {}){
-        let contentObj = Joi.validate(data,Rules.update,{stripUnknown:true})
+        let contentObj = await Joi.validate(data,Rules.update,{stripUnknown:true})
         let oldContent = await ContentModel.findById(id)
         if(!oldContent)throw new Error(`无效的文章Id`)
         //提取内容中所有图片

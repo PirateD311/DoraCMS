@@ -428,6 +428,7 @@ const mutations = {
     },
     [types.CONTENT_FORMSTATE](state, formState) {
         state.content.formState.edit = formState.edit;
+        state.content.formState.crawlerPublish = formState.crawlerPublish;
         state.content.formState.formData = Object.assign({
             title: '',
             stitle: '',

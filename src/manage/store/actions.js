@@ -217,6 +217,7 @@ export default {
         }) => {
         commit(types.CONTENT_FORMSTATE, {
             edit: params.edit,
+            crawlerPublish: params.crawlerPublish,
             formData: params.formData
         })
     },
